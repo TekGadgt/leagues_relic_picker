@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Raging Echoes Relic Picker</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://league-relic-picker.netlify.app/osrs/5/" />
+  <meta property="og:title" content="Raging Echoes Relic Picker" />
+  <meta property="og:description" content="Set a title, pick your relics, screenshot, and share" />
+  <meta property="og:image" content="https://league-relic-picker.netlify.app/osrs/5/poster_relics.png" />
+  <meta propery="og:image:alt" content="A Selection of Relics for the OSRS Raging Echoes League." />
+  <link rel="stylesheet" href="./variables.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="../../shared.js"></script>
+</head>
+
+<body>
+  <main id="main">
+    <h1 class="title" contenteditable="true">Change Me</h1>
+    <div class="colContainer" id="relicsContainer">
+      <!-- Relics will be dynamically inserted here -->
+    </div>
+  </main>
+  <button id="exportBtn">Export Image</button>
+  <script>
+    async function fetchRelics() {
+      try {
+        const response = await fetch('./relics.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const relicsData = await response.json();
+        return relicsData.relics;
+      } catch (error) {
+        console.error('Error fetching relics:', error);
+      }
+    }
+
+    function createRelicElement(relic, tier) {
+      const relicDiv = document.createElement('div');
+      relicDiv.className = 'relic';
+      relicDiv.id = `${tier}-${relic.id}`;
+
+      const img = document.createElement('img');
+      img.className = 'relicImg';
+      img.src = relic.src;
+      img.alt = `${relic.relicLabel} relic icon`;
+      relicDiv.appendChild(img);
+
+      const span = document.createElement('span');
+      span.className = 'relicLabel';
+      span.textContent = relic.relicLabel;
+      relicDiv.appendChild(span);
+
+      // Create tooltip if toolTipItems exist
+      if (relic.toolTipItems && relic.toolTipItems.length > 0) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+
+        const list = document.createElement('ul');
+        relic.toolTipItems.forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = item;
+          list.appendChild(listItem);
+        });
+
+        tooltip.appendChild(list);
+        relicDiv.appendChild(tooltip);
+      }
+
+      return relicDiv;
+    }
+
+    function renderRelics(relics) {
+      const container = document.getElementById('relicsContainer');
+      Object.keys(relics).forEach(tier => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col';
+        colDiv.id = tier;
+
+        relics[tier].forEach(relic => {
+          const relicElement = createRelicElement(relic, tier);
+          colDiv.appendChild(relicElement);
+        });
+
+        container.appendChild(colDiv);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const relics = await fetchRelics();
+      renderRelics(relics);
+      setInitialSelections(document.getElementsByClassName('relic'), '.title');
+      Array.from(document.getElementsByClassName('relic')).forEach(relic => relic.addEventListener('click', function () {
+        toggleElement(this, document.getElementsByClassName('relic'), '.title');
+      }));
+    });
+
+    document.querySelector('.title').addEventListener('input', function () {
+      updateURLParams(document.getElementsByClassName('relic'), '.title');
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function () {
+      var mainElement = document.getElementById('main');
+
+      // Hide all tooltips before export
+      const tooltips = document.querySelectorAll('.tooltip');
+      tooltips.forEach(tooltip => {
+        tooltip.style.display = 'none';
+      });
+
+      mainElement.style.backgroundColor = '#071022';
+      mainElement.style.paddingTop = '50px';
+      mainElement.style.paddingBottom = '50px';
+      html2canvas(mainElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#071022'
+      }).then(function (canvas) {
+        var link = document.createElement('a');
+        link.download = 'relics.png';
+        link.href = canvas.toDataURL();
+        link.click();
+
+        // Show tooltips again after export
+        tooltips.forEach(tooltip => {
+          tooltip.style.display = '';
+        });
+      });
+    });
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "a488248dbb94443d840feb6ed005bc1b"}'></script>
+</body>
+
+</html>

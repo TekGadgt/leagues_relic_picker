@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Raging Echoes Mastery Picker</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://league-relic-picker.netlify.app/osrs/5/masteries.html" />
+  <meta property="og:title" content="Raging Echoes Mastery Picker" />
+  <meta property="og:description" content="Set a title, pick your masteries, screenshot and share" />
+  <meta property="og:image" content="https://league-relic-picker.netlify.app/osrs/5/poster_masteries.png" />
+  <meta propery="og:image:alt" content="A Selection of Masteries for the OSRS Raging Echoes League." />
+  <link rel="stylesheet" href="./variables.css" />
+  <link rel="stylesheet" href="../../styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="../../shared.js"></script>
+</head>
+
+<body>
+  <main id="main">
+    <h1 class="title" contenteditable="true">Change Me</h1>
+    <div class="rowContainer" id="masteriesContainer">
+      <!-- Masteries will be dynamically inserted here -->
+    </div>
+  </main>
+  <button id="exportBtn">Export Image</button>
+  <script>
+    async function fetchMasteries() {
+      try {
+        const response = await fetch('./masteries.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const masteriesData = await response.json();
+        return masteriesData.masteries;
+      } catch (error) {
+        console.error('Error fetching masteries:', error);
+      }
+    }
+
+    function createMasteryElement(mastery, type) {
+      const masteryDiv = document.createElement('div');
+      masteryDiv.className = 'mastery';
+      masteryDiv.id = `${type}-${mastery.id}`;
+
+      const img = document.createElement('img');
+      img.className = 'masteryImg';
+      img.src = mastery.src;
+      img.alt = `${mastery.title} mastery icon`;
+      masteryDiv.appendChild(img);
+
+      const span = document.createElement('span');
+      span.className = 'masteryLabel';
+      span.textContent = mastery.title;
+      masteryDiv.appendChild(span);
+
+      // Create tooltip if toolTipItems exist
+      if (mastery.toolTipItems && mastery.toolTipItems.length > 0) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+
+        const list = document.createElement('ul');
+        mastery.toolTipItems.forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = item;
+          list.appendChild(listItem);
+        });
+
+        tooltip.appendChild(list);
+        masteryDiv.appendChild(tooltip);
+      }
+
+      return masteryDiv;
+    }
+
+    function renderMasteries(masteries) {
+      const container = document.getElementById('masteriesContainer');
+      Object.keys(masteries).forEach(type => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'row';
+        rowDiv.id = type;
+
+        masteries[type].forEach(mastery => {
+          const masteryElement = createMasteryElement(mastery, type);
+          rowDiv.appendChild(masteryElement);
+        });
+
+        container.appendChild(rowDiv);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const masteries = await fetchMasteries();
+      renderMasteries(masteries);
+      setInitialSelections(document.getElementsByClassName('mastery'), '.title');
+      Array.from(document.getElementsByClassName('mastery')).forEach(mastery => mastery.addEventListener('click', function () {
+        toggleElement(this, document.getElementsByClassName('mastery'), '.title');
+      }));
+    });
+
+    document.querySelector('.title').addEventListener('input', function () {
+      updateURLParams(document.getElementsByClassName('mastery'), '.title');
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function () {
+      var mainElement = document.getElementById('main');
+
+      // Hide all tooltips before export
+      const tooltips = document.querySelectorAll('.tooltip');
+      tooltips.forEach(tooltip => {
+        tooltip.style.display = 'none';
+      });
+
+      mainElement.style.backgroundColor = '#071022';
+      mainElement.style.paddingTop = '50px';
+      mainElement.style.paddingBottom = '50px';
+      html2canvas(mainElement, {
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#071022'
+      }).then(function (canvas) {
+        var link = document.createElement('a');
+        link.download = 'masteries.png';
+        link.href = canvas.toDataURL();
+        link.click();
+
+        // Show tooltips again after export
+        tooltips.forEach(tooltip => {
+          tooltip.style.display = '';
+        });
+      });
+    });
+  </script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+    data-cf-beacon='{"token": "a488248dbb94443d840feb6ed005bc1b"}'></script>
+</body>
+
+</html>

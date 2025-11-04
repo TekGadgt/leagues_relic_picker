@@ -1,0 +1,228 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center the export button */
+  background-color: var(--background-color);
+  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  min-height: 98vh;
+}
+
+.title {
+  display: flex;
+  flex: auto;
+  min-width: 99vw;
+  min-height: 9vh;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-title);
+  color: var(--title-color);
+  background-color: var(--background-color);
+  text-align: center;
+}
+
+.subTitle {
+  font-size: var(--font-size-subtitle);
+  color: var(--title-color);
+  padding-bottom: 20px;
+}
+
+.navItems {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.navItem {
+  text-decoration: none;
+}
+
+.navItem > img {
+  max-width: 200px;
+  filter: brightness(60%);
+  padding: 5px;
+}
+
+.navItem > img:hover {
+  filter: brightness(100%);
+}
+
+.navItemSubTitle {
+  font-size: var(--font-size-nav-item);
+  color: var(--title-color);
+  text-decoration: none;
+}
+
+.title[contenteditable="true"]:empty:before {
+  content: attr(placeholder);
+  color: var(--title-color);
+}
+
+.title[contenteditable="true"] {
+  outline: none;
+}
+
+.title > input {
+  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  background-color: var(--background-color);
+  font-size: 5em;
+  color: var(--title-color);
+  border: 0;
+  text-align: center;
+}
+
+main > .colContainer {
+  display: flex;
+  flex: auto;
+  min-height: 60vh;
+  min-width: 99vw;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.relic {
+  margin: 10px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.relicImg {
+  height: 150px;
+  width: 150px;
+}
+
+.relicImg.rs3 {
+  width: 116px;
+  height: 100px;
+}
+
+.relicLabel {
+  font-size: 1.5em;
+  margin-top: 5px;
+  color: var(--title-color);
+}
+
+.tooltip {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgba(20, 20, 40, 0.9);
+  color: var(--title-color);
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 100;
+  width: auto;
+  width: min(400px, 90vw);
+  min-width: 200px;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: 100%;
+  margin-bottom: 10px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  border: 1px solid var(--title-color);
+  overflow-y: auto;
+  /* Add shadow for better visibility */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.tooltip ul {
+  margin: 0;
+  padding: 0 0 0 20px;
+  text-align: left;
+}
+
+.tooltip li {
+  margin: 5px 0;
+}
+
+.relic, .mastery {
+  position: relative;
+}
+
+.relic:hover .tooltip, .mastery:hover .tooltip {
+  visibility: visible;
+  opacity: 1 !important; /* Force full opacity when visible */
+}
+
+/* Adjust tooltip position for elements near screen edges */
+.relic:hover .tooltip.flip-up, .mastery:hover .tooltip.flip-up {
+  bottom: auto;
+  top: 100%;
+  margin-bottom: 0;
+  margin-top: 10px;
+}
+
+.relic:hover .tooltip.flip-left, .mastery:hover .tooltip.flip-left {
+  transform: translateX(0);
+  left: 0;
+}
+
+.relic:hover .tooltip.flip-right, .mastery:hover .tooltip.flip-right {
+  transform: translateX(0);
+  right: 0;
+  left: auto;
+}
+
+#exportBtn {
+  background-color: var(--title-color);
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: auto; /* Make the button not full width */
+}
+
+#exportBtn:hover {
+  background-color: var(--nav-item-color);
+}
+
+/* New styles for masteries.html */
+main > .rowContainer {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  min-height: 60vh;
+  min-width: 99vw;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.mastery {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.masteryImg {
+  height: 150px;
+  width: 150px;
+}
+
+.masteryLabel {
+  font-size: 1.5em;
+  margin-top: 5px;
+  color: #8ce0ff;
+}

@@ -1,0 +1,196 @@
+{
+    "relics": {
+        "tier1": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/Endless_Harvest.png",
+                "relicLabel": "Endless Harvest",
+                "toolTipItems": [
+                  "2x Resources from Fishing, Woodcutting and Mining",
+                  "Experience is granted per resource gathered",
+                  "Resources gathered are banked if you have space"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Production_Master.png",
+                "relicLabel": "Production Master",
+                "toolTipItems": [
+                  "Instant resource processing for the following:",
+                  "Smelting ores, smithing bars and making cannonballs",
+                  "Fletching logs and cutting bolt tips",
+                  "Cleaning herbs and making potions",
+                  "Cooking food and making jugs of wine",
+                  "Crafting leather, uncut gems, glass, jewellery, pottery, battlestaves, and spinning flax/wool"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/Skilling_Prodigy.png",
+                "relicLabel": "Skilling Prodigy",
+                "toolTipItems": [
+                  "All non-combat skills will permanently be boosted by 12",
+                  "Skills boosted/drained above/below +12 will eventually return to +12"
+                ]
+            }
+        ],
+        "tier2": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/Fairys_Flight.png",
+                "relicLabel": "Fairy's Flight",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given a fairy mushroom which allows players to teleport to any fairy ring or spirit tree, provided they can access the destination"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Eternal_Jeweller.png",
+                "relicLabel": "Eternal Jeweller",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players will receive a ring of dueling, ring of returning, ring of wealth, games necklace, skills necklace, and a necklace of passage",
+                  "The above items will no longer consume charges, in addition to the master scroll book, slayer ring, amulet of glory, Digsite pendant, and combat bracelet"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/Last_Recall.png",
+                "relicLabel": "Last Recall",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given a crystal of memories which allows players to teleport themselves back to the location where their most recent teleport occurred, excluding instances"
+                ]
+            }
+        ],
+        "tier3": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/Quick_Shot.png",
+                "relicLabel": "Quick Shot",
+                "toolTipItems": [
+                  "Attack speed of all ranged weapons are halved, rounded up",
+                  "Ranged attacks deal 10% more damage and have 100% increased accuracy against NPCs (50% against players)",
+                  "90% of ammunition is saved when using ranged weapons, excluding chinchompas",
+                  "Crystal bow and Toxic blowpipe item charges are also affected by this effect"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Fluid_Strikes.png",
+                "relicLabel": "Fluid Strikes",
+                "toolTipItems": [
+                  "Attack speed of all melee weapons are halved, rounded up",
+                  "Melee attacks have 25% increased accuracy",
+                  "Players will take 15% less damage from non-lethal sources",
+                  "Hitpoints regenerate at a rate of four per minute instead of one"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/Double_Cast.png",
+                "relicLabel": "Double Cast",
+                "toolTipItems": [
+                  "Attack speed of all magic weapons and spells are halved, rounded up",
+                  "With +60 Magic Attack Accuracy (+20 with regular/elite void knigh mage armour) your binding spells and ice spells have 100% accuracy against creatures",
+                  "Otherwise, magic attacks have 125% increased accuracy against NPCs (50% against players)",
+                  "90% of runes used are saved when casting spells, including item charges from powered staves"
+                ]
+            }
+        ],
+        "tier4": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/Treasure_Seeker.png",
+                "relicLabel": "Treasure Seeker",
+                "toolTipItems": [
+                  "NPCs that drop clue scrolls will have a 1/20 chance of dropping them",
+                  "Clue geodes, nests, and bottles will be found ten times more often",
+                  "All un-started clues are stackable as scroll boxes",
+                  "All clues will have the lowest number of steps possible for their tier"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Unnatural_Selection.png",
+                "relicLabel": "Unnatural Selection",
+                "toolTipItems": [
+                  "Players can choose which slayer assignment they would like to receive",
+                  "Superior slayer monsters will have a 1/25 chance of appearing",
+                  "Superior slayer monsters will always drop a clue scroll if they are able to drop one",
+                  "Superior slayer monsters will roll their standard variant's drop table six times, though this does not increase the amount of rolls on the superior creature's unique drop table"
+                ]
+            }
+        ],
+        "tier5": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/The_Botanist.png",
+                "relicLabel": "The Botanist",
+                "toolTipItems": [
+                  "Farming ticks occur every minute instead of five",
+                  "Resources harvested from Farming are multiplied by two but will not grant additional experience",
+                  "Creating potions will give their four-dose variant, and players have a 95% chance of saving their secondary ingredient",
+                  "Stats boosted above the player's base level will not drain over time"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Infernal_Gathering.png",
+                "relicLabel": "Infernal Gathering",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Trailblazer axe: Any logs chopped are burned, granting Firemaking experience regardless of level requirements",
+                  "Trailblazer pickaxe: Any ore mined will be smelted into a metal bar (if applicable), granting Smithing experience regardless of level requirements",
+                  "Trailblazer harpoon: Any fish caught are cooked, granting Cooking experience regardless of level requirements",
+                  "If equipped, harpoon will also work for fish that don't require a harpoon to be caught, e.g. trout"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/Equilibrium.png",
+                "relicLabel": "Equilibrium",
+                "toolTipItems": [
+                  "Each time the player gains experience, they will gain additional experience equal to 10% of the player's total level",
+                  "Additional experience given by this relic is not multiplied by the Leagues XP multiplier"
+                ]
+            }
+        ],
+        "tier6": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/Draining_Strikes.png",
+                "relicLabel": "Draining Strikes",
+                "toolTipItems": [
+                  "Attacks have 10% increased accuracy and 10% increased damage",
+                  "This stacks with tier 3 relics",
+                  "Any successful hit will have a 50% chance of restoring the player's Hitpoints and Prayer points by 10% of the damage dealt",
+                  "This Relic does not work for multi-target attacks or special attacks"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/Exploding_Attacks.png",
+                "relicLabel": "Exploding Attacks",
+                "toolTipItems": [
+                  "Attacks have 10% increased accuracy and 10% increased damage",
+                  "This stacks with tier 3 relics",
+                  "Any successful hit to the primary target will hit up to five additional targets hit as well, dealing the same damage to them as the primary target",
+                  "This Relic does not work for multi-target attacks or special attacks"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/Weapon_Specialist.png",
+                "relicLabel": "Weapon Specialist",
+                "toolTipItems": [
+                  "Attacks have 10% increased accuracy and 10% increased damage",
+                  "This stacks with tier 3 relics",
+                  "The player's special attack energy regenerates at a rate of 30% every 30 seconds instead of 10%",
+                  "Special attacks that cost more than 20% energy will cost 20% instead"
+                ]
+            }
+        ]
+    }
+}

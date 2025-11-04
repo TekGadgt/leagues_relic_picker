@@ -1,0 +1,155 @@
+{
+    "masteries": {
+        "melee": [
+            {
+                "id": "1",
+                "title": "Melee I",
+                "src": "../assets/5/masteries/Melee_I.png",
+                "toolTipItems": [
+                  "Melee hits have a 25% chance to roll damage twice and take the highest result"
+                ]
+            },
+            {
+                "id": "2",
+                "title": "Melee II",
+                "src": "../assets/5/masteries/Melee_II.png",
+                "toolTipItems": [
+                  "Melee hits have a 10% chance to generate an echo hit (Additional melee hit, 50% max-hit, respects Accuracy, PvM only)"
+                ]
+            },
+            {
+                "id": "3",
+                "title": "Melee III",
+                "src": "../assets/5/masteries/Melee_III.png",
+                "toolTipItems": [
+                  "Melee attack rate set to 80%, rounding down"
+                ]
+            },
+            {
+                "id": "4",
+                "title": "Melee IV",
+                "src": "../assets/5/masteries/Melee_IV.png",
+                "toolTipItems": [
+                  "Melee hits have a 5% chance to heal 40% of damage dealt"
+                ]
+            },
+            {
+                "id": "5",
+                "title": "Melee V",
+                "src": "../assets/5/masteries/Melee_V.png",
+                "toolTipItems": [
+                  "Melee attack rate set to 50%, rounded down for 5 and above, rounded up below 4"
+                ]
+            },
+            {
+                "id": "6",
+                "title": "Melee VI",
+                "src": "../assets/5/masteries/Melee_VI.png",
+                "toolTipItems": [
+                  "Your chance to generate a Melee echo increases to 20%, and your echoes can generate additional echoes (Up to 8 times in a row)"
+                ]
+            }
+        ],
+        "ranged": [
+            {
+                "id": "1",
+                "title": "Ranged I",
+                "src": "../assets/5/masteries/Ranged_I.png",
+                "toolTipItems": [
+                  "Damage rolls beneath 30% of max hit with Ranged are increased to 30%"
+                ]
+            },
+            {
+                "id": "2",
+                "title": "Ranged II",
+                "src": "../assets/5/masteries/Ranged_II.png",
+                "toolTipItems": [
+                  "Each subsequent Ranged attack has its max hit increased by an additional 5%. Resets after +20%"
+                ]
+            },
+            {
+                "id": "3",
+                "title": "Ranged III",
+                "src": "../assets/5/masteries/Ranged_III.png",
+                "toolTipItems": [
+                  "Ranged attack rate set to 80%, rounding down"
+                ]
+            },
+            {
+                "id": "4",
+                "title": "Ranged IV",
+                "src": "../assets/5/masteries/Ranged_IV.png",
+                "toolTipItems": [
+                  "Every 5th Ranged hit, heal 5 hitpoints"
+                ]
+            },
+            {
+                "id": "5",
+                "title": "Ranged V",
+                "src": "../assets/5/masteries/Ranged_V.png",
+                "toolTipItems": [
+                  "Ranged attack rate set to 50%, rounded down for 5 and above, rounded up below 4"
+                ]
+            },
+            {
+                "id": "6",
+                "title": "Ranged VI",
+                "src": "../assets/5/masteries/Ranged_VI.png",
+                "toolTipItems": [
+                  "Never miss with Ranged (PvM only)"
+                ]
+            }
+        ],
+        "magic": [
+            {
+                "id": "1",
+                "title": "Magic I",
+                "src": "../assets/5/masteries/Magic_I.png",
+                "toolTipItems": [
+                  "When you roll above 90% of your max hit with Magic, damage is increased by 50%"
+                ]
+            },
+            {
+                "id": "2",
+                "title": "Magic II",
+                "src": "../assets/5/masteries/Magic_II.png",
+                "toolTipItems": [
+                  "Magic max hit is increased by 5% per tick in-between your attacks (Up to +40%)"
+                ]
+            },
+            {
+                "id": "3",
+                "title": "Magic III",
+                "src": "../assets/5/masteries/Magic_III.png",
+                "toolTipItems": [
+                  "Magic attack rate set to 80%, rounding down"
+                ]
+            },
+            {
+                "id": "4",
+                "title": "Magic IV",
+                "src": "../assets/5/masteries/Magic_IV.png",
+                "toolTipItems": [
+                  "When you roll above 90% of your max hit with Magic, heal 10% of damage dealt"
+                ]
+            },
+            {
+                "id": "5",
+                "title": "Magic V",
+                "src": "../assets/5/masteries/Magic_V.png",
+                "toolTipItems": [
+                  "Magic attack rate set to 50%, rounded down for 5 and above, rounded up below 4"
+                ]
+            },
+            {
+                "id": "6",
+                "title": "Magic VI",
+                "src": "../assets/5/masteries/Magic_VI.png",
+                "toolTipItems": [
+                  "Max hit with Magic is increased by 1% for every 100 Hitpoints remaining on target (Up to 10%)",
+                  "On a successful Magic hit, if your target has less Hitpoints than your max hit, you max hit"
+                ]
+            }
+        ]
+    }
+}

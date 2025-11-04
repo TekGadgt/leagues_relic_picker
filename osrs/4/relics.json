@@ -1,0 +1,287 @@
+{
+    "relics": {
+        "tier1": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Endless_Harvest.png",
+                "relicLabel": "Endless Harvest",
+                "toolTipItems": [
+                  "Resources gathered from Fishing, Woodcutting, and Mining are doubled",
+                  "Experience is also given for the extra resource",
+                  "Resources gathered by the relic are sent to the player's bank",
+                  "Items that normally cannot be banked will be placed in the inventory instead"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Production_Prodigy.png",
+                "relicLabel": "Production Prodigy",
+                "toolTipItems": [
+                  "Crafting, Smithing, Herblore, Fletching, and Cooking are boosted by +12",
+                  "Instant resource processing for the following:",
+                  "Smelting ores, smithing bars and making cannonballs",
+                  "Fletching logs, stringing bows, and cutting bolt tips",
+                  "Cleaning herbs and making potions which do not have a stackable secondary ingredient",
+                  "Cooking food and making jugs of wine",
+                  "Crafting leather, jewellery, battlestaves, or pottery, cutting uncut gems, glassblowing, and spinning flax or wool",
+                  "There is a 25% chance that players will make an extra product, which will be sent to the bank if there is space"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Trickster.png",
+                "relicLabel": "Trickster",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given the Sage's greaves, boots that grant 2/3rds of the player's Agility level as experience while running, every ~10 ticks",
+                  "Players will always succeed in performing actions for Thieving, Agility, Hunter, and Firemaking",
+                  "The maximum amount of coin pouches players can hold is tripled",
+                  "The player will automatically re-pickpocket an NPC until they can no longer do so",
+                  "Pickpocketed loot is doubled and converted to bank notes, stacks with rogues outfit for quadruple loot",
+                  "Box traps will lure creatures faster, and give double loot and Hunter experience",
+                  "Impling jars will never break upon opening one",
+                  "Players can burn multiple logs per action (up to nine), providing there is space to do so"
+                ]
+            }
+        ],
+        "tier2": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Fairys_Flight.png",
+                "relicLabel": "Fairy's Flight",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given a fairy mushroom which allows teleporting to any fairy ring, spirit tree, or tool leprechaun",
+                  "Can only teleport to locations within regions the player has unlocked"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Globetrotter.png",
+                "relicLabel": "Globetrotter",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given a globetrotter pendant which allows teleporting to all locations from an ornate jewellery box and nearly all spellbook teleport spells",
+                  "Can only teleport to locations within regions the player has unlocked"
+                ]
+            }
+        ],
+        "tier3": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Bankers_Note.png",
+                "relicLabel": "Banker's Note",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given a banker's note which allows players to use note-able items on it to turn them into banknotes or unnote them",
+                  "Items must be used on the banker's note",
+                  "The 'Activate' option allows players to note and un-note items in one action with a quantity of the player's choosing",
+                  "An item must first be used on the banker's note in order for this to work"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Fire_Sale.png",
+                "relicLabel": "Fire Sale",
+                "toolTipItems": [
+                  "All item shops with coins as currency are free",
+                  "This only applies to shops with a standard shop interface (e.g. general stores)",
+                  "These items can be automatically noted if the player so chooses",
+                  "Shops will no longer buy items for gold"
+                ]
+            }
+        ],
+        "tier4": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Archers_Embrace.png",
+                "relicLabel": "Archer's Embrace",
+                "toolTipItems": [
+                  "Ranged weapons with an attack speed above 4 will have it halved, rounded down",
+                  "Ranged weapons with an attack speed below 3 will have it halved, rounded up",
+                  "Ranged accuracy is doubled",
+                  "Successful hits have a 10% chance to fire an extra projectile, with a damage roll independent from the first",
+                  "Players will save 90% of the ammunition they use on ranged weapons, stacks with Ava's devices for a maximum of 98% savings",
+                  "Applicable charged weapons include the crystal bow, Bow of Faerdhinen, chinchompas, venator bow, and toxic blowpipe",
+                  "Enchanted bolts have a doubled chance to activate"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Brawlers_Resolve.png",
+                "relicLabel": "Brawler's Resolve",
+                "toolTipItems": [
+                  "Melee weapons with an attack speed above 4 will have it halved, rounded down",
+                  "Melee weapons with an attack speed below 3 will have it halved, rounded up",
+                  "The player's melee accuracy, as well as melee, ranged, and magic defence, are increased by 50%",
+                  "Successful hits have a 10% chance to deal double damage",
+                  "Players will save 90% of the charges they use on applicable melee weapons",
+                  "Immunity to all status effects from NPCs and players, including (but not limited) to poison, venom, dragonfire, and icy breath",
+                  "Excludes stuns, roots, and slayer monster attacks (such as banshee shrieks)"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Superior_Sorcerer.png",
+                "relicLabel": "Superior Sorcerer",
+                "toolTipItems": [
+                  "Magic weapons have an attack speed of 2",
+                  "The player's magic accuracy and damage are increased by 175% and 20% respectively",
+                  "Players will save 90% of the runes they use when casting spells, including charges from powered staves",
+                  "In multicombat areas, magic attacks will damage up to 5 surrounding targets for up to 25% of the initial damage dealt on the primary target",
+                  "Spells that bind/freeze the target will always hit, providing that they are not immune or are already bound",
+                  "Players will be given the arcane grimoire and rune pouch",
+                  "The grimoire will allow the changing of spellbooks from the inventory",
+                  "The rune pouch can store five types of runes, while the divine rune pouch can store six"
+                ]
+            }
+        ],
+        "tier5": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Bloodthirsty.png",
+                "relicLabel": "Bloodthirsty",
+                "toolTipItems": [
+                  "Players can receive and cancel Slayer tasks remotely via slayer helmets/gem/rings",
+                  "Expeditious bracelets and bracelets of slaughter have a 35% chance to proc their effects, and no longer consume charges",
+                  "Superior slayer monsters will have the following buffs:",
+                  "Spawn chance is increased to 1/25",
+                  "Slayer points are given upon killing one based on Slayer level requirement and difficulty",
+                  "Six rolls on their normal counterpart's drop table (excluding unique superior table)",
+                  "25% chance for a superior slayer monster to spawn as a bloodthirsty variant, which has the following:",
+                  "Nine rolls on their normal counterpart's drop table",
+                  "A guaranteed clue scroll drop if eligible",
+                  "Tripled chance of rolling the superior unique drop table",
+                  "A roll on the bloodthirsty unique drop table"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Infernal_Gathering.png",
+                "relicLabel": "Infernal Gathering",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "The player is given a set of Trailblazer tools that act as undegradable variants of crystal tools with no requirements, plus some additional effects:",
+                  "Trailblazer axe: Any logs chopped are burned, granting Firemaking experience regardless of level requirements, performs 1 tick quicker than normal tools",
+                  "Trailblazer pickaxe: Any ore mined will be smelted into a metal bar, granting Smithing experience regardless of level requirements, performs 1 tick quicker than normal tools",
+                  "Trailblazer harpoon - Any fish caught are cooked, granting Cooking experience regardless of level requirements",
+                  "If equipped, it will also work for fish that don't require a harpoon to be caught, e.g. trout, performs 2 ticks quicker than normal tools"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Treasure_Seeker.png",
+                "relicLabel": "Treasure Seeker",
+                "toolTipItems": [
+                  "NPCs that drop clue scrolls have a 1/15 chance of dropping one, including impling jars",
+                  "The rate of obtaining clue vessels are increased by 10x",
+                  "Clue scrolls have the lowest possible amount of steps",
+                  "Reward caskets will give the maximum amount of reward rolls",
+                  "Upon opening a reward casket, there is a chance that players will receive another reward casket of the same tier; this is more common the lower the tier",
+                  "Additionally, there is a chance for the bonus casket to be upgraded to a tier above the one players initially opened"
+                ]
+            }
+        ],
+        "tier6": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Equilibrium.png",
+                "relicLabel": "Equilibrium",
+                "toolTipItems": [
+                  "Each time the player gains experience, they will gain additional experience equal to 10% of the player's total level (20% for the player's lowest level skill)",
+                  "Additional experience given by this relic is not multiplied by the Leagues XP multiplier"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Farmers_Fortune.png",
+                "relicLabel": "Farmer's Fortune",
+                "toolTipItems": [
+                  "Players will have a 20% chance to save the seed or sapling that was planted",
+                  "Farming patches will grow instantly and never catch diseases",
+                  "Players will harvest farming patches x25 faster, giving triple the usual yield and turning them into bank notes"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Ruinous_Powers.png",
+                "relicLabel": "Ruinous Powers",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given the Ruinous Powers book, an item that allows players to alternate between the standard prayer book and the Ruinous Powers prayer book"
+                ]
+            }
+        ],
+        "tier7": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Berserker.png",
+                "relicLabel": "Berserker",
+                "toolTipItems": [
+                  "Damage dealt is increased by 0.4% for each hitpoint missing",
+                  "The player is guaranteed to hit their max hit on an NPC if the NPC is at full health"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Soul_Stealer.png",
+                "relicLabel": "Soul Stealer",
+                "toolTipItems": [
+                  "The player's minimum hit is increased by 10% of their max hit",
+                  "Upon a successful hit, there is a 50% chance that the player's Hitpoints and prayer points are restored by 10% of the damage dealt, rounded up",
+                  "The restoration effect excludes multi-target attacks and special attacks"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Weapon_Master.png",
+                "relicLabel": "Weapon Master",
+                "toolTipItems": [
+                  "Special attacks always result in a successful hit against NPCs, and the minimum damage dealt is increased from 0 to 20% of the player's max hit",
+                  "The player's special attack energy is restored by 30% every 30 seconds",
+                  "The lightbearer will increase this to 30% every 15 seconds",
+                  "If players do not have enough special attack energy to perform a special attack, they can instead choose to perform additional special attacks by sacrificing 25 Hitpoints"
+                ]
+            }
+        ],
+        "tier8": [
+            {
+                "id": "1",
+                "src": "../assets/4/relics/Guardian.png",
+                "relicLabel": "Guardian",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given the guardian horn, which allows players to summon a guardian thrall that attacks for 30 minutes, with a damage roll of 6-15, an attack speed of 5, and an accuracy roll of 45,000",
+                  "The guardian thrall will attack with a style that the NPC has the lowest defence bonus for",
+                  "In multicombat areas, the guardian thrall will attempt to cast an area-of-effect attack if the primary target is weak to ranged or magic, this can be toggled via the guardian horn",
+                  "Arceuus thralls can be used alongside the guardian thrall",
+                  "Players cannot bring the guardian horn into locations where items are restricted, The Gauntlet is the only exception to this rule",
+                  "The guardian's outfit can be switched via the horn"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/4/relics/Executioner.png",
+                "relicLabel": "Executioner",
+                "toolTipItems": [
+                  "Must be unlocked in a bank",
+                  "Players are given the Sage's axe, which allows players to instantly kill targets who have less than 20% of their health remaining",
+                  "The axe's attack range is 5 tiles (7 tiles on longrange)",
+                  "NPCs with ranged damage reduction are still applied when using the Sage's axe"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/4/relics/Undying_Retribution.png",
+                "relicLabel": "Undying Retribution",
+                "toolTipItems": [
+                  "Upon death, the player's hitpoints and prayer points are fully restored, damaging all enemies in a 7x7 area around the player which deals up to 200% of the player's Prayer level",
+                  "The effect will only work in the same places that Retribution does",
+                  "There is a three-minute cooldown between uses, removed when the player actually dies",
+                  "The damage effect will not work on NPCs that are immune to recoil damage, except for Nex, the Hespori, Vorkath, and all Wilderness bosses",
+                  "Dying with the effect active will not count towards death penalties in raids"
+                ]
+            }
+        ]
+    }
+}
