@@ -8,6 +8,51 @@ body {
   min-height: 98vh;
 }
 
+/* Navigation bar styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(7, 16, 34, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--title-color);
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.nav-link svg {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+}
+
+.github-link svg {
+  margin-right: 0;
+  width: 24px;
+  height: 24px;
+}
+
 .title {
   display: flex;
   flex: auto;
@@ -225,4 +270,65 @@ main > .rowContainer {
   font-size: 1.5em;
   margin-top: 5px;
   color: #8ce0ff;
+}
+
+/* Footer styles */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: rgba(7, 16, 34, 0.9);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--title-color);
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 44px;
+  height: 44px;
+}
+
+.footer-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.footer-link.prami:hover {
+  color: #ff69ad;
+}
+
+.footer-link.discord:hover {
+  color: #5865f2;
+}
+
+.footer-link svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Add bottom padding to body to account for fixed footer on main page */
+body.has-footer {
+  padding-bottom: 80px;
 }
