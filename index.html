@@ -98,7 +98,6 @@
     // Theme selector functionality
     document.addEventListener('DOMContentLoaded', function () {
       const themeSelect = document.getElementById('theme-select');
-      const currentThemeLink = document.getElementById('theme-variables');
 
       // Load saved theme or default
       const savedTheme = localStorage.getItem('selectedTheme') || 'rs3/1';
@@ -115,6 +114,9 @@
       });
 
       function applyTheme(theme) {
+        // Query for existing theme link each time to ensure we have the latest reference
+        const currentThemeLink = document.getElementById('theme-variables');
+        
         // Remove existing theme link if it exists
         if (currentThemeLink) {
           currentThemeLink.remove();
