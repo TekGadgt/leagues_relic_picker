@@ -53,11 +53,6 @@ body {
   height: 24px;
 }
 
-/* Add top padding to body to account for fixed navbar */
-body {
-  padding-top: 60px;
-}
-
 .title {
   display: flex;
   flex: auto;
@@ -317,6 +312,14 @@ main > .rowContainer {
   background-color: rgba(255, 255, 255, 0.2);
   color: #ffffff;
   transform: translateY(-2px);
+}
+
+.footer-link.prami:hover {
+  color: #ff69ad;
+}
+
+.footer-link.discord:hover {
+  color: #5865f2;
 }
 
 .footer-link svg {
