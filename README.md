@@ -1,6 +1,6 @@
 # Leagues Relic Picker
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/your-badge-id/deploy-status)](https://app.netlify.com/sites/league-relic-picker/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3987763e-d974-4d7d-8c62-001a0eb162f5/deploy-status)](https://app.netlify.com/projects/league-relic-picker/deploys)
 
 A comprehensive web application for creating, sharing, and visualizing relic and mastery selections for both Old School RuneScape (OSRS) and RuneScape 3 (RS3) League events.
 
