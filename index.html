@@ -116,20 +116,18 @@
       function applyTheme(theme) {
         // Query for existing theme link each time to ensure we have the latest reference
         const currentThemeLink = document.getElementById('theme-variables');
-        
+
         // Remove existing theme link if it exists
         if (currentThemeLink) {
           currentThemeLink.remove();
         }
 
-        // Only add a theme link if it's not the default theme
-        if (theme !== 'rs3/1') {
-          const link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = `${theme}/variables.css`;
-          link.id = 'theme-variables';
-          document.head.appendChild(link);
-        }
+        // Always add a theme link for any valid theme
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `${theme}/variables.css`;
+        link.id = 'theme-variables';
+        document.head.appendChild(link);
       }
     });
   </script>
