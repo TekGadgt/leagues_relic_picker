@@ -15,7 +15,7 @@ A comprehensive web application for creating, sharing, and visualizing relic and
 - **Raging Echoes** (2024) - Features both Relics and Masteries systems
 
 ### RS3 Leagues
-- **Catalyst League** (2024) - RS3's take on the league format
+- **Catalyst League** (2025) - RS3's take on the league format
 
 ## ✨ Features
 
