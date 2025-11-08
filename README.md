@@ -4,7 +4,7 @@
 
 A comprehensive web application for creating, sharing, and visualizing relic and mastery selections for both Old School RuneScape (OSRS) and RuneScape 3 (RS3) League events.
 
-🌐 **Live Site**: [league-relic-picker.netlify.app](https://league-relic-picker.netlify.app)
+🌐 **Live Site**: [relics.runetools.lol](https://relics.runetools.lol/)
 
 ## 🎮 Supported Leagues
 
