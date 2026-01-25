@@ -1,0 +1,82 @@
+{
+    "relics": {
+        "tier1": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 1",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 2",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 3",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            }
+        ],
+        "tier2": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 1",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 2",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 3",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            }
+        ],
+        "tier3": [
+            {
+                "id": "1",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 1",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "2",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 2",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            },
+            {
+                "id": "3",
+                "src": "../assets/2/relics/placeholder.png",
+                "relicLabel": "Relic 3",
+                "toolTipItems": [
+                  "Placeholder relic effect"
+                ]
+            }
+        ]
+    }
+}
