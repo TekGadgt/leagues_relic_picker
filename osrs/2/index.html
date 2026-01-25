@@ -56,6 +56,11 @@
       relicDiv.className = 'relic';
       relicDiv.id = `${tier}-${relic.id}`;
 
+      // Store relic data for sidebar
+      relicDiv.dataset.label = relic.relicLabel;
+      relicDiv.dataset.imageSrc = relic.src;
+      relicDiv.dataset.items = JSON.stringify(relic.toolTipItems || []);
+
       const img = document.createElement('img');
       img.className = 'relicImg';
       img.src = relic.src;
@@ -67,21 +72,11 @@
       span.textContent = relic.relicLabel;
       relicDiv.appendChild(span);
 
-      // Create tooltip if toolTipItems exist
-      if (relic.toolTipItems && relic.toolTipItems.length > 0) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-
-        const list = document.createElement('ul');
-        relic.toolTipItems.forEach(item => {
-          const listItem = document.createElement('li');
-          listItem.textContent = item;
-          list.appendChild(listItem);
-        });
-
-        tooltip.appendChild(list);
-        relicDiv.appendChild(tooltip);
-      }
+      // Create minimal hint tooltip
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.innerHTML = '&#9432; Click for details';
+      relicDiv.appendChild(tooltip);
 
       return relicDiv;
     }
@@ -105,9 +100,20 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const relics = await fetchRelics();
       renderRelics(relics);
+      createDetailSidebar();
       setInitialSelections(document.getElementsByClassName('relic'), '.title');
       Array.from(document.getElementsByClassName('relic')).forEach(relic => relic.addEventListener('click', function () {
         toggleElement(this, document.getElementsByClassName('relic'), '.title');
+        // Only open sidebar if relic is now selected, close if unselecting
+        if (this.classList.contains('selected')) {
+          openDetailSidebar({
+            label: this.dataset.label,
+            imageSrc: this.dataset.imageSrc,
+            items: JSON.parse(this.dataset.items)
+          }, this.id);
+        } else {
+          closeDetailSidebar();
+        }
       }));
     });
 
@@ -123,6 +129,9 @@
       tooltips.forEach(tooltip => {
         tooltip.style.display = 'none';
       });
+
+      // Close sidebar before export
+      closeDetailSidebar();
 
       mainElement.style.backgroundColor = '#071022';
       mainElement.style.paddingTop = '50px';

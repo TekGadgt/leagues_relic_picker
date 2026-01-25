@@ -56,6 +56,11 @@
       pactDiv.className = 'mastery';
       pactDiv.id = `${type}-${pact.id}`;
 
+      // Store pact data for sidebar
+      pactDiv.dataset.label = pact.title;
+      pactDiv.dataset.imageSrc = pact.src;
+      pactDiv.dataset.items = JSON.stringify(pact.toolTipItems || []);
+
       const img = document.createElement('img');
       img.className = 'masteryImg';
       img.src = pact.src;
@@ -67,21 +72,11 @@
       span.textContent = pact.title;
       pactDiv.appendChild(span);
 
-      // Create tooltip if toolTipItems exist
-      if (pact.toolTipItems && pact.toolTipItems.length > 0) {
-        const tooltip = document.createElement('div');
-        tooltip.className = 'tooltip';
-
-        const list = document.createElement('ul');
-        pact.toolTipItems.forEach(item => {
-          const listItem = document.createElement('li');
-          listItem.textContent = item;
-          list.appendChild(listItem);
-        });
-
-        tooltip.appendChild(list);
-        pactDiv.appendChild(tooltip);
-      }
+      // Create minimal hint tooltip
+      const tooltip = document.createElement('div');
+      tooltip.className = 'tooltip';
+      tooltip.innerHTML = '&#9432; Click for details';
+      pactDiv.appendChild(tooltip);
 
       return pactDiv;
     }
@@ -105,9 +100,20 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const pacts = await fetchPacts();
       renderPacts(pacts);
+      createDetailSidebar();
       setInitialSelections(document.getElementsByClassName('mastery'), '.title');
       Array.from(document.getElementsByClassName('mastery')).forEach(pact => pact.addEventListener('click', function () {
         toggleElement(this, document.getElementsByClassName('mastery'), '.title');
+        // Only open sidebar if pact is now selected, close if unselecting
+        if (this.classList.contains('selected')) {
+          openDetailSidebar({
+            label: this.dataset.label,
+            imageSrc: this.dataset.imageSrc,
+            items: JSON.parse(this.dataset.items)
+          }, this.id);
+        } else {
+          closeDetailSidebar();
+        }
       }));
     });
 
@@ -123,6 +129,9 @@
       tooltips.forEach(tooltip => {
         tooltip.style.display = 'none';
       });
+
+      // Close sidebar before export
+      closeDetailSidebar();
 
       mainElement.style.backgroundColor = '#0B0000';
       mainElement.style.paddingTop = '50px';

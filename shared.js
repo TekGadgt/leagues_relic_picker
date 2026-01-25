@@ -50,47 +50,84 @@ function updateElementOpacity(element, isSelected) {
   if (label) label.style.opacity = isSelected ? '1' : '0.25';
 }
 
-// Function to adjust tooltip positions based on screen position
+// Initialize tooltips (simplified - no positioning needed for hint tooltips)
 function setupTooltips() {
-  // Add mouse enter event listener to all relics and masteries
-  const elements = document.querySelectorAll('.relic, .mastery');
-  elements.forEach(element => {
-    element.addEventListener('mouseenter', function() {
-      const tooltip = this.querySelector('.tooltip');
-      if (!tooltip) return;
-      
-      // Reset classes first
-      tooltip.classList.remove('flip-up', 'flip-left', 'flip-right');
-      
-      // Get positions
-      const elementRect = this.getBoundingClientRect();
-      const tooltipRect = tooltip.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      
-      // Check if tooltip goes off the top
-      if (elementRect.top < tooltipRect.height + 20) {
-        tooltip.classList.add('flip-up');
-      }
-      
-      // Check horizontal alignment
-      if (elementRect.left < tooltipRect.width / 2) {
-        tooltip.classList.add('flip-left');
-      } else if (windowWidth - elementRect.right < tooltipRect.width / 2) {
-        tooltip.classList.add('flip-right');
-      }
+  // Tooltips now just show a simple hint, no complex positioning needed
+}
+
+// Detail sidebar functionality
+let currentSidebarElementId = null;
+
+function createDetailSidebar() {
+  // Create sidebar
+  const sidebar = document.createElement('div');
+  sidebar.className = 'detail-sidebar';
+  sidebar.innerHTML = `
+    <div class="detail-sidebar-header">
+      <h2 class="detail-sidebar-title"></h2>
+      <button class="detail-sidebar-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="detail-sidebar-content">
+      <div class="detail-sidebar-image"></div>
+      <div class="detail-sidebar-description"></div>
+    </div>
+  `;
+  document.body.appendChild(sidebar);
+
+  // Close button handler
+  sidebar.querySelector('.detail-sidebar-close').addEventListener('click', closeDetailSidebar);
+
+  // Click outside to close (but not on relics/masteries)
+  document.addEventListener('click', function(e) {
+    if (!isDetailSidebarOpen()) return;
+
+    // Check if click is inside sidebar
+    if (sidebar.contains(e.target)) return;
+
+    // Check if click is on a relic or mastery (handled separately)
+    if (e.target.closest('.relic, .mastery')) return;
+
+    closeDetailSidebar();
+  });
+}
+
+function openDetailSidebar(data, elementId) {
+  const sidebar = document.querySelector('.detail-sidebar');
+  if (!sidebar) return;
+
+  currentSidebarElementId = elementId;
+
+  // Update content
+  sidebar.querySelector('.detail-sidebar-title').textContent = data.label;
+
+  const imageContainer = sidebar.querySelector('.detail-sidebar-image');
+  imageContainer.innerHTML = `<img src="${data.imageSrc}" alt="${data.label}">`;
+
+  const descriptionContainer = sidebar.querySelector('.detail-sidebar-description');
+  if (data.items && data.items.length > 0) {
+    const list = document.createElement('ul');
+    data.items.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
     });
-  });
-  
-  // Also handle on window resize
-  window.addEventListener('resize', function() {
-    const visibleTooltip = document.querySelector('.tooltip:hover');
-    if (visibleTooltip) {
-      const parentElement = visibleTooltip.closest('.relic, .mastery');
-      if (parentElement) {
-        // Trigger the mouseenter event again to recalculate position
-        parentElement.dispatchEvent(new MouseEvent('mouseenter'));
-      }
-    }
-  });
+    descriptionContainer.innerHTML = '';
+    descriptionContainer.appendChild(list);
+  } else {
+    descriptionContainer.innerHTML = '<p>No additional details available.</p>';
+  }
+
+  // Open sidebar
+  sidebar.classList.add('open');
+}
+
+function closeDetailSidebar() {
+  const sidebar = document.querySelector('.detail-sidebar');
+  if (sidebar) sidebar.classList.remove('open');
+  currentSidebarElementId = null;
+}
+
+function isDetailSidebarOpen() {
+  const sidebar = document.querySelector('.detail-sidebar');
+  return sidebar && sidebar.classList.contains('open');
 }
