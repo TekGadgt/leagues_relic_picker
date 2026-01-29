@@ -1,0 +1,85 @@
+{
+  "game": "rs3",
+  "leagueNumber": 2,
+  "name": "RS3 League 2",
+  "pageType": "relics",
+  "layout": "columns",
+  "isRs3": true,
+  "backgroundColor": "#071022",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "RS3 League 2 Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/rs3/2/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for RS3 League 2.",
+    "url": "https://relics.runetools.lol/rs3/2/"
+  },
+  "theme": {
+    "titleColor": "#9b59b6",
+    "navItemColor": "#6c3483",
+    "headerBackgroundColor": "#140a1c",
+    "backgroundColor": "#08040b"
+  },
+  "items": {
+    "tier1": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ],
+    "tier2": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ],
+    "tier3": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ]
+  }
+}

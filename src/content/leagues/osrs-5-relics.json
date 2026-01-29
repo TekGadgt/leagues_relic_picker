@@ -1,0 +1,335 @@
+{
+  "game": "osrs",
+  "leagueNumber": 5,
+  "name": "Raging Echoes League",
+  "pageType": "relics",
+  "layout": "columns",
+  "isRs3": false,
+  "backgroundColor": "#071022",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "Raging Echoes Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/osrs/5/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for OSRS Raging Echoes League.",
+    "url": "https://relics.runetools.lol/osrs/5/"
+  },
+  "theme": {
+    "titleColor": "#8ce0ff",
+    "navItemColor": "#598fa3",
+    "headerBackgroundColor": "#0b1933",
+    "backgroundColor": "#071022"
+  },
+  "items": {
+    "tier1": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Power_Miner.png",
+        "relicLabel": "Power Miner",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Grants the Echo pickaxe, a non-degradable variant of the crystal equivalent with no requirements",
+          "On failing to mine a rock, you will have a separate 50% chance to succeed",
+          "Items gathered from Mining are automatically sent to your Bank",
+          "The rock will not deplete until you have mined 4 ores, this buff stacks with the effects of Mining gloves with a cap of 7 ores from a given node",
+          "You will be able to toggle the following effects on or off for the Pickaxe:",
+          "Collected ores are automatically smelted and grant Smithing XP",
+          "Gems gathered from mining are automatically cut and grant Crafting XP"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Lumberjack.png",
+        "relicLabel": "Lumberjack",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Grants the Echo axe, a non-degradable variant of the crystal equivalent with no requirements",
+          "On failing to chop a tree, you will have a separate 50% chance to succeed",
+          "Items gathered from Woodcutting are automatically sent to your Bank",
+          "You will be able to toggle the following effects on or off for the Axe:",
+          "Automatically burning logs for Firemaking XP",
+          "Automatically Fletching logs into arrowshafts for Fletching XP"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Animal_Wrangler.png",
+        "relicLabel": "Animal Wrangler",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Grants the Echo harpoon, a non-degradable variant of the crystal equivalent with no requirements",
+          "On failing to fish a spot, you will have a separate 50% chance to succeed",
+          "Items gathered from Fishing are automatically sent to your Bank",
+          "Fish caught have a 50% chance to be automatically cooked, granting Cooking experience regardless of level requirements",
+          "Attempt to catch fish 1 tick faster",
+          "Acts as a Net, Big net, Lobster pot or any Rod whilst fishing",
+          "Alongside the Echo harpoon effects you will get the following benefits to Hunter:",
+          "Hunter traps will never fail",
+          "Box traps catch chinchompas faster and are doubled when caught, also giving double XP",
+          "Impling jars no longer break upon opening them",
+          "You also never burn food while Cooking"
+        ]
+      }
+    ],
+    "tier2": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Corner_Cutter.png",
+        "relicLabel": "Corner Cutter",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Upon choosing this relic you will receive a pair of sage's greaves",
+          "Whilst equipped, sage's Greaves will grant Agility experience based on your Agility level while you run",
+          "Players will always succeed in performing actions for Agility",
+          "Completing an Agility course grants two completion count and 25% bonus experience",
+          "Marks of grace will also spawn with 10,000 coins",
+          "Double the quantity of pyramid tops, hallowed marks, Brimhaven vouchers, and crystal shards"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Friendly_Forager.png",
+        "relicLabel": "Friendly Forager",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Upon choosing this relic you will receive the forager's pouch",
+          "When you gather resources from Woodcutting, Fishing, Mining and Hunting, the forager's pouch will find and store a random grimy herb, limited to herbs your Herblore level + 25 can clean, whilst also providing a small amount of Herblore experience when one is found",
+          "The forager's Pouch will only find herbs it has room to store, but will always attempt to give you an herb you can receive",
+          "The forager's pouch works just like a herb sack, and shares an inventory with it",
+          "Additionally, you gain the following benefits to Herblore when crafting potions:",
+          "Secondary ingredients have a 90% chance to not be consumed",
+          "Created potions contain 4 doses instead of 3"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Dodgy_Deals.png",
+        "relicLabel": "Dodgy Deals",
+        "toolTipItems": [
+          "When choosing this relic, you gain the following benefits to Thieving:",
+          "Pickpocketing an NPC will also pickpocket all NPCs of the same type in a 11x11 square, granting extra loot for each NPC pickpocketed",
+          "100% success rate on all Thieving checks",
+          "Automatically re-pickpocket an NPC or stall until you can no longer do so",
+          "Items obtained from pickpocketing are noted",
+          "Maximum coin pouch count increased by 3x",
+          "Stalls never deplete"
+        ]
+      }
+    ],
+    "tier3": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Clue_Compass.png",
+        "relicLabel": "Clue Compass",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a clue compass allowing teleport to any STASH unit, and to Falo the Bard",
+          "The compass can also teleport the player to their current clue step if they have one, does not work on clue steps that require killing a certain NPC",
+          "This item ignores wilderness teleport restrictions",
+          "This item cannot be used to teleport to an area which is not unlocked"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Bank_Heist.png",
+        "relicLabel": "Bank Heist",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a banker's briefcase allowing teleport to any deposit box, bank, or bank chest",
+          "This item ignores wilderness teleport restrictions",
+          "This item cannot be used to teleport to an area which is not unlocked"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Fairys_Flight.png",
+        "relicLabel": "Fairy's Flight",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a fairy mushroom which allows teleporting to any fairy ring, spirit tree, or tool leprechaun",
+          "Unlocking this relic will autocomplete the Tree Gnome Village quest",
+          "This item ignores wilderness teleport restrictions",
+          "This item cannot be used to teleport to an area which is not unlocked"
+        ]
+      }
+    ],
+    "tier4": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Golden_God.png",
+        "relicLabel": "Golden God",
+        "toolTipItems": [
+          "High and Low Alchemy spells have no rune cost or level requirements",
+          "Items give 15% more gold and have a 65% chance to not be consumed when the spell is cast",
+          "When Alchemy spells are cast on a stack of items, the spells will automatically be recast over time, until the stack is depleted or moved",
+          "Actions that would normally cancel Alchemy such as walking or attacking will not whilst it is automatically casting",
+          "You gain the following benefits to Prayer:",
+          "20,000 can be offered at Prayer altars in exchange for Prayer XP equivalent to using a dragon bone, this respects altar XP modifiers",
+          "All items purchased from some select shops can be noted, provided the items can be noted at all, this effect can be toggled"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Reloaded.png",
+        "relicLabel": "Reloaded",
+        "toolTipItems": ["Choose another relic from any previous tier"]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Equilibrium.png",
+        "relicLabel": "Equilibrium",
+        "toolTipItems": [
+          "Each time the player gains experience, they will gain additional experience in the skill trained",
+          "The additional experience is equal to 10% of the player's total level",
+          "This is increased to 20% when training the skill the player has the least experience in",
+          "Additional experience given by this relic is not multiplied by the Leagues XP multiplier"
+        ]
+      }
+    ],
+    "tier5": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Treasure_Arbiter.png",
+        "relicLabel": "Treasure Arbiter",
+        "toolTipItems": [
+          "Impling Jars and Creatures that drop Clue Scrolls have a 1/15 chance of dropping them",
+          "Clue Geodes, Clue Nests and Clue Bottles are found 10x more often",
+          "All Clue Scrolls have the lowest number of steps possible for their tier",
+          "Every Clue Scroll casket will roll the max amount of rewards it can give",
+          "Emote, Falo & Charlie Clue steps no longer have item requirements"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Production_Master.png",
+        "relicLabel": "Production Master",
+        "toolTipItems": [
+          "When doing the following Production activities, all items are processed at once:",
+          "Smelting ores, Smithing bars and making Cannonballs",
+          "Fletching logs, stringing Bows, making arrow shafts and cutting bolt tips",
+          "Making headless arrows, regular arrows, bolts and darts (Capped at 10x the regular amount per action)",
+          "Cleaning herbs and making Potions which do not have a stackable secondary ingredient",
+          "Cooking food, making pies or pizzas and making Jugs of Wine",
+          "Crafting leather, uncut gems, glassblowing, jewellery, pottery, Battlestaves and spinning flax or wool"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Slayer_Master.png",
+        "relicLabel": "Slayer Master",
+        "toolTipItems": [
+          "Always on task for all eligible slayer monsters",
+          "Unlock all slayer task perks for free",
+          "Rune pouches, Herb sacks and Looting bags in the slayer point store are all free",
+          "Skip and block tasks for free",
+          "Gain 1000-15,000 bonus Slayer XP for the first time you kill the 100th of each unique slayer monster, scaled by the monster's slayer level requirement (XP stated is before multipliers)"
+        ]
+      }
+    ],
+    "tier6": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Total_Recall.png",
+        "relicLabel": "Total Recall",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a crystal of echoes allowing the following:",
+          "Players can store any single coordinate, alongside their hitpoints, prayer, and special attack energy",
+          "Players may teleport back to the coordinates at any later time, restoring their stats to the saved ones"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Bankers_Note.png",
+        "relicLabel": "Banker's Note",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a banker's note which allows players to use note-able items on it to turn them into banknotes or unnote them",
+          "Items must be used on the banker's note",
+          "The 'Activate' option allows players to note and un-note items in one action with a quantity of the player's choosing",
+          "An item must first be used on the banker's note in order for this to work",
+          "Players can customise how many items the banker's note will note and unnote using the quantity options"
+        ]
+      }
+    ],
+    "tier7": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Pocket_Kingdom.png",
+        "relicLabel": "Pocket Kingdom",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given a Pocket Kingdom",
+          "This item allows full access to the Managing Miscellania feature from anywhere",
+          "Workers will work for 50% less coins, always have max approval, produce twice as many resources, and accrue resources every hour instead of every day"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Grimoire.png",
+        "relicLabel": "Grimoire",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given an Arcane grimoire",
+          "This item can be used to freely swap between spellbooks",
+          "The Grimoire acts as a Book of the dead",
+          "Unlocks access to all Prayers and spells, regardless of area, quest, or diary requirements"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Overgrown.png",
+        "relicLabel": "Overgrown",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given the Leprechaun's vault, which allows access to the Seed vault from anywhere in the world",
+          "You gain the following benefits to Farming:",
+          "Crops will never die",
+          "When planting a seed, it has a 75% chance to not be consumed",
+          "When a seed fully grows, if your Seed Vault has another seed of the same type it will harvest the patch for you, then replant the seed",
+          "Automatically replanted seeds have Ultracompost added, whether or not you have any available"
+        ]
+      }
+    ],
+    "tier8": [
+      {
+        "id": "1",
+        "src": "/osrs/5/relics/Specialist.png",
+        "relicLabel": "Specialist",
+        "toolTipItems": [
+          "You gain the following benefits to special attacks:",
+          "All special attacks cost 20% and have +100% accuracy",
+          "For each failed accuracy roll with a special attack, gain 10% Special Attack Energy",
+          "Whenever you kill an NPC, restore 15% Special Attack Energy"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/5/relics/Guardian.png",
+        "relicLabel": "Guardian",
+        "toolTipItems": [
+          "Must be unlocked in a bank",
+          "Players are given the Guardian horn",
+          "Allows you to summon a powerful Guardian Thrall, lasting 30 minutes, with a damage roll of 5-13, an attack speed of 4, and an accuracy roll of 45,000",
+          "The guardian will attack your target with whatever style it is weak to",
+          "When you are in multi-combat it will cast an AoE attack if the target is weak to range or magic",
+          "The Guardian does not work in PvP",
+          "This relic will also work inside The Gauntlet"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/5/relics/Last_Stand.png",
+        "relicLabel": "Last Stand",
+        "toolTipItems": [
+          "You gain the Last Stand ability, which works as follows:",
+          "If damage would reduce you to 0 hp, you are reduced to 1 hp instead",
+          "Your combat stats are instantly boosted to 255 but begin draining rapidly (16 every tick) back down to your base level + 15",
+          "For the next 16 ticks after this ability is activated, you cannot be reduced to 0 hp",
+          "When the effect ends, all incoming damage is nullified and the player is healed based on the damage they dealt over the last 16 ticks",
+          "Once this ability is used, it cannot be used again until you die or 3 minutes have passed"
+        ]
+      }
+    ]
+  }
+}

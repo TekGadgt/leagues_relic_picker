@@ -1,0 +1,22 @@
+---
+interface Props {
+  id: string;
+  src: string;
+  label: string;
+  toolTipItems: string[];
+}
+
+const { id, src, label, toolTipItems } = Astro.props;
+---
+
+<div
+  class="mastery"
+  id={id}
+  data-label={label}
+  data-image-src={src}
+  data-items={JSON.stringify(toolTipItems)}
+>
+  <img class="masteryImg" src={src} alt={`${label} mastery icon`} />
+  <span class="masteryLabel">{label}</span>
+  <div class="tooltip">&#9432; Right Click for details</div>
+</div>

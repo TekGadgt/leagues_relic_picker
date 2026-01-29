@@ -1,0 +1,70 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import DetailSidebar from "../components/DetailSidebar.astro";
+import ExportButton from "../components/ExportButton.astro";
+
+interface Props {
+  meta: {
+    title: string;
+    description: string;
+    ogImage: string;
+    ogImageAlt: string;
+    url: string;
+  };
+  theme: {
+    titleColor: string;
+    navItemColor: string;
+    headerBackgroundColor: string;
+    backgroundColor: string;
+  };
+  backgroundColor: string;
+  exportFilename: string;
+}
+
+const { meta, theme, backgroundColor, exportFilename } = Astro.props;
+
+// Build the CSS variables string directly
+const themeCSS = `
+:root {
+  --title-color: ${theme.titleColor} !important;
+  --nav-item-color: ${theme.navItemColor} !important;
+  --header-background-color: ${theme.headerBackgroundColor} !important;
+  --background-color: ${theme.backgroundColor} !important;
+}
+`;
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  ogImage={meta.ogImage}
+  ogImageAlt={meta.ogImageAlt}
+  ogUrl={meta.url}
+>
+  <Fragment slot="head">
+    <style set:html={themeCSS}></style>
+    <script
+      is:inline
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+    ></script>
+  </Fragment>
+
+  <Navbar />
+
+  <main id="main">
+    <h1 class="title" contenteditable="true">Change Me</h1>
+    <slot />
+  </main>
+
+  <ExportButton />
+  <DetailSidebar />
+
+  <script is:inline define:vars={{ backgroundColor, exportFilename }}>
+    window.PICKER_CONFIG = {
+      backgroundColor,
+      exportFilename,
+    };
+  </script>
+  <script src="../scripts/picker.ts"></script>
+</BaseLayout>

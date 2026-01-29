@@ -1,0 +1,85 @@
+{
+  "game": "osrs",
+  "leagueNumber": 6,
+  "name": "Demonic Pacts League",
+  "pageType": "pacts",
+  "layout": "rows",
+  "isRs3": false,
+  "backgroundColor": "#0C0000",
+  "exportFilename": "pacts.png",
+  "meta": {
+    "title": "Demonic Pacts Pact Picker",
+    "description": "Set a title, pick your pacts, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/osrs/6/poster_pacts.png",
+    "ogImageAlt": "A Selection of Pacts for OSRS Demonic Pacts League.",
+    "url": "https://relics.runetools.lol/osrs/6/pacts/"
+  },
+  "theme": {
+    "titleColor": "#c33232",
+    "navItemColor": "#7a0c0c",
+    "headerBackgroundColor": "#140202",
+    "backgroundColor": "#0C0000"
+  },
+  "items": {
+    "category1": [
+      {
+        "id": "1",
+        "title": "Pact I",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "2",
+        "title": "Pact II",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "3",
+        "title": "Pact III",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      }
+    ],
+    "category2": [
+      {
+        "id": "1",
+        "title": "Pact I",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "2",
+        "title": "Pact II",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "3",
+        "title": "Pact III",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      }
+    ],
+    "category3": [
+      {
+        "id": "1",
+        "title": "Pact I",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "2",
+        "title": "Pact II",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      },
+      {
+        "id": "3",
+        "title": "Pact III",
+        "src": "/osrs/6/pacts/placeholder.png",
+        "toolTipItems": ["Placeholder pact effect"]
+      }
+    ]
+  }
+}
