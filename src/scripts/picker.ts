@@ -201,11 +201,6 @@ function initPicker(): void {
           link.download = config.exportFilename;
           link.href = canvas.toDataURL();
           link.click();
-
-          // Show tooltips again after export
-          tooltips.forEach(tooltip => {
-            (tooltip as HTMLElement).style.display = '';
-          });
         });
       }
     });
