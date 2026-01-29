@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogUrl?: string;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = "All Previous and Current OSRS/RS3 Leagues Relic Pickers",
+  ogImage = "/poster.png",
+  ogImageAlt = "Leagues Relic Picker",
+  ogUrl = "https://relics.runetools.lol",
+  bodyClass = ""
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={ogUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:alt" content={ogImageAlt} />
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <slot />
+  <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a488248dbb94443d840feb6ed005bc1b"}'></script>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

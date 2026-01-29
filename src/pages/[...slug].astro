@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import PickerLayout from '../layouts/PickerLayout.astro';
+import ItemGrid from '../components/ItemGrid.astro';
+
+export async function getStaticPaths() {
+  const leagues = await getCollection('leagues');
+
+  return leagues.map((league) => {
+    // Build the slug based on game, number, and page type
+    let slug: string;
+    if (league.data.pageType === 'relics') {
+      slug = `${league.data.game}/${league.data.leagueNumber}`;
+    } else {
+      slug = `${league.data.game}/${league.data.leagueNumber}/${league.data.pageType}`;
+    }
+
+    return {
+      params: { slug },
+      props: { league },
+    };
+  });
+}
+
+const { league } = Astro.props;
+const { data } = league;
+---
+
+<PickerLayout
+  meta={data.meta}
+  theme={data.theme}
+  backgroundColor={data.backgroundColor}
+  exportFilename={data.exportFilename}
+>
+  <ItemGrid
+    items={data.items}
+    layout={data.layout}
+    pageType={data.pageType}
+    isRs3={data.isRs3}
+  />
+</PickerLayout>

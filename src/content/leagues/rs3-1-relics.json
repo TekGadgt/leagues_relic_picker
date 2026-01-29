@@ -1,0 +1,301 @@
+{
+  "game": "rs3",
+  "leagueNumber": 1,
+  "name": "Catalyst League",
+  "pageType": "relics",
+  "layout": "columns",
+  "isRs3": true,
+  "backgroundColor": "#0C0000",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "Catalyst League Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/rs3/1/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for RS3 Catalyst League.",
+    "url": "https://relics.runetools.lol/rs3/1/"
+  },
+  "theme": {
+    "titleColor": "#d5281a",
+    "navItemColor": "#9b1e14",
+    "headerBackgroundColor": "#160403",
+    "backgroundColor": "#0C0000"
+  },
+  "items": {
+    "tier1": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Animal_Wrangler.png",
+        "relicLabel": "Animal Wrangler",
+        "toolTipItems": [
+          "Grants a powerful harpoon for both Fishing and Hunter",
+          "While training Fishing with the tool equipped:",
+          "No bait required for fishing",
+          "50% increased catch rate for all fish",
+          "All fish caught are sent to the bank",
+          "Fish can be automatically cooked (toggleable)",
+          "While training Hunter with the tool equipped:",
+          "Traps never fail",
+          "All Hunter loot is sent to the bank",
+          "Double Hunter loot"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Divine_Woodcutter.png",
+        "relicLabel": "Divine Woodcutter",
+        "toolTipItems": [
+          "Grants a powerful hatchet for both Woodcutting and Divination",
+          "While training Woodcutting with the tool equipped:",
+          "Logs can be automatically burnt (toggleable)",
+          "Unburnt logs and bird nests are sent to the bank",
+          "While training Divination with the tool equipped:",
+          "Memories are automatically deposited straight into the rift",
+          "Chronicles are captured instantly",
+          "Energy springs last longer",
+          "Double divine energy from springs and memory conversions"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Excavator.png",
+        "relicLabel": "Excavator",
+        "toolTipItems": [
+          "Grants a powerful tool for both Mining and Archaeology, counting as both a pickaxe and a mattock",
+          "While training Mining with the tool equipped:",
+          "Ores are automatically smelted into bars",
+          "Gems are instantly cut",
+          "Resources are sent to the bank",
+          "Double damage during Rockertunities",
+          "While training Archaeology with the tool equipped:",
+          "Increased Chronote gain",
+          "Material costs to restore artefacts are halved",
+          "Time sprites are stationary",
+          "Geodes have a chance of containing Archaeology materials"
+        ]
+      }
+    ],
+    "tier2": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Golden_Footed.png",
+        "relicLabel": "Golden Footed",
+        "toolTipItems": [
+          "Grants a pair of boots that ensure a surefooted approach to agility",
+          "Goldenhawk boots grant you agility experience periodically while running (every 10 ticks), skilling, or when using ultimate abilities",
+          "Upon completing an agility course lap, receive 1,000 coins per agility level",
+          "Upon completing an agility course lap, the agility xp for completing the lap is +200%",
+          "Prevents you from failing any agility course obstacles and shortcuts"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Five_Finger_Discount.png",
+        "relicLabel": "Five Finger Discount",
+        "toolTipItems": [
+          "Significantly improve your thieving abilities",
+          "Never fail a thieving check",
+          "All thieving loot is noted",
+          "Stealing from stalls does not cause them to deplete",
+          "Reduce safe cracking cooldown to 1 minute"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Farming_Frenzy.png",
+        "relicLabel": "Farming Frenzy",
+        "toolTipItems": [
+          "A range of benefits to nurture your farming skills",
+          "Patches are harvested instantly and products are automatically noted",
+          "Seeds planted instantly grow to full",
+          "15% chance of increased crop yield",
+          "All patches are always treated with ultracompost",
+          "20% chance to save planted seeds when sowing",
+          "Plant max herbs using a single seed"
+        ]
+      }
+    ],
+    "tier3": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Fairys_Flight.png",
+        "relicLabel": "Fairy's Flight",
+        "toolTipItems": [
+          "Grants a fairy mushroom that allows teleportation to any fairy ring, spirit tree, or farming patch",
+          "Automatically completes the Tree Gnome Village quest"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Assassins_Insight.png",
+        "relicLabel": "Assassin's Insight",
+        "toolTipItems": [
+          "Grants the skull of slaying that allows teleportation to any slayer master and slayer dungeon, as well as a collection of Slayer targets"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Voidwalker.png",
+        "relicLabel": "Voidwalker",
+        "toolTipItems": [
+          "Grants the abyssal conduit that allows teleportation to any destination granted by the amulet of glory, combat bracelet, delver's anklet, dig site pendant, enlightened amulet, ferocious ring, games necklace, ring of duelling, ring of respawn, ring of slaying, ring of wealth, skills necklace, and traveller's necklace"
+        ]
+      }
+    ],
+    "tier4": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Production_Master.png",
+        "relicLabel": "Production Master",
+        "toolTipItems": [
+          "Grants the brooch of the Elder Gods",
+          "Various production activities will have their items processed at once",
+          "You will never burn food accidentally",
+          "Your brooch of the Elder Gods will supply infinite urns",
+          "While the the Brooch of the Elder Gods is equipped:",
+          "You will gain the benefits of Portable skilling stations even while not using one",
+          "You can spawn Seren spirits, Divine blessings, Catalysts of alteration and Manifested knowledge",
+          "You will gain a +6 boost to Smithing, Herblore, Cooking, Crafting and Construction"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Rejuvenated.png",
+        "relicLabel": "Rejuvenated",
+        "toolTipItems": [
+          "Pick another relic from tier 1, 2, or 3, instead of tier 4"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Clue_Connoisseur.png",
+        "relicLabel": "Clue Connoisseur",
+        "toolTipItems": [
+          "Optimise your clue solving with this selection of time savers",
+          "Unlock the Globetrotter outfit",
+          "Globetrotter outfit pieces have infinite charges",
+          "Receive an extra casket when completing clues",
+          "When opening treasure caskets you will receive the maximum number of loot drops",
+          "When starting a new clue it will have the minimum number of steps to complete",
+          "Chance of receiving a sealed clue scroll is doubled",
+          "Can find an unlimited amount of sealed clues"
+        ]
+      }
+    ],
+    "tier5": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Barbarism.png",
+        "relicLabel": "Barbarism",
+        "toolTipItems": [
+          "Generate 2x adrenaline with basic Melee abilities",
+          "Melee ability cooldowns reduced by 20% (including special attacks)",
+          "100% hit chance with melee attacks",
+          "Melee attack range increased by 1",
+          "Melee base damage increased by +500",
+          "Melee base damage heals for 10% of damage dealt"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Bombardment.png",
+        "relicLabel": "Bombardment",
+        "toolTipItems": [
+          "Generate 2x adrenaline with basic Ranged abilities",
+          "Ranged ability cooldowns reduced by 20% (including special attacks)",
+          "100% hit chance with ranged attacks",
+          "95% chance to save ammunition in combat",
+          "Single-target attacks also hit up to 9 enemies within 1 tile"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Crit_Happens.png",
+        "relicLabel": "Crit Happens",
+        "toolTipItems": [
+          "Generate 2x adrenaline with basic Magic abilities",
+          "Magic ability cooldowns reduced by 20% (including special attacks)",
+          "100% hit chance with magic attacks",
+          "95% chance to save runes in combat",
+          "Magic critical strike damage is increased by 50%"
+        ]
+      },
+      {
+        "id": "4",
+        "src": "/rs3/1/relics/Soulbourne.png",
+        "relicLabel": "Soulbourne",
+        "toolTipItems": [
+          "Generate 2x adrenaline with basic Necromancy abilities",
+          "Necromancy ability cooldowns reduced by 20% (including special attacks)",
+          "100% hit chance with necromancy attacks",
+          "95% chance to save ectoplasm and runes when casting abilities and incantations",
+          "Necromancy spirits are 25% larger and deal 25% more damage",
+          "Unlock all abilities from the necromancy well of souls talent tree"
+        ]
+      }
+    ],
+    "tier6": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Bankers_Note.png",
+        "relicLabel": "Banker's Note",
+        "toolTipItems": [
+          "Receive the banker's note inventory item",
+          "Grants access to your Bank from almost anywhere in the world",
+          "The 'activate' option allows you to note and unnote items in one action, with a specified quantity. You can set this amount by using the item on the note",
+          "Manually use items on the Banker's note to note and unnote items directly into your inventory"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Perkfection.png",
+        "relicLabel": "Perkfection",
+        "toolTipItems": [
+          "Gain an incredible stack of invention related boosts",
+          "Access to infinite Invention materials",
+          "Augmented items and machines consume no charge",
+          "Helpful perks will trigger 10% more often (does not stack with item level 20 benefit)",
+          "Invention machines will run twice as fast",
+          "When disassembling or alchemising items manually, gain the resources from both actions (does not effect machines or cleaners)",
+          "When disassembling or alchemising items manually, have a 66% chance to save the resource (does not effect machines or cleaners)",
+          "Unlock all blueprints in the dwarven and goblin tech tree"
+        ]
+      }
+    ],
+    "tier7": [
+      {
+        "id": "1",
+        "src": "/rs3/1/relics/Ascension.png",
+        "relicLabel": "Ascension",
+        "toolTipItems": [
+          "A broad range of reading can provide some exceptional abilities",
+          "Attacks have a 5% chance to empower you with the stone of jas, increasing your combat stats to 255 for 6 seconds",
+          "Grants the Elder God Book, containing the effects of every combat god book, including Erethdor's Grimoire",
+          "God book activation cooldown has been reduced from 15 seconds to 4.8 seconds"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/1/relics/Specialist.png",
+        "relicLabel": "Specialist",
+        "toolTipItems": [
+          "Grants the Elder Essence of Finality Amulet, which allows you to select any special attack from a menu without needing the weapon",
+          "At bank, the special attack contained within the Elder Essence of Finality Amulet can be changed for free",
+          "Every 15 seconds, your next special attack will consume no adrenaline",
+          "Special attacks deal 50% more damage"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/1/relics/Everlasting_Faith.png",
+        "relicLabel": "Everlasting Faith",
+        "toolTipItems": [
+          "Gain the ultimate blessing of the gods",
+          "Prayer points no longer drain",
+          "Protection prayers and deflect curses block +50% damage",
+          "Protection prayers and deflect curses act as Soul Split being active",
+          "On death: Revive with 100% of your maximum life points. Does not work in PvP. 5 minute cooldown"
+        ]
+      }
+    ]
+  }
+}

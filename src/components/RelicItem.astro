@@ -1,0 +1,27 @@
+---
+interface Props {
+  id: string;
+  src: string;
+  label: string;
+  toolTipItems: string[];
+  isRs3?: boolean;
+}
+
+const { id, src, label, toolTipItems, isRs3 = false } = Astro.props;
+---
+
+<div
+  class="relic"
+  id={id}
+  data-label={label}
+  data-image-src={src}
+  data-items={JSON.stringify(toolTipItems)}
+>
+  <img
+    class:list={["relicImg", { rs3: isRs3 }]}
+    src={src}
+    alt={`${label} relic icon`}
+  />
+  <span class="relicLabel">{label}</span>
+  <div class="tooltip">&#9432; Right Click for details</div>
+</div>

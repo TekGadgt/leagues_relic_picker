@@ -1,0 +1,85 @@
+{
+  "game": "osrs",
+  "leagueNumber": 6,
+  "name": "Demonic Pacts League",
+  "pageType": "relics",
+  "layout": "columns",
+  "isRs3": false,
+  "backgroundColor": "#070101",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "Demonic Pacts Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/osrs/6/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for OSRS Demonic Pacts League.",
+    "url": "https://relics.runetools.lol/osrs/6/"
+  },
+  "theme": {
+    "titleColor": "#c33232",
+    "navItemColor": "#7a0c0c",
+    "headerBackgroundColor": "#140202",
+    "backgroundColor": "#070101"
+  },
+  "items": {
+    "tier1": [
+      {
+        "id": "1",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ],
+    "tier2": [
+      {
+        "id": "1",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ],
+    "tier3": [
+      {
+        "id": "1",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 1",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 2",
+        "toolTipItems": ["Placeholder relic effect"]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/6/relics/placeholder.png",
+        "relicLabel": "Relic 3",
+        "toolTipItems": ["Placeholder relic effect"]
+      }
+    ]
+  }
+}

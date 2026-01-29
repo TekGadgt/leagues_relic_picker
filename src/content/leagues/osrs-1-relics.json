@@ -1,0 +1,167 @@
+{
+  "game": "osrs",
+  "leagueNumber": 1,
+  "name": "Twisted League",
+  "pageType": "relics",
+  "layout": "columns",
+  "isRs3": false,
+  "backgroundColor": "#060804",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "Twisted League Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/osrs/1/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for OSRS Twisted League.",
+    "url": "https://relics.runetools.lol/osrs/1/"
+  },
+  "theme": {
+    "titleColor": "#a3ce27",
+    "navItemColor": "#6a8418",
+    "headerBackgroundColor": "#0f1406",
+    "backgroundColor": "#060804"
+  },
+  "items": {
+    "tier1": [
+      {
+        "id": "1",
+        "src": "/osrs/1/relics/Abyssal_Accumulator.png",
+        "relicLabel": "Abyssal Accumulator",
+        "toolTipItems": ["Save 85% of their ammunition and runes"]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/1/relics/Endless_Endurance.png",
+        "relicLabel": "Endless Endurance",
+        "toolTipItems": ["Unlimited run energy", "Quadruple HP restore rate"]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/1/relics/Dark_Altar_Devotion.png",
+        "relicLabel": "Dark Altar Devotion",
+        "toolTipItems": [
+          "Automatically bury bones",
+          "Quadruple bone bury xp",
+          "Ensouled heads drop two at a time"
+        ]
+      }
+    ],
+    "tier2": [
+      {
+        "id": "1",
+        "src": "/osrs/1/relics/Hardcore_Harvester.png",
+        "relicLabel": "Hardcore Harvester",
+        "toolTipItems": [
+          "Triple resources from Mining, Fishing, Woodcutting, harvesting herbs, blast mine and farming contracts",
+          "Triple Molch pearls from Aerial Fishing",
+          "Farming ticks will occur every minute instead of every five minutes"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/1/relics/Arcane_Courier.png",
+        "relicLabel": "Arcane Courier",
+        "toolTipItems": [
+          "All supply crates from Wintertodt and resources gathered from Mining, Fishing, Woodcutting, Farming and blast mine are automatically banked"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/1/relics/Unnatural_Selection.png",
+        "relicLabel": "Unnatural Selection",
+        "toolTipItems": [
+          "Players can choose their farming contract and Slayer task"
+        ]
+      }
+    ],
+    "tier3": [
+      {
+        "id": "1",
+        "src": "/osrs/1/relics/Eye_of_the_Artisan.png",
+        "relicLabel": "Eye of the Artisan",
+        "toolTipItems": [
+          "Double xp in Smithing, Cooking, Firemaking, Herblore, Fletching, Crafting and Construction",
+          "This stacks with any existing experience multipliers"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/1/relics/Gift_of_the_Gatherer.png",
+        "relicLabel": "Gift of the Gatherer",
+        "toolTipItems": [
+          "Double xp in Mining, Fishing, Woodcutting, Hunter, Thieving, Farming and Runecraft",
+          "This stacks with any existing experience multipliers"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/1/relics/Way_of_the_Warrior.png",
+        "relicLabel": "Way of the Warrior",
+        "toolTipItems": [
+          "Double xp in Attack, Strength, Defence, Hitpoints, Magic, Ranged and Prayer",
+          "This stacks with any existing experience multipliers"
+        ]
+      }
+    ],
+    "tier4": [
+      {
+        "id": "1",
+        "src": "/osrs/1/relics/Spirit_of_Dinh.png",
+        "relicLabel": "Spirit of Dinh",
+        "toolTipItems": [
+          "Wintertodt's attacks do no damage",
+          "Wintertodt's attacks no longer interrupt a player's actions",
+          "Triple loot from supply crates"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/1/relics/Konars_Blessing.png",
+        "relicLabel": "Konar's Blessing",
+        "toolTipItems": [
+          "10% increased accuracy and damage for all attack styles",
+          "30% if the monster is part of an active Slayer task"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/1/relics/Treasure_Seeker.png",
+        "relicLabel": "Treasure Seeker",
+        "toolTipItems": [
+          "NPCs that drop clue scrolls now have a flat 1/10 chance of dropping them",
+          "Clue geodes, nests and bottles are now found ten times more often from all skilling activities from which they can be found",
+          "All un-started clues are stackable",
+          "All clues have the lowest number of steps possible for their tier"
+        ]
+      }
+    ],
+    "tier5": [
+      {
+        "id": "1",
+        "src": "/osrs/1/relics/Xerics_Focus.png",
+        "relicLabel": "Xeric's Focus",
+        "toolTipItems": [
+          "Attack speed of all weapons are sped up by 1, including magic spells",
+          "Special attacks with instant attacks such as the dragon thrownaxe are unaffected"
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/osrs/1/relics/Xerics_Resilience.png",
+        "relicLabel": "Xeric's Resilience",
+        "toolTipItems": [
+          "Players take 50% less damage from all monsters",
+          "Prayer is restored at a rate of 1 point every 3.6 seconds"
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/osrs/1/relics/Xerics_Wisdom.png",
+        "relicLabel": "Xeric's Wisdom",
+        "toolTipItems": [
+          "Double xp from all skills",
+          "This stacks with any existing experience multipliers"
+        ]
+      }
+    ]
+  }
+}

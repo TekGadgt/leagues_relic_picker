@@ -1,0 +1,57 @@
+---
+import RelicItem from './RelicItem.astro';
+import MasteryItem from './MasteryItem.astro';
+
+interface Item {
+  id: string;
+  src: string;
+  relicLabel?: string;
+  title?: string;
+  toolTipItems: string[];
+}
+
+interface Props {
+  items: Record<string, Item[]>;
+  layout: 'columns' | 'rows';
+  pageType: 'relics' | 'masteries' | 'pacts';
+  isRs3?: boolean;
+}
+
+const { items, layout, pageType, isRs3 = false } = Astro.props;
+
+const containerClass = layout === 'columns' ? 'colContainer' : 'rowContainer';
+const groupClass = layout === 'columns' ? 'col' : 'row';
+const itemType = pageType === 'relics' ? 'relic' : 'mastery';
+---
+
+<div class={containerClass} id={`${pageType}Container`}>
+  {Object.entries(items).map(([groupKey, groupItems]) => (
+    <div class={groupClass} id={groupKey}>
+      {groupItems.map((item) => {
+        const label = item.relicLabel || item.title || '';
+        const elementId = `${groupKey}-${item.id}`;
+
+        if (itemType === 'relic') {
+          return (
+            <RelicItem
+              id={elementId}
+              src={item.src}
+              label={label}
+              toolTipItems={item.toolTipItems}
+              isRs3={isRs3}
+            />
+          );
+        } else {
+          return (
+            <MasteryItem
+              id={elementId}
+              src={item.src}
+              label={label}
+              toolTipItems={item.toolTipItems}
+            />
+          );
+        }
+      })}
+    </div>
+  ))}
+</div>
