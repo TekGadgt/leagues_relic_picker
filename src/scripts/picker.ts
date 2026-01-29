@@ -67,6 +67,8 @@ function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {
   if (label) label.style.opacity = isSelected ? '1' : '0.25';
 }
 
+let currentSidebarElementId: string | null = null;
+
 // Detail Sidebar Management
 function openDetailSidebar(data: DetailData, _elementId: string): void {
   const sidebar = document.querySelector('.detail-sidebar');
@@ -97,11 +99,13 @@ function openDetailSidebar(data: DetailData, _elementId: string): void {
   }
 
   sidebar.classList.add('open');
+  currentSidebarElementId = _elementId;
 }
 
 function closeDetailSidebar(): void {
   const sidebar = document.querySelector('.detail-sidebar');
   if (sidebar) sidebar.classList.remove('open');
+  currentSidebarElementId = null;
 }
 
 function isDetailSidebarOpen(): boolean {
@@ -133,7 +137,7 @@ function initPicker(): void {
     element.addEventListener('contextmenu', function(this: HTMLElement, e: Event) {
       e.preventDefault();
 
-      if (isDetailSidebarOpen()) {
+      if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
         closeDetailSidebar();
       } else {
         openDetailSidebar({
