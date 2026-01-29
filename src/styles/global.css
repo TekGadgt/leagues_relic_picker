@@ -41,11 +41,11 @@ body {
 }
 
 .nav-link-start {
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .nav-link-end {
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .nav-link {
