@@ -26,14 +26,26 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   padding: 10px 20px;
   background-color: var(--header-background-color);
   backdrop-filter: blur(10px);
   z-index: 1000;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-link-wrapper {
+  display: flex;
+}
+
+.nav-link-start {
+  justify-content: start;
+}
+
+.nav-link-end {
+  justify-content: end;
 }
 
 .nav-link {
