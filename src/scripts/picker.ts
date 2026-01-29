@@ -182,12 +182,6 @@ function initPicker(): void {
 
       const config = getPickerConfig();
 
-      // Hide all tooltips before export
-      const tooltips = document.querySelectorAll('.tooltip');
-      tooltips.forEach(tooltip => {
-        (tooltip as HTMLElement).style.display = 'none';
-      });
-
       // Close sidebar before export
       closeDetailSidebar();
 
