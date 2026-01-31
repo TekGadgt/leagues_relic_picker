@@ -25,19 +25,19 @@
       {
         "id": "1",
         "title": "Pact I",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "2",
         "title": "Pact II",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "3",
         "title": "Pact III",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       }
     ],
@@ -45,19 +45,19 @@
       {
         "id": "1",
         "title": "Pact I",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "2",
         "title": "Pact II",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "3",
         "title": "Pact III",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       }
     ],
@@ -65,19 +65,19 @@
       {
         "id": "1",
         "title": "Pact I",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "2",
         "title": "Pact II",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       },
       {
         "id": "3",
         "title": "Pact III",
-        "src": "/osrs/6/pacts/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "toolTipItems": ["Placeholder pact effect"]
       }
     ]

@@ -362,7 +362,7 @@ main > .rowContainer {
 .masteryLabel {
   font-size: 1.5em;
   margin-top: 5px;
-  color: #8ce0ff;
+  color: var(--title-color);
 }
 
 /* Footer styles */

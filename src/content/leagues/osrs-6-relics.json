@@ -24,19 +24,19 @@
     "tier1": [
       {
         "id": "1",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "2",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "3",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
         "toolTipItems": ["Placeholder relic effect"]
       }
@@ -44,19 +44,19 @@
     "tier2": [
       {
         "id": "1",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "2",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "3",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
         "toolTipItems": ["Placeholder relic effect"]
       }
@@ -64,19 +64,19 @@
     "tier3": [
       {
         "id": "1",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "2",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
         "toolTipItems": ["Placeholder relic effect"]
       },
       {
         "id": "3",
-        "src": "/osrs/6/relics/placeholder.png",
+        "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
         "toolTipItems": ["Placeholder relic effect"]
       }
