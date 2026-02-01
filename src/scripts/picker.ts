@@ -20,7 +20,7 @@ function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: str
   const title = titleElement?.textContent || '';
   const url = new URL(window.location.href);
   url.searchParams.set('selected', params.join(','));
-  url.searchParams.set('title', encodeURIComponent(title));
+  url.searchParams.set('title', title);
   window.history.replaceState({}, '', url.toString());
 }
 
@@ -42,7 +42,7 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
   if (title) {
     const titleElement = document.querySelector(titleSelector);
     if (titleElement) {
-      titleElement.textContent = decodeURIComponent(title);
+      titleElement.textContent = title;
     }
   }
 
