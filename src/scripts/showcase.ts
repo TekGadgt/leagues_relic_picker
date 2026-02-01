@@ -67,11 +67,13 @@ function parseShareURL(urlString: string): ParsedURL | null {
 
     // Extract selected items from query params
     const selected = url.searchParams.get('selected');
-    const selectedIds = selected ? selected.split(',').filter(id => id.trim()) : [];
+    const selectedIds = selected
+      ? selected.split(',').map(id => id.trim()).filter(id => id)
+      : [];
 
     // Extract title from query params
     const rawTitle = url.searchParams.get('title');
-    const title = rawTitle ? decodeURIComponent(rawTitle) : 'Untitled Build';
+    const title = rawTitle || 'Untitled Build';
 
     return { leagueKey, selectedIds, title };
   } catch {
@@ -123,6 +125,9 @@ function getHighestPerGroup(selectedIds: string[], items: Record<string, LeagueI
 function getAllSelectedItems(selectedIds: string[], items: Record<string, LeagueItem[]>): LeagueItem[] {
   const result: LeagueItem[] = [];
 
+  // Convert selectedIds to Set for O(1) lookups
+  const selectedSet = new Set(selectedIds);
+
   // Sort groups by key (tier1, tier2, tier3, etc.)
   const sortedGroups = Object.keys(items).sort((a, b) => {
     // Extract numbers from group names for proper sorting
@@ -136,7 +141,7 @@ function getAllSelectedItems(selectedIds: string[], items: Record<string, League
 
     for (const item of group) {
       const elementId = `${groupKey}-${item.id}`;
-      if (selectedIds.includes(elementId)) {
+      if (selectedSet.has(elementId)) {
         result.push(item);
       }
     }
@@ -286,32 +291,62 @@ function generatePreview(): void {
  */
 function exportImage(): void {
   const container = document.getElementById('showcaseContainer');
+  const exportBtn = document.getElementById('exportBtn') as HTMLButtonElement | null;
+  
   if (!container) return;
 
   // Add exporting class for styling
   container.classList.add('exporting');
+  if (exportBtn) {
+    exportBtn.disabled = true;
+    exportBtn.classList.add('exporting');
+  }
 
   // Access html2canvas from window
   const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
 
-  if (w.html2canvas) {
-    w.html2canvas(container, {
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#000000',
-      scale: 2 // Higher quality
-    }).then(function(canvas: HTMLCanvasElement) {
-      const link = document.createElement('a');
-      link.download = 'showcase.png';
-      link.href = canvas.toDataURL();
-      link.click();
-
-      // Remove exporting class
-      container.classList.remove('exporting');
-    }).catch(function() {
-      container.classList.remove('exporting');
-    });
+  if (!w.html2canvas) {
+    // Clean up state and inform the user that export is not available
+    container.classList.remove('exporting');
+    if (exportBtn) {
+      exportBtn.disabled = false;
+      exportBtn.classList.remove('exporting');
+    }
+    window.alert('Export is not available - html2canvas library failed to load.');
+    return;
   }
+
+  w.html2canvas(container, {
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#000000',
+    scale: 2 // Higher quality
+  }).then(function(canvas: HTMLCanvasElement) {
+    const link = document.createElement('a');
+    link.download = 'showcase.png';
+    link.href = canvas.toDataURL();
+    link.click();
+
+    // Remove exporting class and reset button state
+    container.classList.remove('exporting');
+    if (exportBtn) {
+      exportBtn.disabled = false;
+      exportBtn.classList.remove('exporting');
+    }
+  }).catch(function(error: unknown) {
+    // Log the error for debugging
+    console.error('Failed to export showcase image', error);
+
+    // Remove exporting class and reset button state
+    container.classList.remove('exporting');
+    if (exportBtn) {
+      exportBtn.disabled = false;
+      exportBtn.classList.remove('exporting');
+    }
+
+    // Surface a visible error message to the user
+    window.alert('Failed to export image. This may be caused by browser security restrictions (CORS) or image loading issues.');
+  });
 }
 
 /**
