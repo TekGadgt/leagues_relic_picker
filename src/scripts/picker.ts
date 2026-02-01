@@ -205,6 +205,30 @@ function initPicker(): void {
       }
     });
   }
+
+  // Add to Showcase button handler
+  const addToShowcaseBtn = document.getElementById('addToShowcaseBtn');
+  if (addToShowcaseBtn) {
+    addToShowcaseBtn.addEventListener('click', function() {
+      // Get current URL with all params
+      const currentUrl = window.location.href;
+
+      // Load existing URLs
+      const stored = localStorage.getItem('showcaseUrls');
+      const urls: string[] = stored ? JSON.parse(stored) : [];
+
+      // Add current URL (avoid duplicates)
+      if (!urls.includes(currentUrl)) {
+        urls.push(currentUrl);
+        localStorage.setItem('showcaseUrls', JSON.stringify(urls));
+      }
+
+      // Visual feedback
+      const originalText = addToShowcaseBtn.textContent;
+      addToShowcaseBtn.textContent = 'Added!';
+      setTimeout(() => { addToShowcaseBtn.textContent = originalText; }, 1500);
+    });
+  }
 }
 
 // Initialize when DOM is ready

@@ -13,9 +13,10 @@ for (const league of leagues) {
   // For relics: "osrs-1", "osrs-5", "rs3-1"
   // For masteries/pacts: "osrs-5-masteries", "osrs-6-pacts"
   const pageType = league.data.pageType;
-  const key = pageType === "relics"
-    ? `${league.data.game}-${league.data.leagueNumber}`
-    : `${league.data.game}-${league.data.leagueNumber}-${pageType}`;
+  const key =
+    pageType === "relics"
+      ? `${league.data.game}-${league.data.leagueNumber}`
+      : `${league.data.game}-${league.data.leagueNumber}-${pageType}`;
 
   leagueData[key] = {
     game: league.data.game,
@@ -37,7 +38,12 @@ for (const league of leagues) {
   bodyClass="has-footer"
 >
   <Fragment slot="head">
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" is:inline></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+      integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      is:inline></script>
   </Fragment>
 
   <Navbar homeLink="/" />
@@ -46,16 +52,26 @@ for (const league of leagues) {
     <h1 class="title">Build Showcase</h1>
 
     <div class="showcase-input-section">
-      <p class="showcase-instructions">Paste your share URLs below (one per line) to combine multiple builds into a single image.</p>
+      <p class="showcase-instructions">
+        Paste your share URLs below (one per line) to combine multiple builds
+        into a single image.
+      </p>
       <textarea
         id="urlInput"
         class="showcase-textarea"
-        placeholder="https://relics.runetools.lol/osrs/1/?selected=tier1-1,tier2-2&title=My%20Build&#10;https://relics.runetools.lol/osrs/5/masteries/?selected=melee-3,ranged-4&title=Another%20Build"
-        rows="4"
-      ></textarea>
+        placeholder="https://relics.runetools.lol/osrs/1/?selected=tier1-1,tier2-2&title=My%20Build
+https://relics.runetools.lol/osrs/5/masteries/?selected=melee-3,ranged-4&title=Another%20Build"
+        rows="4"></textarea>
       <div class="showcase-buttons">
         <button id="generateBtn" class="showcase-btn">Generate Preview</button>
-        <button id="exportBtn" class="showcase-btn showcase-btn-export" style="display: none;">Export Image</button>
+        <button
+          id="exportBtn"
+          class="showcase-btn showcase-btn-export"
+          style="display: none;">Export Image</button
+        >
+        <button id="clearBtn" class="showcase-btn showcase-btn-clear"
+          >Clear Showcase</button
+        >
       </div>
     </div>
 

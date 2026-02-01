@@ -216,7 +216,7 @@ main > .colContainer {
   color: var(--title-color);
 }
 
-.tooltip {
+/* .tooltip {
   visibility: hidden;
   position: absolute;
   background-color: rgba(20, 20, 40, 0.95);
@@ -234,7 +234,7 @@ main > .colContainer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   font-size: 0.9em;
   white-space: nowrap;
-}
+} */
 
 /* Detail sidebar overlay */
 .detail-sidebar {
@@ -327,14 +327,24 @@ main > .colContainer {
   position: relative;
 }
 
-.relic:hover .tooltip,
+/* .relic:hover .tooltip,
 .mastery:hover .tooltip {
   visibility: visible;
   opacity: 1 !important;
+} */
+
+/* Picker page buttons container */
+.picker-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 0;
 }
 
-#exportBtn {
-  background-color: var(--title-color);
+#exportBtn,
+#generateBtn,
+#addToShowcaseBtn,
+.showcase-btn {
   color: black;
   border: none;
   padding: 10px 20px;
@@ -342,14 +352,30 @@ main > .colContainer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 10px 2px;
   cursor: pointer;
   border-radius: 5px;
   width: auto;
+  transition: background-color 0.2s;
 }
 
-#exportBtn:hover {
+#exportBtn,
+#generateBtn,
+#addToShowcaseBtn {
+  background-color: var(--title-color);
+}
+
+#exportBtn:hover,
+#generateBtn:hover,
+#addToShowcaseBtn:hover {
   background-color: var(--nav-item-color);
+}
+
+.showcase-btn-clear {
+  background-color: #f44336;
+}
+
+.showcase-btn-clear:hover {
+  background-color: #b82929;
 }
 
 /* Row layout for masteries/pacts */
@@ -558,30 +584,6 @@ body.has-footer {
   gap: 10px;
   margin-top: 12px;
   justify-content: center;
-}
-
-.showcase-btn {
-  background-color: var(--title-color);
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.2s;
-}
-
-.showcase-btn:hover {
-  background-color: var(--nav-item-color);
-}
-
-.showcase-btn-export {
-  background-color: #4caf50;
-}
-
-.showcase-btn-export:hover {
-  background-color: #388e3c;
 }
 
 .showcase-container {

@@ -315,11 +315,44 @@ function exportImage(): void {
 }
 
 /**
+ * Load stored URLs from localStorage and populate textarea
+ */
+function loadStoredUrls(): void {
+  const textarea = document.getElementById('urlInput') as HTMLTextAreaElement;
+  if (!textarea) return;
+
+  const stored = localStorage.getItem('showcaseUrls');
+  if (stored) {
+    const urls: string[] = JSON.parse(stored);
+    textarea.value = urls.join('\n');
+  }
+}
+
+/**
+ * Clear the showcase: textarea, preview, and localStorage
+ */
+function clearShowcase(): void {
+  const textarea = document.getElementById('urlInput') as HTMLTextAreaElement;
+  const container = document.getElementById('showcaseContainer');
+  const exportBtn = document.getElementById('exportBtn');
+
+  if (textarea) textarea.value = '';
+  if (container) container.innerHTML = '';
+  if (exportBtn) exportBtn.style.display = 'none';
+
+  localStorage.removeItem('showcaseUrls');
+}
+
+/**
  * Initialize the showcase page
  */
 function initShowcase(): void {
   const generateBtn = document.getElementById('generateBtn');
   const exportBtn = document.getElementById('exportBtn');
+  const clearBtn = document.getElementById('clearBtn');
+
+  // Load stored URLs on init
+  loadStoredUrls();
 
   if (generateBtn) {
     generateBtn.addEventListener('click', generatePreview);
@@ -327,6 +360,10 @@ function initShowcase(): void {
 
   if (exportBtn) {
     exportBtn.addEventListener('click', exportImage);
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', clearShowcase);
   }
 }
 
