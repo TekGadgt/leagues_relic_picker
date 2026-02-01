@@ -1,0 +1,72 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { getCollection } from "astro:content";
+
+// Pre-bundle all league data at build time
+const leagues = await getCollection("leagues");
+const leagueData: Record<string, any> = {};
+
+for (const league of leagues) {
+  // Determine the key based on pageType
+  // For relics: "osrs-1", "osrs-5", "rs3-1"
+  // For masteries/pacts: "osrs-5-masteries", "osrs-6-pacts"
+  const pageType = league.data.pageType;
+  const key = pageType === "relics"
+    ? `${league.data.game}-${league.data.leagueNumber}`
+    : `${league.data.game}-${league.data.leagueNumber}-${pageType}`;
+
+  leagueData[key] = {
+    game: league.data.game,
+    leagueNumber: league.data.leagueNumber,
+    name: league.data.name,
+    pageType: league.data.pageType,
+    theme: league.data.theme,
+    items: league.data.items,
+  };
+}
+---
+
+<BaseLayout
+  title="Showcase - Leagues Relic Pickers"
+  description="Combine multiple builds into a single shareable image"
+  ogImage="https://relics.runetools.lol/poster.png"
+  ogImageAlt="The Leagues Relic Picker Showcase page for combining multiple builds."
+  ogUrl="https://relics.runetools.lol/showcase/"
+  bodyClass="has-footer"
+>
+  <Fragment slot="head">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" is:inline></script>
+  </Fragment>
+
+  <Navbar homeLink="/" />
+
+  <main id="main" class="showcase-page">
+    <h1 class="title">Build Showcase</h1>
+
+    <div class="showcase-input-section">
+      <p class="showcase-instructions">Paste your share URLs below (one per line) to combine multiple builds into a single image.</p>
+      <textarea
+        id="urlInput"
+        class="showcase-textarea"
+        placeholder="https://relics.runetools.lol/osrs/1/?selected=tier1-1,tier2-2&title=My%20Build&#10;https://relics.runetools.lol/osrs/5/masteries/?selected=melee-3,ranged-4&title=Another%20Build"
+        rows="4"
+      ></textarea>
+      <div class="showcase-buttons">
+        <button id="generateBtn" class="showcase-btn">Generate Preview</button>
+        <button id="exportBtn" class="showcase-btn showcase-btn-export" style="display: none;">Export Image</button>
+      </div>
+    </div>
+
+    <div id="showcaseContainer" class="showcase-container"></div>
+  </main>
+
+  <Footer showThemeSelector={true} />
+</BaseLayout>
+
+<script is:inline define:vars={{ leagueData }}>
+  window.LEAGUE_DATA = leagueData;
+</script>
+
+<script src="../scripts/showcase.ts"></script>
