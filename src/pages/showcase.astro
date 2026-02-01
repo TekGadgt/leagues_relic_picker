@@ -6,7 +6,22 @@ import { getCollection } from "astro:content";
 
 // Pre-bundle all league data at build time
 const leagues = await getCollection("leagues");
-const leagueData: Record<string, any> = {};
+
+type LeagueEntry = {
+  game: string;
+  leagueNumber: number;
+  name: string;
+  pageType: string;
+  theme: {
+    titleColor: string;
+    navItemColor: string;
+    headerBackgroundColor: string;
+    backgroundColor: string;
+  };
+  items: Record<string, unknown>;
+};
+
+const leagueData: Record<string, LeagueEntry> = {};
 
 for (const league of leagues) {
   // Determine the key based on pageType
