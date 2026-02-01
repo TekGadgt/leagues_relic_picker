@@ -20,7 +20,7 @@ function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: str
   const title = titleElement?.textContent || '';
   const url = new URL(window.location.href);
   url.searchParams.set('selected', params.join(','));
-  url.searchParams.set('title', encodeURIComponent(title));
+  url.searchParams.set('title', title);
   window.history.replaceState({}, '', url.toString());
 }
 
@@ -42,7 +42,7 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
   if (title) {
     const titleElement = document.querySelector(titleSelector);
     if (titleElement) {
-      titleElement.textContent = decodeURIComponent(title);
+      titleElement.textContent = title;
     }
   }
 
@@ -203,6 +203,30 @@ function initPicker(): void {
           link.click();
         });
       }
+    });
+  }
+
+  // Add to Showcase button handler
+  const addToShowcaseBtn = document.getElementById('addToShowcaseBtn');
+  if (addToShowcaseBtn) {
+    addToShowcaseBtn.addEventListener('click', function() {
+      // Get current URL with all params
+      const currentUrl = window.location.href;
+
+      // Load existing URLs
+      const stored = localStorage.getItem('showcaseUrls');
+      const urls: string[] = stored ? JSON.parse(stored) : [];
+
+      // Add current URL (avoid duplicates)
+      if (!urls.includes(currentUrl)) {
+        urls.push(currentUrl);
+        localStorage.setItem('showcaseUrls', JSON.stringify(urls));
+      }
+
+      // Visual feedback
+      const originalText = addToShowcaseBtn.textContent;
+      addToShowcaseBtn.textContent = 'Added!';
+      setTimeout(() => { addToShowcaseBtn.textContent = originalText; }, 1500);
     });
   }
 }

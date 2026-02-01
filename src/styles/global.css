@@ -15,7 +15,7 @@ body {
   align-items: center;
   background-color: var(--background-color);
   font-family: "Comic Sans MS", "Comic Sans", sans-serif;
-  min-height: 98vh;
+  min-height: 90vh;
   margin: 0;
   padding: 0;
 }
@@ -136,6 +136,29 @@ body {
   text-decoration: none;
 }
 
+.showcase-link-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.showcase-nav-link {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--title-color);
+  border-radius: 8px;
+  color: var(--title-color);
+  text-decoration: none;
+  font-size: 1.2em;
+  transition: all 0.3s ease;
+}
+
+.showcase-nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
 .title[contenteditable="true"]:empty:before {
   content: attr(placeholder);
   color: var(--title-color);
@@ -193,7 +216,7 @@ main > .colContainer {
   color: var(--title-color);
 }
 
-.tooltip {
+/* .tooltip {
   visibility: hidden;
   position: absolute;
   background-color: rgba(20, 20, 40, 0.95);
@@ -211,7 +234,7 @@ main > .colContainer {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   font-size: 0.9em;
   white-space: nowrap;
-}
+} */
 
 /* Detail sidebar overlay */
 .detail-sidebar {
@@ -304,14 +327,24 @@ main > .colContainer {
   position: relative;
 }
 
-.relic:hover .tooltip,
+/* .relic:hover .tooltip,
 .mastery:hover .tooltip {
   visibility: visible;
   opacity: 1 !important;
+} */
+
+/* Picker page buttons container */
+.picker-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 10px 0;
 }
 
-#exportBtn {
-  background-color: var(--title-color);
+#exportBtn,
+#generateBtn,
+#addToShowcaseBtn,
+.showcase-btn {
   color: black;
   border: none;
   padding: 10px 20px;
@@ -319,14 +352,30 @@ main > .colContainer {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 10px 2px;
   cursor: pointer;
   border-radius: 5px;
   width: auto;
+  transition: background-color 0.2s;
 }
 
-#exportBtn:hover {
+#exportBtn,
+#generateBtn,
+#addToShowcaseBtn {
+  background-color: var(--title-color);
+}
+
+#exportBtn:hover,
+#generateBtn:hover,
+#addToShowcaseBtn:hover {
   background-color: var(--nav-item-color);
+}
+
+.showcase-btn-clear {
+  background-color: #f44336;
+}
+
+.showcase-btn-clear:hover {
+  background-color: #b82929;
 }
 
 /* Row layout for masteries/pacts */
@@ -473,4 +522,134 @@ main > .rowContainer {
 /* Add bottom padding to body to account for fixed footer on main page */
 body.has-footer {
   padding-bottom: 80px;
+}
+
+/* Showcase page styles */
+.showcase-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 20px 20px;
+  min-height: auto;
+}
+
+.showcase-page .title {
+  min-width: auto;
+  min-height: auto;
+  font-size: 2.5em;
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+.showcase-instructions {
+  color: var(--title-color);
+  text-align: center;
+  margin-bottom: 10px;
+  opacity: 0.8;
+  font-size: 0.95em;
+}
+
+.showcase-input-section {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+
+.showcase-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--nav-item-color);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--title-color);
+  font-family: monospace;
+  font-size: 13px;
+  resize: vertical;
+  min-height: 100px;
+  box-sizing: border-box;
+}
+
+.showcase-textarea::placeholder {
+  color: var(--nav-item-color);
+  opacity: 0.7;
+}
+
+.showcase-textarea:focus {
+  outline: none;
+  border-color: var(--title-color);
+}
+
+.showcase-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.showcase-container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.showcase-container.exporting {
+  padding: 15px;
+  background-color: #000000;
+  border-radius: 8px;
+}
+
+.showcase-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border-left: 4px solid var(--title-color);
+}
+
+.showcase-row-error {
+  border-left-color: #ff6b6b;
+  opacity: 0.7;
+}
+
+.showcase-row-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--title-color);
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.showcase-row-separator {
+  color: var(--nav-item-color);
+  font-size: 1.3em;
+  opacity: 0.5;
+}
+
+.showcase-row-error-msg {
+  color: #ff6b6b;
+  font-style: italic;
+}
+
+.showcase-row-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.showcase-item-img {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
+
+.showcase-empty {
+  color: var(--nav-item-color);
+  text-align: center;
+  padding: 40px;
+  font-style: italic;
 }

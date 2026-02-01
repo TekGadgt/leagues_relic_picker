@@ -45,9 +45,11 @@ const themeCSS = `
   <Fragment slot="head">
     <style set:html={themeCSS}></style>
     <script
-      is:inline
       src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
-    ></script>
+      integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      is:inline></script>
   </Fragment>
 
   <Navbar />
