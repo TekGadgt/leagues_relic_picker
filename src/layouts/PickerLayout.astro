@@ -20,9 +20,10 @@ interface Props {
   };
   backgroundColor: string;
   exportFilename: string;
+  pageType: 'relics' | 'masteries' | 'pacts';
 }
 
-const { meta, theme, backgroundColor, exportFilename } = Astro.props;
+const { meta, theme, backgroundColor, exportFilename, pageType } = Astro.props;
 
 // Build the CSS variables string directly
 const themeCSS = `
@@ -52,7 +53,7 @@ const themeCSS = `
       is:inline></script>
   </Fragment>
 
-  <Navbar />
+  <Navbar itemType={pageType} />
 
   <main id="main">
     <h1 class="title" contenteditable="true">Change Me</h1>

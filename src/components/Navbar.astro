@@ -1,8 +1,18 @@
 ---
 // Navbar component for picker pages
+interface Props {
+  homeLink?: string;
+  showInstructions?: boolean;
+  itemType?: 'relics' | 'masteries' | 'pacts';
+}
+
+const { showInstructions = true, itemType = 'relics' } = Astro.props;
+
+// Capitalize the item type for display
+const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
 ---
 
-<nav class="navbar">
+<nav class:list={["navbar", { "navbar--no-instructions": !showInstructions }]}>
   <div class="nav-link-wrapper nav-link-start">
     <a href="/" class="nav-link">
       <svg viewBox="0 0 24 24" fill="currentColor">
@@ -12,7 +22,7 @@
       Back to Home
     </a>
   </div>
-  <span class="nav-instructions">&#9432; Right Click Relics for details</span>
+  {showInstructions && <span class="nav-instructions">&#9432; Right Click {itemTypeDisplay} for details</span>}
   <div class="nav-link-wrapper nav-link-end">
     <a
       href="https://github.com/TekGadgt/leagues_relic_picker"
