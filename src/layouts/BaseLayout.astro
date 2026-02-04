@@ -18,6 +18,9 @@ const {
   bodyClass = "",
   enableThemeScript = false,
 } = Astro.props;
+
+const site = Astro.site || new URL("https://relics.runetools.lol");
+const sitemapUrl = new URL("/sitemap-index.xml", site).href;
 ---
 
 <!doctype html>
@@ -54,6 +57,7 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:alt" content={ogImageAlt} />
+    <link rel="sitemap" type="application/xml" href={sitemapUrl} />
     <slot name="head" />
   </head>
   <body class={bodyClass}>
