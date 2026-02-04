@@ -19,7 +19,7 @@ const {
   enableThemeScript = false,
 } = Astro.props;
 
-const site = Astro.site || new URL("https://relics.runetools.lol");
+const site = Astro.site || 'https://relics.runetools.lol';
 const sitemapUrl = new URL("/sitemap-index.xml", site).href;
 ---
 
