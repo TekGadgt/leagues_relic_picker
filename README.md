@@ -13,9 +13,11 @@ A comprehensive web application for creating, sharing, and visualizing relic and
 - **Trailblazer League** (2020) - Choose your regions and relics
 - **Trailblazer Reloaded** (2023) - The enhanced return of Trailblazer
 - **Raging Echoes** (2024) - Features both Relics and Masteries systems
+- **Demonic Pacts** (2026) - Not many details known yet, possibly pacts only, possibly relics & pacts, will update accordingly
 
 ### RS3 Leagues
 - **Catalyst League** (2025) - RS3's take on the league format
+- **TBD** (2026) - RS3's Second League
 
 ## ✨ Features
 
@@ -27,14 +29,12 @@ A comprehensive web application for creating, sharing, and visualizing relic and
 - **Responsive Design**: Works on desktop, tablet, and mobile devices (WIP)
 
 ### 🎨 User Experience
-- **Hover Tooltips**: Detailed information about each relic's effects
-- **Smart Positioning**: Tooltips automatically adjust to stay on screen
+- **Right Click Sidebar**: Detailed information about each relic's effects
 - **Visual Feedback**: Selected relics are highlighted, unselected ones are dimmed
 - **Navigation**: Easy navigation between different league pages
-- **Social Sharing**: Optimized meta tags for Discord, Twitter, and other platforms
 
 ### 🔧 Technical Features
-- **Pure JavaScript**: No frameworks required, fast loading
+- **AstroJS**: Minimal Framework usage, fast loading
 - **Client-side Rendering**: Dynamic content generation from JSON data
 - **Semantic HTML**: Accessible and SEO-friendly markup
 - **CSS Grid/Flexbox**: Modern layout techniques for perfect alignment
@@ -57,43 +57,13 @@ git clone https://github.com/TekGadgt/leagues_relic_picker.git
 # Navigate to the project directory
 cd leagues_relic_picker
 
+#Install Dependencies
+npm install
+
 # Serve locally (using any static file server)
-# Option 1: Python
-python -m http.server 8000
+npm run dev
 
-# Option 2: Node.js
-npx serve
-
-# Option 3: PHP
-php -S localhost:8000
-
-# Then visit http://localhost:8000
-```
-
-## 📁 Project Structure
-
-```
-league_relic_picker/
-├── index.html              # Homepage with league selection
-├── styles.css              # Global styles and components
-├── shared.js               # Shared JavaScript utilities
-├── variables.css           # CSS custom properties
-├── poster.png              # Social media preview image
-├── osrs/                   # OSRS league data and pages
-│   ├── 1/                  # Twisted League
-│   ├── 2/                  # Trailblazer League
-│   ├── 4/                  # Trailblazer Reloaded
-│   └── 5/                  # Raging Echoes
-│       ├── index.html      # Relics page
-│       ├── masteries.html  # Masteries page
-│       ├── relics.json     # Relic data
-│       ├── masteries.json  # Mastery data
-│       └── variables.css   # League-specific styling
-└── rs3/                    # RS3 league data and pages
-    └── 1/                  # Catalyst League
-        ├── index.html      # Main page
-        ├── relics.json     # Relic data
-        └── variables.css   # League-specific styling
+# Then visit http://localhost:4321
 ```
 
 ## 🛠️ Technical Implementation
@@ -104,18 +74,9 @@ league_relic_picker/
 - **Vanilla JavaScript**: ES6+ features, modular code organization
 - **html2canvas**: Client-side image generation
 - **JSON**: Data storage for relics and masteries
+- **AstroJS**: Astro Framework
 
 ### Key Components
-
-#### Relic Selection System
-```javascript
-// Example of the selection toggle system
-function toggleElement(element, elements, titleSelector) {
-  const isSelected = element.classList.toggle('selected');
-  updateElementOpacity(element, isSelected);
-  updateURLParams(elements, titleSelector);
-}
-```
 
 #### URL State Management
 Selections are automatically saved to the URL, enabling:
@@ -123,21 +84,17 @@ Selections are automatically saved to the URL, enabling:
 - Sharing builds via social media
 - Browser history support
 
-#### Dynamic Tooltip System
-- Automatically positions tooltips based on screen edges
-- Supports both relics and masteries
-- Responsive sizing for mobile devices
+#### Right Click Sidebar
+- Right click any relic/mastery/pact to display a sidebar with details about it
+- Supports relics, masteries, and pacts
 
 ## 🎨 Customization
 
 ### Adding a New League
-1. Create the directory structure (e.g., `osrs/6/` or `rs3/2/`)
-2. Add the JSON data file with relic information
-3. Create the HTML page using the existing template
-4. Add navigation links to the main index.html
-5. Include league-specific CSS variables
+TODO: Update steps, it's changed a fair bit since migrating to Astro
 
 ### JSON Data Format
+TODO: This is still mostly accurate, but where it's stored has changed.
 ```json
 {
   "relics": {
@@ -157,15 +114,7 @@ Selections are automatically saved to the URL, enabling:
 ```
 
 ### CSS Theming
-Each league can have custom colors and styling through `variables.css`:
-```css
-:root {
-  --title-color: #d5281a;
-  --nav-item-color: #802010;
-  --background-color: #071022;
-  --font-size-title: 5em;
-}
-```
+TODO: Update this, theming works better now but has gotten more convoluted as a result.
 
 ## 🤝 Contributing
 
@@ -199,7 +148,6 @@ Contributions are welcome! Here's how you can help:
 - **Chrome/Edge**: Full support
 - **Firefox**: Full support  
 - **Safari**: Full support
-- **Mobile browsers**: Optimized experience
 
 ## 🔧 Deployment
 
@@ -207,8 +155,8 @@ The project is automatically deployed to Netlify on every push to the main branc
 
 ### Manual Deployment
 ```bash
-# Build (if applicable)
-# No build step required - static files only
+# Build
+npm run build
 
 # Deploy to any static hosting service
 # - Netlify
@@ -223,7 +171,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- **Jagex**: For creating the amazing League game modes
+- **Jagex**: For creating the amazing Leagues game modes
 - **Community**: For feedback and suggestions
 - **html2canvas**: For enabling client-side image generation
 - **All contributors**: Thank you for your contributions!
@@ -232,7 +180,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - **Issues**: [GitHub Issues](https://github.com/TekGadgt/leagues_relic_picker/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/TekGadgt/leagues_relic_picker/discussions)
-- **Website**: [league-relic-picker.netlify.app](https://league-relic-picker.netlify.app)
+- **Website**: [relics.runetools.lol](https://relics.runetools.lol)
 
 ---
 
