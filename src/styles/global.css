@@ -528,6 +528,11 @@ body.has-footer {
   padding-bottom: 80px;
 }
 
+/* Homepage styles */
+.homepage {
+  padding: 70px 20px 20px;
+}
+
 /* Showcase page styles */
 .showcase-page {
   display: flex;

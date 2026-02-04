@@ -2,11 +2,19 @@
 // Navbar component for picker pages
 interface Props {
   homeLink?: string;
+  showHomeLink?: boolean;
+  showShowcaseLink?: boolean;
   showInstructions?: boolean;
   itemType?: 'relics' | 'masteries' | 'pacts';
 }
 
-const { homeLink = '/', showInstructions = true, itemType = 'relics' } = Astro.props;
+const {
+  homeLink = '/',
+  showHomeLink = true,
+  showShowcaseLink = false,
+  showInstructions = true,
+  itemType = 'relics'
+} = Astro.props;
 
 // Capitalize the item type for display
 const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
@@ -14,13 +22,23 @@ const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
 
 <nav class:list={["navbar", { "navbar--no-instructions": !showInstructions }]}>
   <div class="nav-link-wrapper nav-link-start">
-    <a href={homeLink} class="nav-link">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-        ></path>
-      </svg>
-      Back to Home
-    </a>
+    {showHomeLink && (
+      <a href={homeLink} class="nav-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+          ></path>
+        </svg>
+        Back to Home
+      </a>
+    )}
+    {showShowcaseLink && (
+      <a href="/showcase/" class="nav-link">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"></path>
+        </svg>
+        Showcase
+      </a>
+    )}
   </div>
   {showInstructions && <span class="nav-instructions">&#9432; Right Click {itemTypeDisplay} for details</span>}
   <div class="nav-link-wrapper nav-link-end">
