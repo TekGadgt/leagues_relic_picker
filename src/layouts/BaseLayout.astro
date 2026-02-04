@@ -6,6 +6,7 @@ interface Props {
   ogImageAlt?: string;
   ogUrl?: string;
   bodyClass?: string;
+  enableThemeScript?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   ogImageAlt = "Leagues Relic Picker",
   ogUrl = "https://relics.runetools.lol",
   bodyClass = "",
+  enableThemeScript = false,
 } = Astro.props;
 ---
 
@@ -23,6 +25,28 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {enableThemeScript && (
+      <script is:inline>
+        // Apply saved theme immediately to prevent flicker
+        (function() {
+          var themes = {
+            'osrs/1': { title: '#a3ce27', nav: '#6a8418', header: '#0f1406', bg: '#060804' },
+            'osrs/2': { title: '#f9ebb3', nav: '#96896b', header: '#14120b', bg: '#080704' },
+            'osrs/4': { title: '#cd7429', nav: '#7a451a', header: '#160b05', bg: '#090402' },
+            'osrs/5': { title: '#8ce0ff', nav: '#598fa3', header: '#0b1933', bg: '#071022' },
+            'osrs/6': { title: '#c33232', nav: '#cc0000', header: '#140202', bg: '#0c0000' },
+            'rs3/1': { title: '#d5281a', nav: '#802010', header: '#160403', bg: '#080201' },
+            'rs3/2': { title: '#9b59b6', nav: '#6c3483', header: '#140a1c', bg: '#08040b' }
+          };
+          var saved = localStorage.getItem('selectedTheme');
+          var theme = saved && themes[saved] ? themes[saved] : themes['rs3/1'];
+          var style = document.createElement('style');
+          style.id = 'theme-variables-inline';
+          style.textContent = ':root{--title-color:' + theme.title + '!important;--nav-item-color:' + theme.nav + '!important;--header-background-color:' + theme.header + '!important;--background-color:' + theme.bg + '!important;}';
+          document.head.appendChild(style);
+        })();
+      </script>
+    )}
     <title>{title}</title>
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogUrl} />
