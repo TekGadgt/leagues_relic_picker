@@ -54,9 +54,18 @@ const { showThemeSelector = false } = Astro.props;
       const themeSelect = document.getElementById('theme-select') as HTMLSelectElement | null;
       if (!themeSelect) return;
 
+      const themes: Record<string, { title: string; nav: string; header: string; bg: string }> = {
+        'osrs/1': { title: '#a3ce27', nav: '#6a8418', header: '#0f1406', bg: '#060804' },
+        'osrs/2': { title: '#f9ebb3', nav: '#96896b', header: '#14120b', bg: '#080704' },
+        'osrs/4': { title: '#cd7429', nav: '#7a451a', header: '#160b05', bg: '#090402' },
+        'osrs/5': { title: '#8ce0ff', nav: '#598fa3', header: '#0b1933', bg: '#071022' },
+        'osrs/6': { title: '#c33232', nav: '#cc0000', header: '#140202', bg: '#0c0000' },
+        'rs3/1': { title: '#d5281a', nav: '#802010', header: '#160403', bg: '#080201' },
+        'rs3/2': { title: '#9b59b6', nav: '#6c3483', header: '#140a1c', bg: '#08040b' }
+      };
+
       const savedTheme = localStorage.getItem('selectedTheme') || 'rs3/1';
       themeSelect.value = savedTheme;
-      applyTheme(savedTheme);
 
       themeSelect.addEventListener('change', function () {
         const selectedTheme = this.value;
@@ -64,17 +73,12 @@ const { showThemeSelector = false } = Astro.props;
         applyTheme(selectedTheme);
       });
 
-      function applyTheme(theme: string) {
-        const currentThemeLink = document.getElementById('theme-variables');
-        if (currentThemeLink) {
-          currentThemeLink.remove();
+      function applyTheme(themeKey: string) {
+        const theme = themes[themeKey] || themes['rs3/1'];
+        const styleEl = document.getElementById('theme-variables-inline');
+        if (styleEl) {
+          styleEl.textContent = `:root{--title-color:${theme.title}!important;--nav-item-color:${theme.nav}!important;--header-background-color:${theme.header}!important;--background-color:${theme.bg}!important;}`;
         }
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = `/${theme}/variables.css`;
-        link.id = 'theme-variables';
-        document.head.appendChild(link);
       }
     });
   </script>
