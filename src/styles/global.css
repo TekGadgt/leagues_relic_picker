@@ -723,6 +723,11 @@ body.has-footer {
   height: 20px;
 }
 
+/* Desktop instruction visibility (default) */
+.nav-instructions--mobile {
+  display: none;
+}
+
 /* Tablet Responsive Styles */
 @media screen and (max-width: 1024px) and (min-width: 769px) {
   /* Navbar - hamburger menu on tablet */
@@ -744,6 +749,14 @@ body.has-footer {
 
   .nav-instructions--desktop {
     display: none;
+  }
+
+  .nav-instructions--mobile {
+    display: flex;
+    font-size: 1em;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
   }
 
   .title {
@@ -1011,9 +1024,4 @@ body.has-footer {
     font-size: 14px;
     padding: 8px 16px;
   }
-}
-
-/* Desktop instruction visibility (default) */
-.nav-instructions--mobile {
-  display: none;
 }
