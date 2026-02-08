@@ -325,9 +325,15 @@ function exportImage(): void {
     // Try Web Share API for mobile (lets users save to Photos)
     if (navigator.share && navigator.canShare) {
       try {
-        const dataUrl = canvas.toDataURL('image/png');
-        const response = await fetch(dataUrl);
-        const blob = await response.blob();
+        const blob = await new Promise<Blob>((resolve, reject) => {
+          canvas.toBlob((result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(new Error('Failed to convert canvas to Blob'));
+            }
+          }, 'image/png');
+        });
         const file = new File([blob], 'showcase.png', { type: 'image/png' });
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file] });
