@@ -237,42 +237,51 @@ function initPicker(): void {
       // Close sidebar before export
       closeDetailSidebar();
 
+      // Force desktop layout for export
+      mainElement.classList.add('exporting');
       mainElement.style.backgroundColor = config.backgroundColor;
       mainElement.style.paddingTop = '50px';
       mainElement.style.paddingBottom = '50px';
 
-      // Access html2canvas from window
-      const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
-      if (w.html2canvas) {
-        w.html2canvas(mainElement, {
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: config.backgroundColor
-        }).then(async function(canvas: HTMLCanvasElement) {
-          // Try Web Share API for mobile (lets users save to Photos)
-          if (navigator.share && navigator.canShare) {
-            try {
-              const dataUrl = canvas.toDataURL('image/png');
-              const response = await fetch(dataUrl);
-              const blob = await response.blob();
-              const file = new File([blob], config.exportFilename, { type: 'image/png' });
-              if (navigator.canShare({ files: [file] })) {
-                await navigator.share({ files: [file] });
-                return;
-              }
-            } catch (shareError) {
-              // User cancelled or share failed - fall through to download
-              if (shareError instanceof Error && shareError.name === 'AbortError') return;
-            }
-          }
+      // Wait for repaint before capturing
+      requestAnimationFrame(() => {
+        const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
+        if (w.html2canvas) {
+          w.html2canvas(mainElement, {
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: config.backgroundColor
+          }).then(async function(canvas: HTMLCanvasElement) {
+            // Restore mobile layout
+            mainElement.classList.remove('exporting');
+            mainElement.style.paddingTop = '';
+            mainElement.style.paddingBottom = '';
 
-          // Fallback: standard download
-          const link = document.createElement('a');
-          link.download = config.exportFilename;
-          link.href = canvas.toDataURL();
-          link.click();
-        });
-      }
+            // Try Web Share API for mobile (lets users save to Photos)
+            if (navigator.share && navigator.canShare) {
+              try {
+                const dataUrl = canvas.toDataURL('image/png');
+                const response = await fetch(dataUrl);
+                const blob = await response.blob();
+                const file = new File([blob], config.exportFilename, { type: 'image/png' });
+                if (navigator.canShare({ files: [file] })) {
+                  await navigator.share({ files: [file] });
+                  return;
+                }
+              } catch (shareError) {
+                // User cancelled or share failed - fall through to download
+                if (shareError instanceof Error && shareError.name === 'AbortError') return;
+              }
+            }
+
+            // Fallback: standard download
+            const link = document.createElement('a');
+            link.download = config.exportFilename;
+            link.href = canvas.toDataURL();
+            link.click();
+          });
+        }
+      });
     });
   }
 

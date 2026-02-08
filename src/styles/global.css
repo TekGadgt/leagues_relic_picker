@@ -611,6 +611,79 @@ body.has-footer {
   border-radius: 8px;
 }
 
+/* Force desktop column layout during picker export */
+main.exporting .colContainer {
+  flex-direction: row;
+  min-width: 99vw;
+  min-height: 60vh;
+}
+
+main.exporting .col {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  overflow-x: visible;
+  padding: 0 10px;
+}
+
+main.exporting .col > .relic:first-child,
+main.exporting .col > .mastery:first-child {
+  margin-left: 0;
+}
+
+main.exporting .col > .relic:last-child,
+main.exporting .col > .mastery:last-child {
+  margin-right: 0;
+}
+
+main.exporting .relicImg {
+  height: 150px;
+  width: 150px;
+}
+
+main.exporting .relicImg.rs3 {
+  width: 116px;
+  height: 100px;
+}
+
+main.exporting .relicLabel,
+main.exporting .masteryLabel {
+  font-size: 1.5em;
+  max-width: none;
+}
+
+main.exporting .relic {
+  margin: 10px 0;
+  flex-shrink: 0;
+}
+
+main.exporting .rowContainer {
+  min-width: 99vw;
+  min-height: 60vh;
+}
+
+main.exporting .row {
+  flex: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+main.exporting .masteryImg {
+  height: 150px;
+  width: 140px;
+}
+
+main.exporting .mastery {
+  margin: 10px;
+  flex-shrink: 0;
+}
+
+main.exporting .title {
+  font-size: var(--font-size-title);
+  min-width: 99vw;
+  min-height: 9vh;
+}
+
 .showcase-container.exporting .showcase-row-items {
   flex-wrap: nowrap;
 }
