@@ -218,6 +218,7 @@ main > .colContainer {
   font-size: 1.5em;
   margin-top: 5px;
   color: var(--title-color);
+  text-align: center;
 }
 
 /* .tooltip {
@@ -416,6 +417,7 @@ main > .rowContainer {
   font-size: 1.5em;
   margin-top: 5px;
   color: var(--title-color);
+  text-align: center;
 }
 
 /* Footer styles */
@@ -661,4 +663,357 @@ body.has-footer {
   text-align: center;
   padding: 40px;
   font-style: italic;
+}
+
+/* Hamburger menu (hidden on desktop) */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--title-color);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.nav-hamburger svg {
+  width: 24px;
+  height: 24px;
+}
+
+.nav-hamburger:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Mobile dropdown menu (hidden by default) */
+.nav-mobile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--header-background-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-direction: column;
+  padding: 10px 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-mobile-menu.open {
+  display: flex;
+}
+
+.nav-mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  color: var(--title-color);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.nav-mobile-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-mobile-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Tablet Responsive Styles */
+@media screen and (max-width: 1024px) and (min-width: 769px) {
+  /* Navbar - hamburger menu on tablet */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .nav-instructions--desktop {
+    display: none;
+  }
+
+  .title {
+    font-size: 3em;
+    min-width: auto;
+  }
+
+  main > .colContainer {
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  main > .rowContainer {
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  .relicImg {
+    height: 85px;
+    width: 85px;
+  }
+
+  .relicImg.rs3 {
+    width: 70px;
+    height: 60px;
+  }
+
+  .masteryImg {
+    height: 85px;
+    width: 80px;
+  }
+
+  .relicLabel,
+  .masteryLabel {
+    font-size: 1em;
+  }
+
+  .relic {
+    margin: 3px 0;
+  }
+
+  .mastery {
+    margin: 3px;
+  }
+
+  /* Homepage */
+  .subTitle {
+    font-size: 2em;
+  }
+
+  .navItem > img {
+    max-width: 150px;
+  }
+
+  .navItemSubTitle {
+    font-size: 1.5em;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  body {
+    justify-content: flex-start;
+  }
+
+  /* Navbar mobile layout */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-desktop {
+    display: none;
+  }
+
+  .nav-instructions--desktop {
+    display: none;
+  }
+
+  .nav-instructions--mobile {
+    display: flex;
+    font-size: 0.9em;
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Main content spacing for fixed navbar */
+  main {
+    padding-top: 20px;
+  }
+
+  /* Title section */
+  .title {
+    font-size: 1.8em;
+    min-width: auto;
+    min-height: auto;
+    padding: 15px 10px;
+    word-break: break-word;
+  }
+
+  /* Switch column layout to rows - no wrap for tier consistency */
+  main > .colContainer {
+    flex-direction: column;
+    min-height: auto;
+    min-width: auto;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .col {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 5px 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  /* Reduce item sizes */
+  .relicImg {
+    height: 70px;
+    width: 70px;
+  }
+
+  .relicImg.rs3 {
+    width: 60px;
+    height: 50px;
+  }
+
+  .masteryImg {
+    height: 70px;
+    width: 65px;
+  }
+
+  .relicLabel,
+  .masteryLabel {
+    font-size: 0.65em;
+    max-width: 70px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+
+  .relic,
+  .mastery {
+    margin: 3px;
+    flex-shrink: 0;
+  }
+
+  /* Row layout for masteries/pacts on mobile */
+  main > .rowContainer {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: center;
+    padding: 5px 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Bottom sheet sidebar */
+  .detail-sidebar {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 70vh;
+    border-left: none;
+    border-top: 1px solid var(--title-color);
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+  }
+
+  .detail-sidebar.open {
+    transform: translateY(0);
+  }
+
+  /* Visual drag handle indicator */
+  .detail-sidebar-header::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    margin: 0 auto 10px;
+  }
+
+  /* Homepage adjustments */
+  .subTitle {
+    font-size: 1.4em;
+  }
+
+  .homepage {
+    padding-top: 20px;
+  }
+
+  .homepage .col {
+    flex-direction: column;
+  }
+
+  .navItem > img {
+    max-width: 120px;
+  }
+
+  .navItemSubTitle {
+    font-size: 1.2em;
+  }
+
+  /* Footer stacked layout */
+  .footer {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    gap: 10px;
+    padding: 10px 20px;
+  }
+
+  .footer-links {
+    position: static;
+    transform: none;
+  }
+
+  .theme-selector {
+    margin-left: 0;
+  }
+
+  .footer-link {
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+  }
+
+  .footer-link svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Export button adjustments */
+  .picker-buttons {
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+
+  #exportBtn,
+  #addToShowcaseBtn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+/* Desktop instruction visibility (default) */
+.nav-instructions--mobile {
+  display: none;
 }

@@ -11,6 +11,23 @@ interface DetailData {
   items: string[];
 }
 
+// Double-tap state for mobile
+interface TapState {
+  lastTapTime: number;
+  lastTapTarget: HTMLElement | null;
+}
+
+const tapState: TapState = {
+  lastTapTime: 0,
+  lastTapTarget: null
+};
+
+const DOUBLE_TAP_THRESHOLD = 300;
+
+function isTouchDevice(): boolean {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
 // URL State Management
 function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
   const params = Array.from(elements)
@@ -128,25 +145,59 @@ function initPicker(): void {
   // Set initial selections from URL
   setInitialSelections(elements, titleSelector);
 
-  // Add click handlers to all items
+  // Add click/touch handlers to all items
+  const isTouch = isTouchDevice();
+
   Array.from(elements).forEach(element => {
-    element.addEventListener('click', function(this: HTMLElement) {
-      toggleElement(this, elements, titleSelector);
-    });
+    if (isTouch) {
+      // Touch device: single tap = toggle, double tap = sidebar
+      element.addEventListener('click', function(this: HTMLElement, e: Event) {
+        const now = Date.now();
+        const timeSinceLastTap = now - tapState.lastTapTime;
+        const isSameTarget = tapState.lastTapTarget === this;
 
-    element.addEventListener('contextmenu', function(this: HTMLElement, e: Event) {
-      e.preventDefault();
+        if (isSameTarget && timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
+          // Double tap detected - open sidebar
+          e.preventDefault();
+          if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
+            closeDetailSidebar();
+          } else {
+            openDetailSidebar({
+              label: this.dataset.label || '',
+              imageSrc: this.dataset.imageSrc || '',
+              items: JSON.parse(this.dataset.items || '[]')
+            }, this.id);
+          }
+          // Reset tap state
+          tapState.lastTapTime = 0;
+          tapState.lastTapTarget = null;
+        } else {
+          // Single tap - toggle selection
+          toggleElement(this, elements, titleSelector);
+          tapState.lastTapTime = now;
+          tapState.lastTapTarget = this;
+        }
+      });
+    } else {
+      // Non-touch device: click = toggle, right-click = sidebar
+      element.addEventListener('click', function(this: HTMLElement) {
+        toggleElement(this, elements, titleSelector);
+      });
 
-      if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
-        closeDetailSidebar();
-      } else {
-        openDetailSidebar({
-          label: this.dataset.label || '',
-          imageSrc: this.dataset.imageSrc || '',
-          items: JSON.parse(this.dataset.items || '[]')
-        }, this.id);
-      }
-    });
+      element.addEventListener('contextmenu', function(this: HTMLElement, e: Event) {
+        e.preventDefault();
+
+        if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
+          closeDetailSidebar();
+        } else {
+          openDetailSidebar({
+            label: this.dataset.label || '',
+            imageSrc: this.dataset.imageSrc || '',
+            items: JSON.parse(this.dataset.items || '[]')
+          }, this.id);
+        }
+      });
+    }
   });
 
   // Close button handler for sidebar
