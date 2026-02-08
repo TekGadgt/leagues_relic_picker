@@ -159,6 +159,7 @@ function initPicker(): void {
         if (isSameTarget && timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
           // Double tap detected - open sidebar
           e.preventDefault();
+          e.stopPropagation();
           if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
             closeDetailSidebar();
           } else {
