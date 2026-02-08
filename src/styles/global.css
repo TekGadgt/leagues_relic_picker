@@ -611,6 +611,10 @@ body.has-footer {
   border-radius: 8px;
 }
 
+.showcase-container.exporting .showcase-row-items {
+  flex-wrap: nowrap;
+}
+
 .showcase-row {
   display: flex;
   align-items: center;
@@ -880,11 +884,22 @@ body.has-footer {
   .col {
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-x: auto;
     padding: 5px 10px;
+    box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
+  }
+
+  .col > .relic:first-child,
+  .col > .mastery:first-child {
+    margin-left: auto;
+  }
+
+  .col > .relic:last-child,
+  .col > .mastery:last-child {
+    margin-right: auto;
   }
 
   /* Reduce item sizes */
@@ -899,8 +914,8 @@ body.has-footer {
   }
 
   .masteryImg {
-    height: 70px;
-    width: 65px;
+    height: 60px;
+    width: 55px;
   }
 
   .relicLabel,
@@ -920,15 +935,26 @@ body.has-footer {
   /* Row layout for masteries/pacts on mobile */
   main > .rowContainer {
     min-width: auto;
+    min-height: auto;
     width: 100%;
   }
 
   .row {
+    flex: none;
     flex-wrap: nowrap;
     overflow-x: auto;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 5px 10px;
+    box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .row > :first-child {
+    margin-left: auto;
+  }
+
+  .row > :last-child {
+    margin-right: auto;
   }
 
   /* Bottom sheet sidebar */

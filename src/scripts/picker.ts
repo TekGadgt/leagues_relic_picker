@@ -248,7 +248,25 @@ function initPicker(): void {
           useCORS: true,
           allowTaint: true,
           backgroundColor: config.backgroundColor
-        }).then(function(canvas: HTMLCanvasElement) {
+        }).then(async function(canvas: HTMLCanvasElement) {
+          // Try Web Share API for mobile (lets users save to Photos)
+          if (navigator.share && navigator.canShare) {
+            try {
+              const blob = await new Promise<Blob>((resolve, reject) => {
+                canvas.toBlob(b => b ? resolve(b) : reject(new Error('Failed to create blob')), 'image/png');
+              });
+              const file = new File([blob], config.exportFilename, { type: 'image/png' });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file] });
+                return;
+              }
+            } catch (shareError) {
+              // User cancelled or share failed - fall through to download
+              if (shareError instanceof Error && shareError.name === 'AbortError') return;
+            }
+          }
+
+          // Fallback: standard download
           const link = document.createElement('a');
           link.download = config.exportFilename;
           link.href = canvas.toDataURL();
