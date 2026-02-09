@@ -11,6 +11,25 @@ interface DetailData {
   items: string[];
 }
 
+// Double-tap state for mobile
+interface TapState {
+  lastTapTime: number;
+  lastTapTarget: HTMLElement | null;
+  pendingToggle: ReturnType<typeof setTimeout> | null;
+}
+
+const tapState: TapState = {
+  lastTapTime: 0,
+  lastTapTarget: null,
+  pendingToggle: null
+};
+
+const DOUBLE_TAP_THRESHOLD = 300;
+
+function isTouchDevice(): boolean {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
 // URL State Management
 function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
   const params = Array.from(elements)
@@ -128,25 +147,71 @@ function initPicker(): void {
   // Set initial selections from URL
   setInitialSelections(elements, titleSelector);
 
-  // Add click handlers to all items
+  // Add click/touch handlers to all items
+  const isTouch = isTouchDevice();
+
   Array.from(elements).forEach(element => {
-    element.addEventListener('click', function(this: HTMLElement) {
-      toggleElement(this, elements, titleSelector);
-    });
+    if (isTouch) {
+      // Touch device: single tap = toggle (delayed), double tap = sidebar
+      element.addEventListener('click', function(this: HTMLElement, e: Event) {
+        const now = Date.now();
+        const timeSinceLastTap = now - tapState.lastTapTime;
+        const isSameTarget = tapState.lastTapTarget === this;
 
-    element.addEventListener('contextmenu', function(this: HTMLElement, e: Event) {
-      e.preventDefault();
+        if (isSameTarget && timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
+          // Double tap detected - cancel pending toggle and open sidebar
+          if (tapState.pendingToggle) {
+            clearTimeout(tapState.pendingToggle);
+            tapState.pendingToggle = null;
+          }
+          e.preventDefault();
+          e.stopPropagation();
+          if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
+            closeDetailSidebar();
+          } else {
+            openDetailSidebar({
+              label: this.dataset.label || '',
+              imageSrc: this.dataset.imageSrc || '',
+              items: JSON.parse(this.dataset.items || '[]')
+            }, this.id);
+          }
+          // Reset tap state
+          tapState.lastTapTime = 0;
+          tapState.lastTapTarget = null;
+        } else {
+          // Potential single tap - delay toggle to allow for double tap
+          if (tapState.pendingToggle) {
+            clearTimeout(tapState.pendingToggle);
+          }
+          const element = this;
+          tapState.pendingToggle = setTimeout(() => {
+            toggleElement(element, elements, titleSelector);
+            tapState.pendingToggle = null;
+          }, DOUBLE_TAP_THRESHOLD);
+          tapState.lastTapTime = now;
+          tapState.lastTapTarget = this;
+        }
+      });
+    } else {
+      // Non-touch device: click = toggle, right-click = sidebar
+      element.addEventListener('click', function(this: HTMLElement) {
+        toggleElement(this, elements, titleSelector);
+      });
 
-      if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
-        closeDetailSidebar();
-      } else {
-        openDetailSidebar({
-          label: this.dataset.label || '',
-          imageSrc: this.dataset.imageSrc || '',
-          items: JSON.parse(this.dataset.items || '[]')
-        }, this.id);
-      }
-    });
+      element.addEventListener('contextmenu', function(this: HTMLElement, e: Event) {
+        e.preventDefault();
+
+        if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
+          closeDetailSidebar();
+        } else {
+          openDetailSidebar({
+            label: this.dataset.label || '',
+            imageSrc: this.dataset.imageSrc || '',
+            items: JSON.parse(this.dataset.items || '[]')
+          }, this.id);
+        }
+      });
+    }
   });
 
   // Close button handler for sidebar
@@ -185,24 +250,70 @@ function initPicker(): void {
       // Close sidebar before export
       closeDetailSidebar();
 
+      // Force desktop layout for export
+      mainElement.classList.add('exporting');
       mainElement.style.backgroundColor = config.backgroundColor;
       mainElement.style.paddingTop = '50px';
       mainElement.style.paddingBottom = '50px';
 
-      // Access html2canvas from window
-      const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
-      if (w.html2canvas) {
-        w.html2canvas(mainElement, {
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: config.backgroundColor
-        }).then(function(canvas: HTMLCanvasElement) {
-          const link = document.createElement('a');
-          link.download = config.exportFilename;
-          link.href = canvas.toDataURL();
-          link.click();
-        });
-      }
+      // Wait for repaint before capturing
+      requestAnimationFrame(() => {
+        const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
+        
+        const restoreLayout = () => {
+          mainElement.classList.remove('exporting');
+          mainElement.style.paddingTop = '';
+          mainElement.style.paddingBottom = '';
+          mainElement.style.backgroundColor = '';
+        };
+        
+        if (w.html2canvas) {
+          w.html2canvas(mainElement, {
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: config.backgroundColor
+          }).then(async function(canvas: HTMLCanvasElement) {
+            restoreLayout();
+
+            // Try Web Share API for mobile (lets users save to Photos)
+            if (navigator.share && navigator.canShare) {
+              try {
+                const blob = await new Promise<Blob>((resolve, reject) => {
+                  canvas.toBlob((b) => {
+                    if (b) {
+                      resolve(b);
+                    } else {
+                      reject(new Error('Failed to generate image blob'));
+                    }
+                  }, 'image/png');
+                });
+                const file = new File([blob], config.exportFilename, { type: 'image/png' });
+                if (navigator.canShare({ files: [file] })) {
+                  await navigator.share({ files: [file] });
+                  return;
+                }
+              } catch (shareError) {
+                // User cancelled or share failed - fall through to download
+                if (shareError instanceof Error && shareError.name === 'AbortError') return;
+              }
+            }
+
+            // Fallback: standard download
+            const link = document.createElement('a');
+            link.download = config.exportFilename;
+            link.href = canvas.toDataURL();
+            link.click();
+          }).catch((error) => {
+            restoreLayout();
+            console.error('Export failed:', error);
+            alert('Failed to export image. Please try again.');
+          });
+        } else {
+          restoreLayout();
+          console.error('html2canvas library not loaded');
+          alert('Export functionality is not available. Please refresh the page and try again.');
+        }
+      });
     });
   }
 

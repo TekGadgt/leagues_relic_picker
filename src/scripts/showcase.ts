@@ -321,7 +321,43 @@ function exportImage(): void {
     allowTaint: true,
     backgroundColor: '#000000',
     scale: 2 // Higher quality
-  }).then(function(canvas: HTMLCanvasElement) {
+  }).then(async function(canvas: HTMLCanvasElement) {
+    // Try Web Share API for mobile (lets users save to Photos)
+    if (navigator.share && navigator.canShare) {
+      try {
+        const blob = await new Promise<Blob>((resolve, reject) => {
+          canvas.toBlob((result) => {
+            if (result) {
+              resolve(result);
+            } else {
+              reject(new Error('Failed to convert canvas to Blob'));
+            }
+          }, 'image/png');
+        });
+        const file = new File([blob], 'showcase.png', { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file] });
+          container.classList.remove('exporting');
+          if (exportBtn) {
+            exportBtn.disabled = false;
+            exportBtn.classList.remove('exporting');
+          }
+          return;
+        }
+      } catch (shareError) {
+        // User cancelled share or share failed - fall through to download
+        if (shareError instanceof Error && shareError.name === 'AbortError') {
+          container.classList.remove('exporting');
+          if (exportBtn) {
+            exportBtn.disabled = false;
+            exportBtn.classList.remove('exporting');
+          }
+          return;
+        }
+      }
+    }
+
+    // Fallback: standard download
     const link = document.createElement('a');
     link.download = 'showcase.png';
     link.href = canvas.toDataURL();
