@@ -247,7 +247,7 @@ function initPicker(): void {
       requestAnimationFrame(() => {
         const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
         
-        const restoreLayout = () => {
+        const cleanupExportState = () => {
           mainElement.classList.remove('exporting');
           mainElement.style.paddingTop = '';
           mainElement.style.paddingBottom = '';
@@ -259,7 +259,7 @@ function initPicker(): void {
             allowTaint: true,
             backgroundColor: config.backgroundColor
           }).then(async function(canvas: HTMLCanvasElement) {
-            restoreLayout();
+            cleanupExportState();
 
             // Try Web Share API for mobile (lets users save to Photos)
             if (navigator.share && navigator.canShare) {
@@ -284,12 +284,12 @@ function initPicker(): void {
             link.href = canvas.toDataURL();
             link.click();
           }).catch((error) => {
-            restoreLayout();
+            cleanupExportState();
             console.error('Export failed:', error);
             alert('Failed to export image. Please try again.');
           });
         } else {
-          restoreLayout();
+          cleanupExportState();
           console.error('html2canvas library not loaded');
           alert('Export functionality is not available. Please refresh the page and try again.');
         }
