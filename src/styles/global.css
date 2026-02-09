@@ -904,7 +904,7 @@ main.exporting .title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    position: fixed;
     width: 100%;
     box-sizing: border-box;
   }

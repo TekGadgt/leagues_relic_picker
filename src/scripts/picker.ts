@@ -15,11 +15,13 @@ interface DetailData {
 interface TapState {
   lastTapTime: number;
   lastTapTarget: HTMLElement | null;
+  pendingToggle: ReturnType<typeof setTimeout> | null;
 }
 
 const tapState: TapState = {
   lastTapTime: 0,
-  lastTapTarget: null
+  lastTapTarget: null,
+  pendingToggle: null
 };
 
 const DOUBLE_TAP_THRESHOLD = 300;
@@ -150,14 +152,18 @@ function initPicker(): void {
 
   Array.from(elements).forEach(element => {
     if (isTouch) {
-      // Touch device: single tap = toggle, double tap = sidebar
+      // Touch device: single tap = toggle (delayed), double tap = sidebar
       element.addEventListener('click', function(this: HTMLElement, e: Event) {
         const now = Date.now();
         const timeSinceLastTap = now - tapState.lastTapTime;
         const isSameTarget = tapState.lastTapTarget === this;
 
         if (isSameTarget && timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
-          // Double tap detected - open sidebar
+          // Double tap detected - cancel pending toggle and open sidebar
+          if (tapState.pendingToggle) {
+            clearTimeout(tapState.pendingToggle);
+            tapState.pendingToggle = null;
+          }
           e.preventDefault();
           e.stopPropagation();
           if (isDetailSidebarOpen() && currentSidebarElementId === this.id) {
@@ -173,8 +179,14 @@ function initPicker(): void {
           tapState.lastTapTime = 0;
           tapState.lastTapTarget = null;
         } else {
-          // Single tap - toggle selection
-          toggleElement(this, elements, titleSelector);
+          // Potential single tap - delay toggle to allow for double tap
+          if (tapState.pendingToggle) {
+            clearTimeout(tapState.pendingToggle);
+          }
+          tapState.pendingToggle = setTimeout(() => {
+            toggleElement(this, elements, titleSelector);
+            tapState.pendingToggle = null;
+          }, DOUBLE_TAP_THRESHOLD);
           tapState.lastTapTime = now;
           tapState.lastTapTarget = this;
         }
@@ -251,6 +263,7 @@ function initPicker(): void {
           mainElement.classList.remove('exporting');
           mainElement.style.paddingTop = '';
           mainElement.style.paddingBottom = '';
+          mainElement.style.backgroundColor = '';
         };
         
         if (w.html2canvas) {
@@ -264,9 +277,15 @@ function initPicker(): void {
             // Try Web Share API for mobile (lets users save to Photos)
             if (navigator.share && navigator.canShare) {
               try {
-                const dataUrl = canvas.toDataURL('image/png');
-                const response = await fetch(dataUrl);
-                const blob = await response.blob();
+                const blob = await new Promise<Blob>((resolve, reject) => {
+                  canvas.toBlob((b) => {
+                    if (b) {
+                      resolve(b);
+                    } else {
+                      reject(new Error('Failed to generate image blob'));
+                    }
+                  }, 'image/png');
+                });
                 const file = new File([blob], config.exportFilename, { type: 'image/png' });
                 if (navigator.canShare({ files: [file] })) {
                   await navigator.share({ files: [file] });
