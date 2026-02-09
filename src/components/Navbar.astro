@@ -22,7 +22,7 @@ const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
 
 <nav class:list={["navbar", { "navbar--no-instructions": !showInstructions }]}>
   <!-- Mobile hamburger button -->
-  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+  <button type="button" class="nav-hamburger" id="navHamburger" aria-label="Toggle menu" aria-controls="navMobileMenu" aria-expanded="false">
     <svg viewBox="0 0 24 24" fill="currentColor">
       <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
     </svg>
@@ -114,8 +114,9 @@ const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
 
   if (hamburger && mobileMenu) {
     hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.toggle('open');
       hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
     });
 
     // Close menu when clicking outside
@@ -123,6 +124,7 @@ const itemTypeDisplay = itemType.charAt(0).toUpperCase() + itemType.slice(1);
       if (!hamburger.contains(e.target as Node) && !mobileMenu.contains(e.target as Node)) {
         mobileMenu.classList.remove('open');
         hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
       }
     });
   }

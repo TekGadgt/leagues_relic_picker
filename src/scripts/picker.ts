@@ -246,16 +246,20 @@ function initPicker(): void {
       // Wait for repaint before capturing
       requestAnimationFrame(() => {
         const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
+        
+        const restoreLayout = () => {
+          mainElement.classList.remove('exporting');
+          mainElement.style.paddingTop = '';
+          mainElement.style.paddingBottom = '';
+        };
+        
         if (w.html2canvas) {
           w.html2canvas(mainElement, {
             useCORS: true,
             allowTaint: true,
             backgroundColor: config.backgroundColor
           }).then(async function(canvas: HTMLCanvasElement) {
-            // Restore mobile layout
-            mainElement.classList.remove('exporting');
-            mainElement.style.paddingTop = '';
-            mainElement.style.paddingBottom = '';
+            restoreLayout();
 
             // Try Web Share API for mobile (lets users save to Photos)
             if (navigator.share && navigator.canShare) {
@@ -279,7 +283,15 @@ function initPicker(): void {
             link.download = config.exportFilename;
             link.href = canvas.toDataURL();
             link.click();
+          }).catch((error) => {
+            restoreLayout();
+            console.error('Export failed:', error);
+            alert('Failed to export image. Please try again.');
           });
+        } else {
+          restoreLayout();
+          console.error('html2canvas library not loaded');
+          alert('Export functionality is not available. Please refresh the page and try again.');
         }
       });
     });
