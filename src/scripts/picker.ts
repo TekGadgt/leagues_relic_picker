@@ -183,8 +183,9 @@ function initPicker(): void {
           if (tapState.pendingToggle) {
             clearTimeout(tapState.pendingToggle);
           }
+          const element = this;
           tapState.pendingToggle = setTimeout(() => {
-            toggleElement(this, elements, titleSelector);
+            toggleElement(element, elements, titleSelector);
             tapState.pendingToggle = null;
           }, DOUBLE_TAP_THRESHOLD);
           tapState.lastTapTime = now;
