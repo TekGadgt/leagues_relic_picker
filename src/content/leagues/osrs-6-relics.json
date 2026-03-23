@@ -24,7 +24,7 @@
     "tier1": [
       {
         "id": "1",
-        "src": "/osrs/6/Endless_Harvest.png",
+        "src": "/osrs/6/relics/Endless_Harvest.png",
         "relicLabel": "Endless Harvest",
         "toolTipItems": [
           "Toggleable effect: All resources gathered will be sent to the bank.",
@@ -35,7 +35,7 @@
       },
       {
         "id": "2",
-        "src": "/osrs/6/Barbarian_Gathering.png",
+        "src": "/osrs/6/relics/Barbarian_Gathering.png",
         "relicLabel": "Barbarian Gathering",
         "toolTipItems": [
           "Grants the knapsack",
@@ -50,7 +50,7 @@
       },
       {
         "id": "3",
-        "src": "/osrs/6/Abundance.png",
+        "src": "/osrs/6/relics/Abundance.png",
         "relicLabel": "Abundance",
         "toolTipItems": [
           "Toggleable effect: Coins generated will be put into your inventory.",
