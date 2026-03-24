@@ -183,9 +183,23 @@
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "src": "/osrs/6/relics/Minion.png",
+        "relicLabel": "Minion",
+        "toolTipItems": [
+          "Grants the Minion whistle",
+          "The whistle will allow you to summon a powerful minion which lasts for 30 minutes.",
+          "When you are in multi-combat it will cast an AoE attack if the target is weakest to range or magic.",
+          "The minions stats are:",
+          "Min hit: 3",
+          "Max hit: 10",
+          "Attack speed: 1.8",
+          "Accuracy: 45,000",
+          "The whistle can consume up to 5 unique equippable Zamorak items (by using them on the whistle) increasing your minion's max hit by 2 per unique item.",
+          "The minion will try to automatically loot items from creatures you kill (including fired ranged ammo). A minimum value threshold and whether or not these should be noted is configurable on the whistle.",
+          "The minion will deal damage to targets which are immune to thralls.",
+          "The minion will not fight in PvP and will not fight against Yama.",
+          "The minion whistle can be retrieved from the Leagues Tutor in Yama's Lair if lost."
+        ]
       },
       {
         "id": "3",
