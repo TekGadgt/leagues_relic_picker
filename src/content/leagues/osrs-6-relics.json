@@ -156,8 +156,16 @@
       {
         "id": "3",
         "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "relicLabel": "Culling Spree",
+        "toolTipItems": [
+          "Players may choose their slayer task from a list of 3 choices, with at least 1 boss task if possible",
+          "Task kill count is selectable for all tasks (5-200)",
+          "Superior slayer monsters have a 50% chance of spawning another superior on death",
+          "Superior monsters always drop between 1 and 3 Clue scroll (elite)",
+          "All effects of a Slayer helmet are gained without needing to wear one",
+          "All slayer reward shop perks are free",
+          "The Rune pouch, Herb sack and Looting bag are purchasable from the slayer reward store.",
+        ]
       }
     ],
     "tier7": [
