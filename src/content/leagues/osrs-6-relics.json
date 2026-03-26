@@ -155,7 +155,7 @@
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
+        "src": "/osrs/6/relics/Culling_Spree.png",
         "relicLabel": "Culling Spree",
         "toolTipItems": [
           "Players may choose their slayer task from a list of 3 choices, with at least 1 boss task if possible",
