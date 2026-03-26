@@ -65,19 +65,25 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier3": [
@@ -85,19 +91,31 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "relicLabel": "Evil Eye",
+        "toolTipItems": [
+          "Grants the evil eye",
+          "The eye will allow you to teleport to the entrance of any boss or raid in the combat achievements list.",
+          "Barrows will have the option to go to the chest or to the surface.",
+          "You can teleport to each Moon of peril individually.",
+          "The eye ignores wilderness teleport restrictions.",
+          "The eye cannot be used to teleport to an area you haven't unlocked.",
+          "The eye can be retrieved from the Leagues Tutor in Yama's Lair if lost."
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier4": [
@@ -105,19 +123,25 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier5": [
@@ -125,19 +149,25 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier6": [
@@ -145,13 +175,17 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
@@ -173,13 +207,17 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier8": [
@@ -187,7 +225,9 @@
         "id": "1",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
@@ -213,7 +253,9 @@
         "id": "3",
         "src": "/assets/placeholders/relic.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ]
   }
