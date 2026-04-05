@@ -63,26 +63,59 @@
     "tier2": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "src": "/osrs/6/relics/Hotfoot.png",
+        "relicLabel": "Hotfoot",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Upon choosing this relic you will receive the searing boots.",
+          "While the searing boots are worn, you gain the following benefits:",
+          "Agility experience is gained based on your Agility level while you run.",
+          "Caught fish are automatically cooked.",
+          "Mined ore is automatically smelted.",
+          "Additionally, regardless of your footwear:",
+          "Picking up some termites or a mark of grace from a course will automatically complete the lap granting completion XP and 10,000 coins.",
+          "Marks of grace will always have a 33% chance to spawn on all rooftop courses.",
+          "Completing a course grants two completion count and 25% bonus experience.",
+          "100% success rate on all actions for Agility and Cooking.",
+          "You will receive 2x termites from the Colossal Wyrm Agility Course.",
+          "You will receive 10x crystal shards from Prifddinas Agility Course.",
+          "The searing boots can be retrieved from the Leagues tutor in Yama's lair if lost."
         ]
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
+        "src": "/osrs/6/relics/Friendly_Forager.png",
+        "relicLabel": "Friendly Forager",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Upon choosing this relic you will receive the forager's pouch.",
+          "While the forager's pouch is worn or in your inventory, you gain the following benefits:",
+          "When you gather resources from Woodcutting, Fishing, Mining, and Hunter, the pouch will find and store a random grimy herb",
+          "This herb is limited to any which your Herblore level + 25 can clean. This action also provides a small amount of Herblore experience.",
+          "The pouch will only find herbs it has room to store, but will always attempt to give you a herb you can receive.",
+          "The pouch also functions as a silklined herb sack, and shares an inventory with it.",
+          "Additionally, you gain the following perks to Herblore:",
+          "All items are processed at once.",
+          "Secondary ingredients have a 90% chance to not be consumed, this stacks additively with other sources.",
+          "Potions created will have 4 doses instead of 3.",
+          "The forager's pouch can be retrieved from the Leagues Tutor in Yama's Lair if lost. "
         ]
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
+        "src": "/osrs/6/relics/Woodsman.png",
+        "relicLabel": "Woodsman",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Toggleable effects:",
+          "Hunter traps harvest directly to your bank.",
+          "Logs chopped will be automatically burned.",
+          "Passive effects:",
+          "All items are processed at once while Fletching, stackable fletching items are capped at 10x the regular amount per action.",
+          "Chopped logs are automatically burned while Woodcutting granting full Firemaking XP, this effect can be toggled above.",
+          "100% success rate on all Hunter actions.",
+          "Hunter traps attract animals faster, give double the loot and XP.",
+          "Hunter traps always drop a random herb seed or tree seed when harvested.",
+          "Hunter rumours give double XP and Hunters loot sacks will award 2x as much loot.",
+          "All loot from jarred implings will be doubled and noted. Additionally they will no longer break upon opening.",
+          "All Quetzal Whistles will not lose charges."
         ]
       }
     ],
@@ -97,7 +130,7 @@
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
+        "src": "/osrs/6/relics/Evil_Eye.png",
         "relicLabel": "Evil Eye",
         "toolTipItems": [
           "Grants the evil eye",
@@ -129,10 +162,21 @@
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
+        "src": "/osrs/6/relics/Conniving_Clues.png",
+        "relicLabel": "Conniving Clues",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "When opening a reward casket, you have a 1/3 chance to receive clue contracts which can be consumed to teleport you to your current clue step.",
+          "Beginner clues give 0-2 contracts at a time.",
+          "Easy clues give 1-4 contracts at a time.",
+          "Medium clues give 1-5 contracts at a time.",
+          "Hard clues give 1-7 contracts at a time.",
+          "Elite clues give 1-9 contracts at a time.",
+          "Master clues give 1-10 contracts at a time.",
+          "Rewards caskets have a 1/4 chance to contain a clue scroll box of the same tier.",
+          "Clues from creatures and impling jars now have a drop rate of 1/15.",
+          "Clue vessels obtained from skilling (such as clue geodes or clue nests) are 10x more likely to drop.",
+          "All clues have the lowest possible number of steps, and will give the maximum amount of reward rolls.",
+          "Emote and Falo clue steps no longer have item requirements."
         ]
       },
       {
@@ -147,18 +191,40 @@
     "tier5": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "src": "/osrs/6/relics/Natures_Accord.png",
+        "relicLabel": "Nature's Accord",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the fairy mushroom",
+          "Active effects:",
+          "Farming patches and plants no longer have any level requirements to harvest, plant, or make.",
+          "Additionally, you gain the following perks to Farming:",
+          "You will receive 10x yield from all farming patches and it will automatically be noted.",
+          "XP is granted for all additional resources gathered.",
+          "Your plants will never die.",
+          "You have a 20% chance to not use a seed or sapling when planting crops in patches.",
+          "The fairy mushroom will allow you to teleport to any fairy ring, spirit tree, or tool leprechaun.",
+          "Unlocking this will autocomplete the Tree Gnome Village quest.",
+          "This item ignores wilderness teleport restrictions.",
+          "This item cannot be used to teleport to an area you haven't unlocked.",
+          "The fairy mushroom can be retrieved from the Leagues tutor in Yama's Lair if lost."
         ]
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
+        "src": "/osrs/6/relics/Larcenist.png",
+        "relicLabel": "Larcenist",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "You will gain the following benefits while Thieving:",
+          "100% success rate on all actions.",
+          "Automatically re-pickpocket an NPC.",
+          "Automatically re-steal from a stall.",
+          "Items obtained from pickpocketing and stalls are noted.",
+          "Stalls never deplete and guards will never catch you thieving from them.",
+          "The amount of coin pouches you can carry is increased by 10x",
+          "Additionally, while Thieving, loot is increased by 10x for the following:",
+          "Pickpocketing (not including clue scrolls)",
+          "Stealing from stalls.",
+          "Stealing house valuables in Varlamore."
         ]
       },
       {
@@ -173,10 +239,14 @@
     "tier6": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "src": "/osrs/6/relics/Grimoire.png",
+        "relicLabel": "Grimoire",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the arcane grimoire",
+          "The grimoire can be used to freely swap between spellbooks.",
+          "The grimoire acts as a book of the dead.",
+          "Additionally, when you select this relic, you will unlock access to all prayers and spells regardless of area, quest, or diary requirements.",
+          "The arcane grimoire can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       },
       {
@@ -213,10 +283,10 @@
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
+        "src": "/osrs/6/relics/Reloaded.png",
+        "relicLabel": "Reloaded",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Choose another relic from any tier below this one."
         ]
       }
     ],
@@ -251,10 +321,21 @@
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
+        "src": "/osrs/6/relics/Flask_of_Fervour.png",
+        "relicLabel": "Flask of Fervour",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the flask of fervour",
+          "When the Flask is consumed:",
+          "Your Hitpoints will be restored to full.",
+          "Your prayer points will be restored to full.",
+          "Your special attack energy will be restored to full.",
+          "Over the next 2.4 seconds the sigil will:",
+          "Trigger three explosions which deal 60% of your base Prayer level (30% in PvP) to all enemies within 3 tiles of you as typeless damage.",
+          "Reduce all damage you take to 0.",
+          "Not deal damage to Yama.",
+          "This item has a base cooldown of 3 minutes",
+          "For every 10 damage you deal in a single hit, reduce the cooldown by 0.6s.",
+          "The flask of fervour can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       }
     ]
