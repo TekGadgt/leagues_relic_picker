@@ -19,6 +19,7 @@ type LeagueEntry = {
     backgroundColor: string;
   };
   items: Record<string, unknown>;
+  graph?: unknown;
 };
 
 const leagueData: Record<string, LeagueEntry> = {};
@@ -40,6 +41,7 @@ for (const league of leagues) {
     pageType: league.data.pageType,
     theme: league.data.theme,
     items: league.data.items,
+    graph: league.data.graph || null,
   };
 }
 ---

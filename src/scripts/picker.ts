@@ -5,10 +5,12 @@ interface PickerConfig {
   exportFilename: string;
 }
 
+type ToolTipItem = string | string[];
+
 interface DetailData {
   label: string;
   imageSrc: string;
-  items: string[];
+  items: ToolTipItem[];
 }
 
 // Double-tap state for mobile
@@ -76,14 +78,27 @@ function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>
   const isSelected = element.classList.toggle('selected');
   updateElementOpacity(element, isSelected);
   updateURLParams(elements, titleSelector);
+  updateEdgeStyles();
 }
 
 function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {
-  const img = element.querySelector('.relicImg, .masteryImg') as HTMLElement | null;
+  const img = element.querySelector('.relicImg, .masteryImg, .pactImg') as HTMLElement | null;
   const label = element.querySelector('.relicLabel, .masteryLabel') as HTMLElement | null;
 
   if (img) img.style.opacity = isSelected ? '1' : '0.25';
   if (label) label.style.opacity = isSelected ? '1' : '0.25';
+}
+
+function updateEdgeStyles(): void {
+  const edges = document.querySelectorAll('.pact-edge');
+  edges.forEach(edge => {
+    const from = edge.getAttribute('data-from');
+    const to = edge.getAttribute('data-to');
+    const fromEl = from ? document.getElementById(from) : null;
+    const toEl = to ? document.getElementById(to) : null;
+    const bothSelected = fromEl?.classList.contains('selected') && toEl?.classList.contains('selected');
+    edge.classList.toggle('active', !!bothSelected);
+  });
 }
 
 let currentSidebarElementId: string | null = null;
@@ -106,14 +121,27 @@ function openDetailSidebar(data: DetailData, _elementId: string): void {
     if (data.items && data.items.length > 0) {
       const list = document.createElement('ul');
       data.items.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        list.appendChild(li);
+        if (Array.isArray(item)) {
+          const subList = document.createElement('ul');
+          item.forEach(subItem => {
+            const subLi = document.createElement('li');
+            subLi.textContent = subItem;
+            subList.appendChild(subLi);
+          });
+          list.appendChild(subList);
+        } else {
+          const li = document.createElement('li');
+          li.textContent = item;
+          list.appendChild(li);
+        }
       });
-      descriptionContainer.innerHTML = '';
+      while (descriptionContainer.firstChild) descriptionContainer.removeChild(descriptionContainer.firstChild);
       descriptionContainer.appendChild(list);
     } else {
-      descriptionContainer.innerHTML = '<p>No additional details available.</p>';
+      while (descriptionContainer.firstChild) descriptionContainer.removeChild(descriptionContainer.firstChild);
+      const p = document.createElement('p');
+      p.textContent = 'No additional details available.';
+      descriptionContainer.appendChild(p);
     }
   }
 
@@ -140,12 +168,14 @@ function getPickerConfig(): PickerConfig {
 
 // Initialize the picker
 function initPicker(): void {
-  const itemClass = document.querySelector('.relic') ? 'relic' : 'mastery';
+  const itemClass = document.querySelector('.pact') ? 'pact' : document.querySelector('.relic') ? 'relic' : 'mastery';
   const elements = document.getElementsByClassName(itemClass);
+  const isPactGraph = itemClass === 'pact';
   const titleSelector = '.title';
 
   // Set initial selections from URL
   setInitialSelections(elements, titleSelector);
+  if (isPactGraph) updateEdgeStyles();
 
   // Add click/touch handlers to all items
   const isTouch = isTouchDevice();
@@ -227,6 +257,10 @@ function initPicker(): void {
     const sidebar = document.querySelector('.detail-sidebar');
     if (sidebar && sidebar.contains(e.target as Node)) return;
 
+    // Don't close sidebar when interacting with pact graph viewport
+    const pactViewport = document.getElementById('pactViewport');
+    if (pactViewport && pactViewport.contains(e.target as Node)) return;
+
     closeDetailSidebar();
   });
 
@@ -250,6 +284,13 @@ function initPicker(): void {
       // Close sidebar before export
       closeDetailSidebar();
 
+      // Reset graph transform for export
+      const wExport = window as Window & {
+        resetPactGraphTransform?: () => void;
+        restorePactGraphTransform?: () => void;
+      };
+      if (wExport.resetPactGraphTransform) wExport.resetPactGraphTransform();
+
       // Force desktop layout for export
       mainElement.classList.add('exporting');
       mainElement.style.backgroundColor = config.backgroundColor;
@@ -259,12 +300,13 @@ function initPicker(): void {
       // Wait for repaint before capturing
       requestAnimationFrame(() => {
         const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
-        
+
         const restoreLayout = () => {
           mainElement.classList.remove('exporting');
           mainElement.style.paddingTop = '';
           mainElement.style.paddingBottom = '';
           mainElement.style.backgroundColor = '';
+          if (wExport.restorePactGraphTransform) wExport.restorePactGraphTransform();
         };
         
         if (w.html2canvas) {

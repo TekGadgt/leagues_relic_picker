@@ -1,0 +1,79 @@
+---
+import PactNode from './PactNode.astro';
+
+interface GraphNode {
+  id: string;
+  x: number;
+  y: number;
+  src: string;
+  pactLabel: string;
+  toolTipItems: (string | string[])[];
+  size: 'sm' | 'md' | 'lg';
+}
+
+interface GraphEdge {
+  id?: string;
+  from: string;
+  to: string;
+  style?: 'default' | 'red';
+}
+
+interface Props {
+  graph: {
+    nodes: GraphNode[];
+    edges: GraphEdge[];
+  };
+}
+
+const { graph } = Astro.props;
+
+const nodePositions = new Map(graph.nodes.map(n => [n.id, { x: n.x, y: n.y }]));
+---
+
+<div class="pact-viewport" id="pactViewport">
+  <div class="pact-controls">
+    <button id="pactZoomOut" title="Zoom out">-</button>
+    <button id="pactZoomIn" title="Zoom in">+</button>
+    <button id="pactZoomReset" title="Center">&#x1f441;</button>
+  </div>
+
+  <div class="pact-canvas" id="pactCanvas">
+    <svg
+      class="pact-edges"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+    >
+      {graph.edges.map(edge => {
+        const fromPos = nodePositions.get(edge.from);
+        const toPos = nodePositions.get(edge.to);
+        if (!fromPos || !toPos) return null;
+        return (
+          <line
+            x1={fromPos.x}
+            y1={fromPos.y}
+            x2={toPos.x}
+            y2={toPos.y}
+            data-from={edge.from}
+            data-to={edge.to}
+            class={`pact-edge${edge.style === 'red' ? ' pact-edge-red' : ''}`}
+          />
+        );
+      })}
+    </svg>
+
+    <div class="pact-nodes">
+      {graph.nodes.map(node => (
+        <div class="pact-node-wrapper" style={`left: ${node.x}%; top: ${node.y}%;`}>
+          <PactNode
+            id={node.id}
+            src={node.src}
+            label={node.pactLabel}
+            toolTipItems={node.toolTipItems}
+            size={node.size}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

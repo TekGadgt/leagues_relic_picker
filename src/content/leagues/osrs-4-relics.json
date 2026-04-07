@@ -4,7 +4,6 @@
   "name": "Trailblazer Reloaded League",
   "pageType": "relics",
   "layout": "columns",
-  "isRs3": false,
   "backgroundColor": "#090402",
   "exportFilename": "relics.png",
   "meta": {

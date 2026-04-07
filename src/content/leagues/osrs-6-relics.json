@@ -4,7 +4,6 @@
   "name": "Demonic Pacts League",
   "pageType": "relics",
   "layout": "columns",
-  "isRs3": false,
   "backgroundColor": "#070101",
   "exportFilename": "relics.png",
   "meta": {

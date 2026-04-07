@@ -1,0 +1,21 @@
+---
+interface Props {
+  id: string;
+  src: string;
+  label: string;
+  toolTipItems: (string | string[])[];
+  size: 'sm' | 'md' | 'lg';
+}
+
+const { id, src, label, toolTipItems, size } = Astro.props;
+---
+
+<div
+  class={`pact pact-${size}`}
+  id={id}
+  data-label={label}
+  data-image-src={src}
+  data-items={JSON.stringify(toolTipItems)}
+>
+  <img class="pactImg" src={src} alt={`${label} pact icon`} />
+</div>

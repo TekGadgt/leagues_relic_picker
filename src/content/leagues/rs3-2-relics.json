@@ -4,7 +4,6 @@
   "name": "RS3 League 2",
   "pageType": "relics",
   "layout": "columns",
-  "isRs3": true,
   "backgroundColor": "#071022",
   "exportFilename": "relics.png",
   "meta": {
