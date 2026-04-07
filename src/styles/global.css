@@ -205,8 +205,8 @@ main > .colContainer {
 }
 
 .relicImg {
-  height: 150px;
-  width: 150px;
+  height: 120px;
+  width: 120px;
 }
 
 .relicImg.rs3 {
@@ -639,8 +639,8 @@ main.exporting .col > .mastery:last-child {
 }
 
 main.exporting .relicImg {
-  height: 150px;
-  width: 150px;
+  height: 120px;
+  width: 120px;
 }
 
 main.exporting .relicImg.rs3 {
