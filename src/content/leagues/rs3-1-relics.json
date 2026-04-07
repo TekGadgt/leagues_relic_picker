@@ -4,7 +4,6 @@
   "name": "Catalyst League",
   "pageType": "relics",
   "layout": "columns",
-  "isRs3": true,
   "backgroundColor": "#0C0000",
   "exportFilename": "relics.png",
   "meta": {

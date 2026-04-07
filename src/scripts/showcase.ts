@@ -1,11 +1,20 @@
 // Showcase page client-side logic
 
+type ToolTipItem = string | string[];
+
 interface LeagueItem {
   id: string;
   src: string;
   relicLabel?: string;
   title?: string;
-  toolTipItems: string[];
+  toolTipItems: ToolTipItem[];
+}
+
+interface GraphNode {
+  id: string;
+  src: string;
+  pactLabel: string;
+  toolTipItems: ToolTipItem[];
 }
 
 interface LeagueData {
@@ -20,6 +29,7 @@ interface LeagueData {
     backgroundColor: string;
   };
   items: Record<string, LeagueItem[]>;
+  graph?: { nodes: GraphNode[] } | null;
 }
 
 interface ParsedURL {
@@ -241,9 +251,23 @@ function processURLs(urls: string[]): BuildData[] {
     }
 
     // Get items based on page type
-    const items = league.pageType === 'relics'
-      ? getAllSelectedItems(parsed.selectedIds, league.items)
-      : getHighestPerGroup(parsed.selectedIds, league.items);
+    let items: LeagueItem[];
+    if (league.graph && league.graph.nodes) {
+      // Graph-based layout (pacts): look up nodes by ID directly
+      const nodeMap = new Map(league.graph.nodes.map(n => [n.id, n]));
+      const graphItems: LeagueItem[] = [];
+      for (const id of parsed.selectedIds) {
+        const node = nodeMap.get(id);
+        if (node) {
+          graphItems.push({ id: node.id, src: node.src, relicLabel: node.pactLabel, toolTipItems: node.toolTipItems });
+        }
+      }
+      items = graphItems;
+    } else if (league.pageType === 'relics') {
+      items = getAllSelectedItems(parsed.selectedIds, league.items);
+    } else {
+      items = getHighestPerGroup(parsed.selectedIds, league.items);
+    }
 
     builds.push({
       title: parsed.title,

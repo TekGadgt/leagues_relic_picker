@@ -3,7 +3,7 @@ interface Props {
   id: string;
   src: string;
   label: string;
-  toolTipItems: string[];
+  toolTipItems: (string | string[])[];
 }
 
 const { id, src, label, toolTipItems } = Astro.props;

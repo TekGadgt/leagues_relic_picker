@@ -7,17 +7,17 @@ interface Item {
   src: string;
   relicLabel?: string;
   title?: string;
-  toolTipItems: string[];
+  toolTipItems: (string | string[])[];
 }
 
 interface Props {
   items: Record<string, Item[]>;
   layout: 'columns' | 'rows';
   pageType: 'relics' | 'masteries' | 'pacts';
-  isRs3?: boolean;
+  game: 'osrs' | 'rs3';
 }
 
-const { items, layout, pageType, isRs3 = false } = Astro.props;
+const { items, layout, pageType, game } = Astro.props;
 
 const containerClass = layout === 'columns' ? 'colContainer' : 'rowContainer';
 const groupClass = layout === 'columns' ? 'col' : 'row';
@@ -38,7 +38,7 @@ const itemType = pageType === 'relics' ? 'relic' : 'mastery';
               src={item.src}
               label={label}
               toolTipItems={item.toolTipItems}
-              isRs3={isRs3}
+              game={game}
             />
           );
         } else {

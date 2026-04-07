@@ -3,11 +3,11 @@ interface Props {
   id: string;
   src: string;
   label: string;
-  toolTipItems: string[];
-  isRs3?: boolean;
+  toolTipItems: (string | string[])[];
+  game: 'osrs' | 'rs3';
 }
 
-const { id, src, label, toolTipItems, isRs3 = false } = Astro.props;
+const { id, src, label, toolTipItems, game } = Astro.props;
 ---
 
 <div
@@ -18,7 +18,7 @@ const { id, src, label, toolTipItems, isRs3 = false } = Astro.props;
   data-items={JSON.stringify(toolTipItems)}
 >
   <img
-    class:list={["relicImg", { rs3: isRs3 }]}
+    class:list={["relicImg", { rs3: game === 'rs3' }]}
     src={src}
     alt={`${label} relic icon`}
   />

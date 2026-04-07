@@ -4,7 +4,6 @@
   "name": "Raging Echoes League",
   "pageType": "masteries",
   "layout": "rows",
-  "isRs3": false,
   "backgroundColor": "#071022",
   "exportFilename": "masteries.png",
   "meta": {

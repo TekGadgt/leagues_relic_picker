@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import PickerLayout from '../layouts/PickerLayout.astro';
 import ItemGrid from '../components/ItemGrid.astro';
+import PactGraph from '../components/PactGraph.astro';
 
 export async function getStaticPaths() {
   const leagues = await getCollection('leagues');
@@ -33,10 +34,18 @@ const { data } = league;
   exportFilename={data.exportFilename}
   pageType={data.pageType}
 >
-  <ItemGrid
-    items={data.items}
-    layout={data.layout}
-    pageType={data.pageType}
-    isRs3={data.isRs3}
-  />
+  {data.layout === 'graph' ? (
+    data.graph ? (
+      <PactGraph graph={data.graph} />
+    ) : (
+      <p style="color: red; text-align: center;">Error: graph layout requires graph data</p>
+    )
+  ) : (
+    <ItemGrid
+      items={data.items}
+      layout={data.layout}
+      pageType={data.pageType}
+      game={data.game}
+    />
+  )}
 </PickerLayout>
