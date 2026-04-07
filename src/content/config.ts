@@ -32,32 +32,43 @@ const pactGraphSchema = z.object({
   edges: z.array(graphEdgeSchema),
 });
 
+const leagueBaseSchema = z.object({
+  game: z.enum(['osrs', 'rs3']),
+  leagueNumber: z.number(),
+  name: z.string(),
+  pageType: z.enum(['relics', 'masteries', 'pacts']),
+  backgroundColor: z.string(),
+  exportFilename: z.string(),
+  meta: z.object({
+    title: z.string(),
+    description: z.string(),
+    ogImage: z.string(),
+    ogImageAlt: z.string(),
+    url: z.string(),
+  }),
+  theme: z.object({
+    titleColor: z.string(),
+    navItemColor: z.string(),
+    headerBackgroundColor: z.string(),
+    backgroundColor: z.string(),
+  }),
+});
+
+const gridLayoutSchema = leagueBaseSchema.extend({
+  layout: z.enum(['columns', 'rows']),
+  items: z.record(z.string(), z.array(itemSchema)),
+  graph: pactGraphSchema.optional(),
+});
+
+const graphLayoutSchema = leagueBaseSchema.extend({
+  layout: z.literal('graph'),
+  items: z.record(z.string(), z.array(itemSchema)).default({}),
+  graph: pactGraphSchema,
+});
+
 const leagueCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    game: z.enum(['osrs', 'rs3']),
-    leagueNumber: z.number(),
-    name: z.string(),
-    pageType: z.enum(['relics', 'masteries', 'pacts']),
-    layout: z.enum(['columns', 'rows', 'graph']),
-    backgroundColor: z.string(),
-    exportFilename: z.string(),
-    meta: z.object({
-      title: z.string(),
-      description: z.string(),
-      ogImage: z.string(),
-      ogImageAlt: z.string(),
-      url: z.string(),
-    }),
-    theme: z.object({
-      titleColor: z.string(),
-      navItemColor: z.string(),
-      headerBackgroundColor: z.string(),
-      backgroundColor: z.string(),
-    }),
-    items: z.record(z.string(), z.array(itemSchema)),
-    graph: pactGraphSchema.optional(),
-  }),
+  schema: z.union([graphLayoutSchema, gridLayoutSchema]),
 });
 
 export const collections = {

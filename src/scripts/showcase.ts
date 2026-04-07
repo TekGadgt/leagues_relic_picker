@@ -1,18 +1,20 @@
 // Showcase page client-side logic
 
+type ToolTipItem = string | string[];
+
 interface LeagueItem {
   id: string;
   src: string;
   relicLabel?: string;
   title?: string;
-  toolTipItems: string[];
+  toolTipItems: ToolTipItem[];
 }
 
 interface GraphNode {
   id: string;
   src: string;
   pactLabel: string;
-  toolTipItems: string[];
+  toolTipItems: ToolTipItem[];
 }
 
 interface LeagueData {
