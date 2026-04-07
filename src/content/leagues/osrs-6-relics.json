@@ -144,10 +144,16 @@
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
+        "src": "/osrs/6/relics/Map_of_Alacrity.png",
+        "relicLabel": "Map of Alacrity",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the map of alacrity",
+          "The map allows you to teleport to agility shortcuts",
+          "You will be sent to the less favourable side of the shortcut, or the starting side if it is one-way.",
+          "Teleports can only be used if you meet all of the requirements to reach the shortcut's location.",
+          "Shortcuts retain all of their typical requirements.",
+          "The map ignores Wilderness teleport restrictions.",
+          "The map can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       }
     ],
