@@ -38,11 +38,15 @@
         "relicLabel": "Barbarian Gathering",
         "toolTipItems": [
           "Grants the knapsack",
-          "Up to 3 different types of gathered items (wood, fish, metallic ore and coal) can be placed in the knapsack, which has a total maximum capacity of 140.",
-          "Toggleable effect: dispose option will ask what to destroy",
-          "The knapsack can be retrieved from the Leagues Tutor in Yama's lair if lost.",
+          [
+            "Up to 3 different types of gathered items (wood, fish, metallic ore and coal) can be placed in the knapsack, which has a total maximum capacity of 140.",
+            "Toggleable effect: dispose option will ask what to destroy",
+            "The knapsack can be retrieved from the Leagues Tutor in Yama's lair if lost."
+          ],
           "You become capable of chopping wood, mining rocks and fishing with your bare hands without requiring any tools or bait. ",
-          "Your hands are equivalent to the crystal version of the respective tools where those exist.",
+          [
+            "Your hands are equivalent to the crystal version of the respective tools where those exist."
+          ],
           "Whenever you gain Fishing, Woodcutting or Mining XP while gathering you will also receive an additional 10% XP in both Strength and Agility",
           "On failing to mine a rock, catch a fish or chop a tree you will have a separate 50% chance to succeed instead."
         ]
@@ -67,17 +71,21 @@
         "toolTipItems": [
           "Upon choosing this relic you will receive the searing boots.",
           "While the searing boots are worn, you gain the following benefits:",
-          "Agility experience is gained based on your Agility level while you run.",
-          "Caught fish are automatically cooked.",
-          "Mined ore is automatically smelted.",
+          [
+            "Agility experience is gained based on your Agility level while you run.",
+            "Caught fish are automatically cooked.",
+            "Mined ore is automatically smelted."
+          ],
           "Additionally, regardless of your footwear:",
-          "Picking up some termites or a mark of grace from a course will automatically complete the lap granting completion XP and 10,000 coins.",
-          "Marks of grace will always have a 33% chance to spawn on all rooftop courses.",
-          "Completing a course grants two completion count and 25% bonus experience.",
-          "100% success rate on all actions for Agility and Cooking.",
-          "You will receive 2x termites from the Colossal Wyrm Agility Course.",
-          "You will receive 10x crystal shards from Prifddinas Agility Course.",
-          "The searing boots can be retrieved from the Leagues tutor in Yama's lair if lost."
+          [
+            "Picking up some termites or a mark of grace from a course will automatically complete the lap granting completion XP and 10,000 coins.",
+            "Marks of grace will always have a 33% chance to spawn on all rooftop courses.",
+            "Completing a course grants two completion count and 25% bonus experience.",
+            "100% success rate on all actions for Agility and Cooking.",
+            "You will receive 2x termites from the Colossal Wyrm Agility Course.",
+            "You will receive 10x crystal shards from Prifddinas Agility Course.",
+            "The searing boots can be retrieved from the Leagues tutor in Yama's lair if lost."
+          ]
         ]
       },
       {
@@ -87,14 +95,18 @@
         "toolTipItems": [
           "Upon choosing this relic you will receive the forager's pouch.",
           "While the forager's pouch is worn or in your inventory, you gain the following benefits:",
-          "When you gather resources from Woodcutting, Fishing, Mining, and Hunter, the pouch will find and store a random grimy herb",
-          "This herb is limited to any which your Herblore level + 25 can clean. This action also provides a small amount of Herblore experience.",
-          "The pouch will only find herbs it has room to store, but will always attempt to give you a herb you can receive.",
-          "The pouch also functions as a silklined herb sack, and shares an inventory with it.",
+          [
+            "When you gather resources from Woodcutting, Fishing, Mining, and Hunter, the pouch will find and store a random grimy herb",
+            "This herb is limited to any which your Herblore level + 25 can clean. This action also provides a small amount of Herblore experience.",
+            "The pouch will only find herbs it has room to store, but will always attempt to give you a herb you can receive.",
+            "The pouch also functions as a silklined herb sack, and shares an inventory with it."
+          ],
           "Additionally, you gain the following perks to Herblore:",
-          "All items are processed at once.",
-          "Secondary ingredients have a 90% chance to not be consumed, this stacks additively with other sources.",
-          "Potions created will have 4 doses instead of 3.",
+          [
+            "All items are processed at once.",
+            "Secondary ingredients have a 90% chance to not be consumed, this stacks additively with other sources.",
+            "Potions created will have 4 doses instead of 3."
+          ],
           "The forager's pouch can be retrieved from the Leagues Tutor in Yama's Lair if lost. "
         ]
       },
@@ -104,17 +116,21 @@
         "relicLabel": "Woodsman",
         "toolTipItems": [
           "Toggleable effects:",
-          "Hunter traps harvest directly to your bank.",
-          "Logs chopped will be automatically burned.",
+          [
+            "Hunter traps harvest directly to your bank.",
+            "Logs chopped will be automatically burned."
+          ],
           "Passive effects:",
-          "All items are processed at once while Fletching, stackable fletching items are capped at 10x the regular amount per action.",
-          "Chopped logs are automatically burned while Woodcutting granting full Firemaking XP, this effect can be toggled above.",
-          "100% success rate on all Hunter actions.",
-          "Hunter traps attract animals faster, give double the loot and XP.",
-          "Hunter traps always drop a random herb seed or tree seed when harvested.",
-          "Hunter rumours give double XP and Hunters loot sacks will award 2x as much loot.",
-          "All loot from jarred implings will be doubled and noted. Additionally they will no longer break upon opening.",
-          "All Quetzal Whistles will not lose charges."
+          [
+            "All items are processed at once while Fletching, stackable fletching items are capped at 10x the regular amount per action.",
+            "Chopped logs are automatically burned while Woodcutting granting full Firemaking XP, this effect can be toggled above.",
+            "100% success rate on all Hunter actions.",
+            "Hunter traps attract animals faster, give double the loot and XP.",
+            "Hunter traps always drop a random herb seed or tree seed when harvested.",
+            "Hunter rumours give double XP and Hunters loot sacks will award 2x as much loot.",
+            "All loot from jarred implings will be doubled and noted. Additionally they will no longer break upon opening.",
+            "All Quetzal Whistles will not lose charges."
+          ]
         ]
       }
     ],
@@ -134,10 +150,12 @@
         "toolTipItems": [
           "Grants the evil eye",
           "The eye will allow you to teleport to the entrance of any boss or raid in the combat achievements list.",
-          "Barrows will have the option to go to the chest or to the surface.",
-          "You can teleport to each Moon of peril individually.",
-          "The eye ignores wilderness teleport restrictions.",
-          "The eye cannot be used to teleport to an area you haven't unlocked.",
+          [
+            "Barrows will have the option to go to the chest or to the surface.",
+            "You can teleport to each Moon of peril individually.",
+            "The eye ignores wilderness teleport restrictions.",
+            "The eye cannot be used to teleport to an area you haven't unlocked."
+          ],
           "The eye can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       },
@@ -148,10 +166,12 @@
         "toolTipItems": [
           "Grants the map of alacrity",
           "The map allows you to teleport to agility shortcuts",
-          "You will be sent to the less favourable side of the shortcut, or the starting side if it is one-way.",
-          "Teleports can only be used if you meet all of the requirements to reach the shortcut's location.",
-          "Shortcuts retain all of their typical requirements.",
-          "The map ignores Wilderness teleport restrictions.",
+          [
+            "You will be sent to the less favourable side of the shortcut, or the starting side if it is one-way.",
+            "Teleports can only be used if you meet all of the requirements to reach the shortcut's location.",
+            "Shortcuts retain all of their typical requirements.",
+            "The map ignores Wilderness teleport restrictions."
+          ],
           "The map can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       }
@@ -159,10 +179,25 @@
     "tier4": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "src": "/osrs/6/relics/Transmutation.png",
+        "relicLabel": "Transmutation",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Upon choosing this relic you will receive the Transmutation ledger. Toggleable Effects:",
+          [
+            "Alchemic spells transmute items.",
+            "Transmutation spells bank noted products."
+          ],
+          "Active Effects:",
+          "The high alchemy and low alchemy spells transform into two new spells:",
+          [
+            "Alchemic Divergence: Upgrades up to 10 of a resource into a higher tier.",
+            "Alchemic Convergence: Downgrades up to 10 of a resource into a lower tier."
+          ],
+          "Both spells cost 1 Nature rune and have no level requirement. The spell gives 10 Magic XP for each item transmuted (before league XP multipliers).",
+          "The Transmutation ledger can be equipped and acts as an infinite source of Nature runes.",
+          "Using items on the Transmutation ledger will display what they can turn into.",
+          "When cast upon a noted item, these spells will automatically re-cast over time as long as the items are available in the same slot in your inventory.",
+          "You can still cast alchemy spells via the toggle above or by configuring the spells in your spellbook. Alchemy spells will not automatically re-cast."
         ]
       },
       {
@@ -171,12 +206,14 @@
         "relicLabel": "Conniving Clues",
         "toolTipItems": [
           "When opening a reward casket, you have a 1/3 chance to receive clue contracts which can be consumed to teleport you to your current clue step.",
-          "Beginner clues give 0-2 contracts at a time.",
-          "Easy clues give 1-4 contracts at a time.",
-          "Medium clues give 1-5 contracts at a time.",
-          "Hard clues give 1-7 contracts at a time.",
-          "Elite clues give 1-9 contracts at a time.",
-          "Master clues give 1-10 contracts at a time.",
+          [
+            "Beginner clues give 0-2 contracts at a time.",
+            "Easy clues give 1-4 contracts at a time.",
+            "Medium clues give 1-5 contracts at a time.",
+            "Hard clues give 1-7 contracts at a time.",
+            "Elite clues give 1-9 contracts at a time.",
+            "Master clues give 1-10 contracts at a time."
+          ],
           "Rewards caskets have a 1/4 chance to contain a clue scroll box of the same tier.",
           "Clues from creatures and impling jars now have a drop rate of 1/15.",
           "Clue vessels obtained from skilling (such as clue geodes or clue nests) are 10x more likely to drop.",
@@ -186,10 +223,28 @@
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
+        "src": "/osrs/6/relics/Butlers_Bell.png",
+        "relicLabel": "Butler's Bell",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Upon choosing this relic you will recieve the Butler's bell.",
+          "Active Effects:",
+          "When the bell is rung, a Demon butler will be summoned to work for you. The butler's work will continue even if you are offline. The butler can gather the following resources for you:",
+          [
+            "Mining ores (8 per minute)",
+            "Catching fish (14 per minute)",
+            "Chopping logs (10 per minutes)",
+            "Picking flax (50 per minute)",
+            "Farming herbs (10 per minute)"
+          ],
+          "Additionally, the butler can also process these gathered items for you but at half the rates listed above:",
+          [
+            "Ores into bars",
+            "Raw fish into cooked fish",
+            "Logs into planks",
+            "Flax into bowstrings",
+            "Herbs into unfinished potions"
+          ],
+          "When the Demon butler processes resources for you, he will share a 10 XP (before League XP multipliers) with you in the relevant production skill per resource. The Butler's bell can be retrieved from the Leagues tutor in Yama's lair if lost."
         ]
       }
     ],
@@ -199,19 +254,23 @@
         "src": "/osrs/6/relics/Natures_Accord.png",
         "relicLabel": "Nature's Accord",
         "toolTipItems": [
-          "Grants the fairy mushroom",
+          [
+            "Grants the fairy mushroom"
+          ],
           "Active effects:",
-          "Farming patches and plants no longer have any level requirements to harvest, plant, or make.",
-          "Additionally, you gain the following perks to Farming:",
-          "You will receive 10x yield from all farming patches and it will automatically be noted.",
-          "XP is granted for all additional resources gathered.",
-          "Your plants will never die.",
-          "You have a 20% chance to not use a seed or sapling when planting crops in patches.",
-          "The fairy mushroom will allow you to teleport to any fairy ring, spirit tree, or tool leprechaun.",
-          "Unlocking this will autocomplete the Tree Gnome Village quest.",
-          "This item ignores wilderness teleport restrictions.",
-          "This item cannot be used to teleport to an area you haven't unlocked.",
-          "The fairy mushroom can be retrieved from the Leagues tutor in Yama's Lair if lost."
+          [
+            "Farming patches and plants no longer have any level requirements to harvest, plant, or make.",
+            "Additionally, you gain the following perks to Farming:",
+            "You will receive 10x yield from all farming patches and it will automatically be noted.",
+            "XP is granted for all additional resources gathered.",
+            "Your plants will never die.",
+            "You have a 20% chance to not use a seed or sapling when planting crops in patches.",
+            "The fairy mushroom will allow you to teleport to any fairy ring, spirit tree, or tool leprechaun.",
+            "Unlocking this will autocomplete the Tree Gnome Village quest.",
+            "This item ignores wilderness teleport restrictions.",
+            "This item cannot be used to teleport to an area you haven't unlocked.",
+            "The fairy mushroom can be retrieved from the Leagues tutor in Yama's Lair if lost."
+          ]
         ]
       },
       {
@@ -220,24 +279,35 @@
         "relicLabel": "Larcenist",
         "toolTipItems": [
           "You will gain the following benefits while Thieving:",
-          "100% success rate on all actions.",
-          "Automatically re-pickpocket an NPC.",
-          "Automatically re-steal from a stall.",
-          "Items obtained from pickpocketing and stalls are noted.",
-          "Stalls never deplete and guards will never catch you thieving from them.",
-          "The amount of coin pouches you can carry is increased by 10x",
+          [
+            "100% success rate on all actions.",
+            "Automatically re-pickpocket an NPC.",
+            "Automatically re-steal from a stall.",
+            "Items obtained from pickpocketing and stalls are noted.",
+            "Stalls never deplete and guards will never catch you thieving from them.",
+            "The amount of coin pouches you can carry is increased by 10x"
+          ],
           "Additionally, while Thieving, loot is increased by 10x for the following:",
-          "Pickpocketing (not including clue scrolls)",
-          "Stealing from stalls.",
-          "Stealing house valuables in Varlamore."
+          [
+            "Pickpocketing (not including clue scrolls)",
+            "Stealing from stalls.",
+            "Stealing house valuables in Varlamore."
+          ]
         ]
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 3",
+        "src": "/osrs/6/relics/Soul_Harvest.png",
+        "relicLabel": "Soul Harvest",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Toggleable Effect: All dropped bones and ashes will be turned into soul shards.",
+          "Active Effects: While harvesting any farming crop, or when NPCs would drop bones or ashes, you will instead harvest stackable soul shards. Soul shards can be used for the following:",
+          [
+            "They can be used in place of pure essence while training Runecraft.",
+            "100 can be sacrificed at the libation bowl at the Teomat for 550 Prayer XP (before league multipliers) without requiring libation wine"
+          ],
+          "You will receive 1 shard per 4 XP gained while harvesting your crops.",
+          "You will receive more shards for higher tier bones and ashes roughly equal to the bone shard equivalent for that tier of item."
         ]
       }
     ],
@@ -247,9 +317,11 @@
         "src": "/osrs/6/relics/Grimoire.png",
         "relicLabel": "Grimoire",
         "toolTipItems": [
-          "Grants the arcane grimoire",
-          "The grimoire can be used to freely swap between spellbooks.",
-          "The grimoire acts as a book of the dead.",
+          [
+            "Grants the arcane grimoire",
+            "The grimoire can be used to freely swap between spellbooks.",
+            "The grimoire acts as a book of the dead."
+          ],
           "Additionally, when you select this relic, you will unlock access to all prayers and spells regardless of area, quest, or diary requirements.",
           "The arcane grimoire can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
@@ -313,10 +385,12 @@
           "The whistle will allow you to summon a powerful minion which lasts for 30 minutes.",
           "When you are in multi-combat it will cast an AoE attack if the target is weakest to range or magic.",
           "The minions stats are:",
-          "Min hit: 3",
-          "Max hit: 10",
-          "Attack speed: 1.8",
-          "Accuracy: 45,000",
+          [
+            "Min hit: 3",
+            "Max hit: 10",
+            "Attack speed: 1.8",
+            "Accuracy: 45,000"
+          ],
           "The whistle can consume up to 5 unique equippable Zamorak items (by using them on the whistle) increasing your minion's max hit by 2 per unique item.",
           "The minion will try to automatically loot items from creatures you kill (including fired ranged ammo). A minimum value threshold and whether or not these should be noted is configurable on the whistle.",
           "The minion will deal damage to targets which are immune to thralls.",
@@ -331,15 +405,22 @@
         "toolTipItems": [
           "Grants the flask of fervour",
           "When the Flask is consumed:",
-          "Your Hitpoints will be restored to full.",
-          "Your prayer points will be restored to full.",
-          "Your special attack energy will be restored to full.",
+          [
+            "Your Hitpoints will be restored to full.",
+            "Your prayer points will be restored to full.",
+            "Your special attack energy will be restored to full."
+          ],
           "Over the next 2.4 seconds the sigil will:",
-          "Trigger three explosions which deal 60% of your base Prayer level (30% in PvP) to all enemies within 3 tiles of you as typeless damage.",
-          "Reduce all damage you take to 0.",
-          "Not deal damage to Yama.",
+          [
+            "Trigger three explosions which deal 60% of your base Prayer level (30% in PvP) to all enemies within 3 tiles of you as typeless damage.",
+            "Reduce all damage you take to 0.",
+            "Not deal damage to Yama.",
+            "This perk will also work in the Gauntlet."
+          ],
           "This item has a base cooldown of 3 minutes",
-          "For every 10 damage you deal in a single hit, reduce the cooldown by 0.6s.",
+          [
+            "For every 10 damage you deal in a single hit, reduce the cooldown by 0.6s."
+          ],
           "The flask of fervour can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       }
