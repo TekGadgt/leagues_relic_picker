@@ -138,9 +138,15 @@
       {
         "id": "1",
         "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "relicLabel": "Bank Heist",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the banker's briefcase",
+          "The briefcase will allow you to teleport to any bank, bank chest, or deposit box.",
+          [
+            "The briefcase ignores wilderness teleport restrictions.",
+            "The briefcase cannot be used to teleport to an area you haven't unlocked."
+          ],
+          "The briefcase can be retrieved from the Leagues Tutor in Yama's Lair if lost."
         ]
       },
       {
@@ -353,9 +359,14 @@
       {
         "id": "1",
         "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "relicLabel": "Flow State",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "The following all occur at a rate of 2 ticks (1.2 Seconds)",
+          [
+            "Mining, Woodcutting, Fishing, Cooking, Firemaking any logs or adding to a bonfire, offering bones at a prayer alter, fletching, smelting, crafting, farming, magic",
+            "Minigame Interactions are included as well (Wintertodt, Tempoross, and stealing valuables)"
+          ],
+          "This effect stack with the fletching knife and diabolical worms"
         ]
       },
       {
