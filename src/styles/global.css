@@ -318,6 +318,21 @@ main > .colContainer {
   min-height: 120px;
 }
 
+.sidebar-pact-composite {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-pact-composite img {
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+}
+
 .detail-sidebar-description ul {
   margin: 0;
   padding: 0 0 0 20px;
@@ -682,7 +697,7 @@ main.exporting .mastery {
 
 main.exporting .title {
   font-size: var(--font-size-title);
-  min-width: 99vw;
+  min-width: 100%;
   min-height: 9vh;
 }
 
@@ -900,28 +915,41 @@ main.exporting .title {
 
 .pact {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
-.pactImg {
-  transition: opacity 0.2s;
-}
+/* Pact states handled by image swapping in JS — no CSS filters needed */
 
-.pact-sm .pactImg {
+.pact-sm {
   width: 80px;
   height: 80px;
 }
 
-.pact-md .pactImg {
+.pact-sm .pactImg {
+  width: 48px;
+  height: 48px;
+}
+
+.pact-md {
   width: 110px;
   height: 110px;
 }
 
-.pact-lg .pactImg {
+.pact-md .pactImg {
+  width: 66px;
+  height: 66px;
+}
+
+.pact-lg {
   width: 150px;
   height: 150px;
+}
+
+.pact-lg .pactImg {
+  width: 90px;
+  height: 90px;
 }
 
 /* Float picker buttons over graph viewport */
@@ -934,6 +962,12 @@ body:has(.pact-viewport) .picker-buttons {
 }
 
 /* Export overrides for pact graph */
+main.exporting:has(.pact-viewport) {
+  width: 1200px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 main.exporting .pact-viewport {
   width: 1200px;
   height: 1200px;
@@ -950,19 +984,34 @@ main.exporting .pact-controls {
   display: none;
 }
 
+main.exporting .pact-sm {
+  width: 30px;
+  height: 30px;
+}
+
 main.exporting .pact-sm .pactImg {
+  width: 18px;
+  height: 18px;
+}
+
+main.exporting .pact-md {
+  width: 40px;
+  height: 40px;
+}
+
+main.exporting .pact-md .pactImg {
   width: 24px;
   height: 24px;
 }
 
-main.exporting .pact-md .pactImg {
-  width: 36px;
-  height: 36px;
+main.exporting .pact-lg {
+  width: 55px;
+  height: 55px;
 }
 
 main.exporting .pact-lg .pactImg {
-  width: 50px;
-  height: 50px;
+  width: 32px;
+  height: 32px;
 }
 
 /* Tablet Responsive Styles */
@@ -1040,19 +1089,34 @@ main.exporting .pact-lg .pactImg {
   }
 
   /* Pact graph - tablet */
-  .pact-sm .pactImg {
+  .pact-sm {
     width: 64px;
     height: 64px;
   }
 
-  .pact-md .pactImg {
+  .pact-sm .pactImg {
+    width: 38px;
+    height: 38px;
+  }
+
+  .pact-md {
     width: 90px;
     height: 90px;
   }
 
-  .pact-lg .pactImg {
+  .pact-md .pactImg {
+    width: 54px;
+    height: 54px;
+  }
+
+  .pact-lg {
     width: 120px;
     height: 120px;
+  }
+
+  .pact-lg .pactImg {
+    width: 72px;
+    height: 72px;
   }
 
   /* Homepage */
@@ -1294,19 +1358,34 @@ main.exporting .pact-lg .pactImg {
     touch-action: none;
   }
 
-  .pact-sm .pactImg {
+  .pact-sm {
     width: 56px;
     height: 56px;
   }
 
-  .pact-md .pactImg {
+  .pact-sm .pactImg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .pact-md {
     width: 80px;
     height: 80px;
   }
 
-  .pact-lg .pactImg {
+  .pact-md .pactImg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .pact-lg {
     width: 100px;
     height: 100px;
+  }
+
+  .pact-lg .pactImg {
+    width: 60px;
+    height: 60px;
   }
 
   /* Export button adjustments */

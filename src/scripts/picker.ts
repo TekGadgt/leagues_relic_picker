@@ -1,4 +1,5 @@
 // Main picker initialization script
+import { isTouchDevice } from './utils';
 
 interface PickerConfig {
   backgroundColor: string;
@@ -28,10 +29,6 @@ const tapState: TapState = {
 
 const DOUBLE_TAP_THRESHOLD = 300;
 
-function isTouchDevice(): boolean {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-}
-
 // URL State Management
 function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
   const params = Array.from(elements)
@@ -60,6 +57,13 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
     });
   }
 
+  // Force center pact node (node1) to always be selected
+  const centerNode = document.getElementById('node1');
+  if (centerNode && centerNode.classList.contains('pact') && !centerNode.classList.contains('selected')) {
+    centerNode.classList.add('selected');
+    updateElementOpacity(centerNode, true);
+  }
+
   if (title) {
     const titleElement = document.querySelector(titleSelector);
     if (titleElement) {
@@ -75,6 +79,9 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
 }
 
 function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>, titleSelector: string): void {
+  // Prevent deselecting the center pact node
+  if (element.id === 'node1' && element.classList.contains('selected')) return;
+
   const isSelected = element.classList.toggle('selected');
   updateElementOpacity(element, isSelected);
   updateURLParams(elements, titleSelector);
@@ -82,11 +89,32 @@ function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>
 }
 
 function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {
-  const img = element.querySelector('.relicImg, .masteryImg, .pactImg') as HTMLElement | null;
+  // Pact nodes swap between active/inactive images
+  if (element.classList.contains('pact')) {
+    updatePactImages(element, isSelected);
+    return;
+  }
+
+  const img = element.querySelector('.relicImg, .masteryImg') as HTMLElement | null;
   const label = element.querySelector('.relicLabel, .masteryLabel') as HTMLElement | null;
 
   if (img) img.style.opacity = isSelected ? '1' : '0.25';
   if (label) label.style.opacity = isSelected ? '1' : '0.25';
+}
+
+function updatePactImages(element: HTMLElement, isSelected: boolean): void {
+  const img = element.querySelector('.pactImg') as HTMLImageElement | null;
+  const activeSrc = element.dataset.activeSrc || '';
+  const inactiveSrc = element.dataset.inactiveSrc || '';
+  const activeFrame = element.dataset.activeFrame || '';
+  const inactiveFrame = element.dataset.inactiveFrame || '';
+
+  if (img && activeSrc && inactiveSrc) {
+    img.src = isSelected ? activeSrc : inactiveSrc;
+  }
+
+  const frameSrc = isSelected ? activeFrame : inactiveFrame;
+  element.style.backgroundImage = frameSrc ? `url(${frameSrc})` : '';
 }
 
 function updateEdgeStyles(): void {
@@ -113,7 +141,33 @@ function openDetailSidebar(data: DetailData, _elementId: string): void {
 
   const imageContainer = sidebar.querySelector('.detail-sidebar-image');
   if (imageContainer) {
-    imageContainer.innerHTML = `<img src="${data.imageSrc}" alt="${data.label}">`;
+    while (imageContainer.firstChild) imageContainer.removeChild(imageContainer.firstChild);
+
+    const sourceEl = document.getElementById(_elementId);
+    const isPact = sourceEl?.classList.contains('pact');
+
+    if (isPact && sourceEl) {
+      const activeFrame = sourceEl.dataset.activeFrame || '';
+      const activeIcon = sourceEl.dataset.activeSrc || data.imageSrc;
+      const composite = document.createElement('div');
+      composite.className = 'sidebar-pact-composite';
+      if (activeFrame) {
+        composite.style.backgroundImage = `url(${activeFrame})`;
+        composite.style.backgroundSize = 'contain';
+        composite.style.backgroundRepeat = 'no-repeat';
+        composite.style.backgroundPosition = 'center';
+      }
+      const img = document.createElement('img');
+      img.src = activeIcon;
+      img.alt = data.label;
+      composite.appendChild(img);
+      imageContainer.appendChild(composite);
+    } else {
+      const img = document.createElement('img');
+      img.src = data.imageSrc;
+      img.alt = data.label;
+      imageContainer.appendChild(img);
+    }
   }
 
   const descriptionContainer = sidebar.querySelector('.detail-sidebar-description');
@@ -317,8 +371,8 @@ function initPicker(): void {
           }).then(async function(canvas: HTMLCanvasElement) {
             restoreLayout();
 
-            // Try Web Share API for mobile (lets users save to Photos)
-            if (navigator.share && navigator.canShare) {
+            // Try Web Share API for mobile only (lets users save to Photos)
+            if (isTouchDevice() && navigator.share && navigator.canShare) {
               try {
                 const blob = await new Promise<Blob>((resolve, reject) => {
                   canvas.toBlob((b) => {

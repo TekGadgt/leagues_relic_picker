@@ -13,7 +13,10 @@ function initPactGraph(): void {
   // Compute initial scale to fit the viewport
   const initVw = viewport.clientWidth;
   const initVh = viewport.clientHeight;
-  const defaultScale = Math.min(initVw, initVh) / CANVAS_SIZE;
+  const fitScale = Math.min(initVw, initVh) / CANVAS_SIZE;
+  // On small screens, start zoomed in ~3.5x so nodes are more visible
+  const isMobile = initVw < 768;
+  const defaultScale = isMobile ? fitScale * 3.5 : fitScale;
   let scale = defaultScale;
   let panX = 0;
   let panY = 0;

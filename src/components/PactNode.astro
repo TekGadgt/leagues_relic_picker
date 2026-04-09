@@ -2,20 +2,28 @@
 interface Props {
   id: string;
   src: string;
+  activeSrc?: string;
+  frame?: string;
+  activeFrame?: string;
   label: string;
   toolTipItems: (string | string[])[];
   size: 'sm' | 'md' | 'lg';
 }
 
-const { id, src, label, toolTipItems, size } = Astro.props;
+const { id, src, activeSrc, frame, activeFrame, label, toolTipItems, size } = Astro.props;
 ---
 
 <div
   class={`pact pact-${size}`}
   id={id}
   data-label={label}
-  data-image-src={src}
+  data-image-src={activeSrc || src}
   data-items={JSON.stringify(toolTipItems)}
+  data-inactive-src={src}
+  data-active-src={activeSrc || src}
+  data-inactive-frame={frame || ''}
+  data-active-frame={activeFrame || frame || ''}
+  style={frame ? `background-image: url(${frame}); background-size: contain; background-repeat: no-repeat; background-position: center;` : undefined}
 >
   <img class="pactImg" src={src} alt={`${label} pact icon`} />
 </div>

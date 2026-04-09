@@ -6,6 +6,9 @@ interface GraphNode {
   x: number;
   y: number;
   src: string;
+  activeSrc?: string;
+  frame?: string;
+  activeFrame?: string;
   pactLabel: string;
   toolTipItems: (string | string[])[];
   size: 'sm' | 'md' | 'lg';
@@ -68,6 +71,9 @@ const nodePositions = new Map(graph.nodes.map(n => [n.id, { x: n.x, y: n.y }]));
           <PactNode
             id={node.id}
             src={node.src}
+            activeSrc={node.activeSrc}
+            frame={node.frame}
+            activeFrame={node.activeFrame}
             label={node.pactLabel}
             toolTipItems={node.toolTipItems}
             size={node.size}

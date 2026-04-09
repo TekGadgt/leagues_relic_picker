@@ -1,4 +1,5 @@
 // Showcase page client-side logic
+import { isTouchDevice } from './utils';
 
 type ToolTipItem = string | string[];
 
@@ -346,8 +347,8 @@ function exportImage(): void {
     backgroundColor: '#000000',
     scale: 2 // Higher quality
   }).then(async function(canvas: HTMLCanvasElement) {
-    // Try Web Share API for mobile (lets users save to Photos)
-    if (navigator.share && navigator.canShare) {
+    // Try Web Share API for mobile only (lets users save to Photos)
+    if (isTouchDevice() && navigator.share && navigator.canShare) {
       try {
         const blob = await new Promise<Blob>((resolve, reject) => {
           canvas.toBlob((result) => {
