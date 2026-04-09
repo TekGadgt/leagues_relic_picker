@@ -117,6 +117,20 @@ function updatePactImages(element: HTMLElement, isSelected: boolean): void {
   element.style.backgroundImage = frameSrc ? `url(${frameSrc})` : '';
 }
 
+function preloadPactImages(elements: HTMLCollectionOf<Element>): void {
+  const srcs = new Set<string>();
+  Array.from(elements).forEach(el => {
+    const activeSrc = (el as HTMLElement).dataset.activeSrc;
+    const activeFrame = (el as HTMLElement).dataset.activeFrame;
+    if (activeSrc) srcs.add(activeSrc);
+    if (activeFrame) srcs.add(activeFrame);
+  });
+  srcs.forEach(src => {
+    const img = new Image();
+    img.src = src;
+  });
+}
+
 function updateEdgeStyles(): void {
   const edges = document.querySelectorAll('.pact-edge');
   edges.forEach(edge => {
@@ -229,7 +243,10 @@ function initPicker(): void {
 
   // Set initial selections from URL
   setInitialSelections(elements, titleSelector);
-  if (isPactGraph) updateEdgeStyles();
+  if (isPactGraph) {
+    updateEdgeStyles();
+    preloadPactImages(elements);
+  }
 
   // Add click/touch handlers to all items
   const isTouch = isTouchDevice();
