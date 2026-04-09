@@ -86,6 +86,7 @@ function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>
   updateElementOpacity(element, isSelected);
   updateURLParams(elements, titleSelector);
   updateEdgeStyles();
+  updatePactCounter(elements);
 }
 
 function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {
@@ -129,6 +130,14 @@ function preloadPactImages(elements: HTMLCollectionOf<Element>): void {
     const img = new Image();
     img.src = src;
   });
+}
+
+function updatePactCounter(elements: HTMLCollectionOf<Element>): void {
+  const counter = document.getElementById('pactCounter');
+  if (!counter) return;
+  const count = Array.from(elements).filter(el => el.classList.contains('selected')).length;
+  counter.textContent = `${count} / 40`;
+  counter.classList.toggle('over-limit', count > 40);
 }
 
 function updateEdgeStyles(): void {
@@ -245,6 +254,7 @@ function initPicker(): void {
   setInitialSelections(elements, titleSelector);
   if (isPactGraph) {
     updateEdgeStyles();
+    updatePactCounter(elements);
     preloadPactImages(elements);
   }
 

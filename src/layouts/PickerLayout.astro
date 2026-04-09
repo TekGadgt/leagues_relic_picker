@@ -60,7 +60,7 @@ const themeCSS = `
     <slot />
   </main>
 
-  <ExportButton />
+  <ExportButton showPactCounter={pageType === 'pacts'} />
   <DetailSidebar />
 
   <script is:inline define:vars={{ backgroundColor, exportFilename }}>

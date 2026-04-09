@@ -1,8 +1,13 @@
 ---
 // Export button component
+interface Props {
+  showPactCounter?: boolean;
+}
+const { showPactCounter = false } = Astro.props;
 ---
 
 <div class="picker-buttons">
+  {showPactCounter && <span id="pactCounter" class="pact-counter">1 / 40</span>}
   <button id="exportBtn">Export Image</button>
   <button id="addToShowcaseBtn">Add to Showcase</button>
 </div>

@@ -360,7 +360,19 @@ main > .colContainer {
   display: flex;
   gap: 10px;
   justify-content: center;
+  align-items: center;
   margin: 10px 0;
+}
+
+.pact-counter {
+  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--title-color, #c33232);
+}
+
+.pact-counter.over-limit {
+  color: #ff4444;
 }
 
 #exportBtn,
