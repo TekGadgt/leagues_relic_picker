@@ -137,7 +137,7 @@
     "tier3": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
+        "src": "/osrs/6/relics/Bank_Heist.png",
         "relicLabel": "Bank Heist",
         "toolTipItems": [
           "Grants the banker's briefcase",
@@ -358,7 +358,7 @@
     "tier7": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
+        "src": "/osrs/6/relics/Flow_State.png",
         "relicLabel": "Flow State",
         "toolTipItems": [
           "The following all occur at a rate of 2 ticks (1.2 Seconds)",
