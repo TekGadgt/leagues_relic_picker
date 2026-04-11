@@ -714,7 +714,7 @@ main.exporting .title {
 }
 
 .showcase-container.exporting .showcase-row-items {
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .showcase-row {
@@ -761,6 +761,23 @@ main.exporting .title {
 .showcase-item-img {
   width: 45px;
   height: 45px;
+  object-fit: contain;
+}
+
+.showcase-pact-composite {
+  width: 45px;
+  height: 45px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showcase-pact-composite img {
+  width: 60%;
+  height: 60%;
   object-fit: contain;
 }
 

@@ -8,12 +8,15 @@ interface LeagueItem {
   src: string;
   relicLabel?: string;
   title?: string;
+  activeFrame?: string;
   toolTipItems: ToolTipItem[];
 }
 
 interface GraphNode {
   id: string;
   src: string;
+  activeSrc?: string;
+  activeFrame?: string;
   pactLabel: string;
   toolTipItems: ToolTipItem[];
 }
@@ -194,12 +197,24 @@ function renderBuildRow(build: BuildData): HTMLElement {
   itemsContainer.className = 'showcase-row-items';
 
   for (const item of build.items) {
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.relicLabel || item.title || 'Item';
-    img.className = 'showcase-item-img';
-    img.title = item.relicLabel || item.title || '';
-    itemsContainer.appendChild(img);
+    if (item.activeFrame) {
+      const composite = document.createElement('div');
+      composite.className = 'showcase-pact-composite';
+      composite.style.backgroundImage = `url(${item.activeFrame})`;
+      composite.title = item.relicLabel || item.title || '';
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.relicLabel || item.title || 'Item';
+      composite.appendChild(img);
+      itemsContainer.appendChild(composite);
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.relicLabel || item.title || 'Item';
+      img.className = 'showcase-item-img';
+      img.title = item.relicLabel || item.title || '';
+      itemsContainer.appendChild(img);
+    }
   }
 
   row.appendChild(itemsContainer);
@@ -260,7 +275,7 @@ function processURLs(urls: string[]): BuildData[] {
       for (const id of parsed.selectedIds) {
         const node = nodeMap.get(id);
         if (node) {
-          graphItems.push({ id: node.id, src: node.src, relicLabel: node.pactLabel, toolTipItems: node.toolTipItems });
+          graphItems.push({ id: node.id, src: node.activeSrc || node.src, relicLabel: node.pactLabel, activeFrame: node.activeFrame, toolTipItems: node.toolTipItems });
         }
       }
       items = graphItems;
