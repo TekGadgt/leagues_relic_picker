@@ -334,10 +334,10 @@
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 2",
+        "src": "/osrs/6/relics/Eternal_Sustenance.png",
+        "relicLabel": "Eternal Sustenance",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Food is no longer consumed when eaten."
         ]
       },
       {
@@ -381,10 +381,17 @@
     "tier8": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic.png",
-        "relicLabel": "Relic 1",
+        "src": "/osrs/6/relics/Executioner.png",
+        "relicLabel": "Executioner",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "The Sage's Axe is a thrown ranged weapon which can be used to execute targets below 20% hitpoints.",
+          "The axe has an attack range of 6 tiles.",
+          "The axe's damage respects any ranged damage reduction effects and immunities the target has.",
+          "The axe will not work against Yama",
+          "Throwing the axe doesn't consume it, but the primary hit does trigger regeneration effects from Demonic Pacts.",
+          "Execute damage can hit additional targets with Demonic Pacts.",
+          "This perk will also work inside The Gauntlet.",
+          "The Sage's Axe can be retrieved from the Leagues tutor in Yama's lair if lost."
         ]
       },
       {
