@@ -17,7 +17,7 @@ A comprehensive web application for creating, sharing, and visualizing relic and
 
 ### RS3 Leagues
 - **Catalyst League** (2025) - RS3's take on the league format
-- **TBD** (2026) - RS3's Second League
+- **Equilibrium League** (2026) - RS3's second league, themed around Order, Balance, and Chaos
 
 ## ✨ Features
 
@@ -91,17 +91,51 @@ Selections are automatically saved to the URL, enabling:
 ## 🎨 Customization
 
 ### Adding a New League
-TODO: Update steps, it's changed a fair bit since migrating to Astro
+
+1. **Create the data file** in `src/content/leagues/`, named `{game}-{number}-{pageType}.json`
+   (e.g. `osrs-7-relics.json`). It must satisfy the schema in `src/content/config.ts`.
+2. **Add the assets** to `public/{game}/{number}/` — `logo.png` plus a `relics/` directory
+   of item images.
+3. **Add the theme** — a `[data-theme="{game}/{number}"]` block in `src/styles/themes.css`.
+   See [CSS Theming](#css-theming) below.
+4. **Add the homepage link** in `src/pages/index.astro`.
+
+Routing is automatic: `src/pages/[...slug].astro` generates a page per data file. A file with
+`pageType: "relics"` becomes `/{game}/{number}/`; anything else becomes
+`/{game}/{number}/{pageType}/`. So `osrs-7-relics.json` serves `/osrs/7/`, and
+`osrs-7-masteries.json` serves `/osrs/7/masteries/`. One league can have several pages, and
+they share a single theme.
+
+Run `npm run build` when you're done — it type-checks the data against the schema and verifies
+the theme wiring, so a missing theme block or a malformed data file fails the build rather than
+shipping.
 
 ### JSON Data Format
-TODO: This is still mostly accurate, but where it's stored has changed.
+
+League data lives in `src/content/leagues/*.json` as an [Astro content
+collection](https://docs.astro.build/en/guides/content-collections/), validated at build time by
+the Zod schema in `src/content/config.ts`.
+
 ```json
 {
-  "relics": {
+  "game": "osrs",
+  "leagueNumber": 7,
+  "name": "Example League",
+  "pageType": "relics",
+  "layout": "columns",
+  "exportFilename": "relics.png",
+  "meta": {
+    "title": "Example League Relic Picker",
+    "description": "Set a title, pick your relics, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/osrs/7/poster_relics.png",
+    "ogImageAlt": "A Selection of Relics for OSRS Example League.",
+    "url": "https://relics.runetools.lol/osrs/7/"
+  },
+  "items": {
     "tier1": [
       {
         "id": "1",
-        "src": "./path/to/image.png",
+        "src": "/osrs/7/relics/Relic_Name.png",
         "relicLabel": "Relic Name",
         "toolTipItems": [
           "Effect description line 1",
@@ -113,8 +147,45 @@ TODO: This is still mostly accurate, but where it's stored has changed.
 }
 ```
 
+Notes:
+
+- `layout` is `"columns"` (relics), `"rows"` (masteries/pacts), or `"graph"` (a node/edge tree,
+  which additionally requires a `graph` object — see `osrs-6-pacts.json`).
+- `src` paths are absolute from `public/`, not relative.
+- Colors do **not** live here. They're in `src/styles/themes.css` — see below.
+
 ### CSS Theming
-TODO: Update this, theming works better now but has gotten more convoluted as a result.
+
+Every league color lives in exactly one file: `src/styles/themes.css`. Each league is one block
+setting four custom properties:
+
+```css
+[data-theme="osrs/7"] {
+  --title-color: #4fc3f7;             /* headings and accents */
+  --nav-item-color: #2b7fa8;          /* nav labels, separators */
+  --header-background-color: #0a1a24; /* navbar background */
+  --background-color: #050d12;        /* page and export background */
+}
+```
+
+A page picks its theme with a `data-theme` attribute, and there are three ways that happens:
+
+- **Picker pages** get it server-rendered onto `<html>`, so they need no JavaScript at all and
+  theme correctly even with JS disabled.
+- **The homepage and showcase** set it from `localStorage.selectedTheme` in a synchronous inline
+  script in `<head>`. Running before first paint is what makes theme switching flicker-free —
+  if you touch that script, keep it inline, synchronous, and unwrapped by any event listener.
+- **Showcase rows** each set their own, which is how one page displays several leagues at once.
+  This works because custom properties inherit, so any element can carry a theme.
+
+Selectors are deliberately element-level (`[data-theme="…"]`, never `:root[data-theme="…"]`) —
+the `:root` prefix would restrict theming to `<html>` and break the showcase. The default is
+`rs3/1`, written as a zero-specificity `:where(:root)` sharing that block, so an explicit theme
+always wins without needing `!important`.
+
+`npm run verify:themes` enforces all of this — it fails if a color is duplicated outside
+`themes.css`, if a league has no theme block, or if the stylesheet stops reaching the browser.
+It runs as part of `npm run build`, so drift breaks the build instead of shipping silently.
 
 ## 🤝 Contributing
 

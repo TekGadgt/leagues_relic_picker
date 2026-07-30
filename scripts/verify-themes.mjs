@@ -179,7 +179,10 @@ function resolveHeadCss(html, htmlFile) {
       continue;
     }
 
-    const cssPath = join('dist', href.slice(1));
+    // A cache-busting query or fragment is part of the URL, not the filename.
+    // Astro's content-hashed output carries neither today, but this gate blocks
+    // deploys, so it must not fail on a legitimate href shape.
+    const cssPath = join('dist', href.replace(/[?#].*$/, '').slice(1));
     if (!existsSync(cssPath)) {
       errors.push(`${htmlFile}: referenced stylesheet ${cssPath} is missing from the build output`);
       continue;
