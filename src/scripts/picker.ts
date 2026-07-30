@@ -2,7 +2,6 @@
 import { isTouchDevice } from './utils';
 
 interface PickerConfig {
-  backgroundColor: string;
   exportFilename: string;
 }
 
@@ -240,7 +239,15 @@ function isDetailSidebarOpen(): boolean {
 // Get picker config from global variable
 function getPickerConfig(): PickerConfig {
   const w = window as Window & { PICKER_CONFIG?: PickerConfig };
-  return w.PICKER_CONFIG || { backgroundColor: '#071022', exportFilename: 'export.png' };
+  return w.PICKER_CONFIG || { exportFilename: 'export.png' };
+}
+
+// The export background comes from the active theme rather than page config, so
+// themes.css stays the only place a league colour is written down.
+function getExportBackgroundColor(): string {
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue('--background-color')
+    .trim();
 }
 
 // Initialize the picker
@@ -374,7 +381,8 @@ function initPicker(): void {
 
       // Force desktop layout for export
       mainElement.classList.add('exporting');
-      mainElement.style.backgroundColor = config.backgroundColor;
+      const exportBackgroundColor = getExportBackgroundColor();
+      mainElement.style.backgroundColor = exportBackgroundColor;
       mainElement.style.paddingTop = '50px';
       mainElement.style.paddingBottom = '50px';
 
@@ -394,7 +402,7 @@ function initPicker(): void {
           w.html2canvas(mainElement, {
             useCORS: true,
             allowTaint: true,
-            backgroundColor: config.backgroundColor
+            backgroundColor: exportBackgroundColor
           }).then(async function(canvas: HTMLCanvasElement) {
             restoreLayout();
 

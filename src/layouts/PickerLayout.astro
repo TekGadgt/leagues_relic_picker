@@ -13,12 +13,11 @@ interface Props {
     url: string;
   };
   themeKey: string;
-  backgroundColor: string;
   exportFilename: string;
   pageType: 'relics' | 'masteries' | 'pacts';
 }
 
-const { meta, themeKey, backgroundColor, exportFilename, pageType } = Astro.props;
+const { meta, themeKey, exportFilename, pageType } = Astro.props;
 ---
 
 <BaseLayout
@@ -48,9 +47,8 @@ const { meta, themeKey, backgroundColor, exportFilename, pageType } = Astro.prop
   <ExportButton showPactCounter={pageType === 'pacts'} />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ backgroundColor, exportFilename }}>
+  <script is:inline define:vars={{ exportFilename }}>
     window.PICKER_CONFIG = {
-      backgroundColor,
       exportFilename,
     };
   </script>
