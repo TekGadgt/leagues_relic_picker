@@ -33,10 +33,11 @@ const sitemapUrl = new URL("/sitemap-index.xml", site).href;
     {enableThemeScript && (
       <script is:inline>
         // Apply the saved theme before first paint to prevent flicker.
-        // An unknown key matches no themes.css block and falls through to the
-        // :where(:root) default, so no key whitelist is needed here.
-        document.documentElement.dataset.theme =
-          localStorage.getItem('selectedTheme') || 'rs3/1';
+        // No saved key (or an unknown one) leaves data-theme unset, which
+        // matches no themes.css block and falls through to the CSS-level
+        // :where(:root) default — so the default lives in exactly one place.
+        var saved = localStorage.getItem('selectedTheme');
+        if (saved) document.documentElement.dataset.theme = saved;
       </script>
     )}
     <title>{title}</title>
