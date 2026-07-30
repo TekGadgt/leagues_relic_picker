@@ -4,7 +4,6 @@
   "name": "Trailblazer League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#080704",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Trailblazer League Relic Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/osrs/2/poster_relics.png",
     "ogImageAlt": "A Selection of Relics for OSRS Trailblazer League.",
     "url": "https://relics.runetools.lol/osrs/2/"
-  },
-  "theme": {
-    "titleColor": "#f9ebb3",
-    "navItemColor": "#96896b",
-    "headerBackgroundColor": "#14120b",
-    "backgroundColor": "#080704"
   },
   "items": {
     "tier1": [

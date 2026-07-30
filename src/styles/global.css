@@ -366,7 +366,7 @@ main > .colContainer {
   font-family: "Comic Sans MS", "Comic Sans", sans-serif;
   font-size: 1.2em;
   font-weight: bold;
-  color: var(--title-color, #c33232);
+  color: var(--title-color);
 }
 
 .pact-counter.over-limit {

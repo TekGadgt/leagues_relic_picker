@@ -4,7 +4,6 @@
   "name": "Raging Echoes League",
   "pageType": "masteries",
   "layout": "rows",
-  "backgroundColor": "#071022",
   "exportFilename": "masteries.png",
   "meta": {
     "title": "Raging Echoes Mastery Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/osrs/5/poster_masteries.png",
     "ogImageAlt": "A Selection of Masteries for the OSRS Raging Echoes League.",
     "url": "https://relics.runetools.lol/osrs/5/masteries/"
-  },
-  "theme": {
-    "titleColor": "#8ce0ff",
-    "navItemColor": "#598fa3",
-    "headerBackgroundColor": "#0b1933",
-    "backgroundColor": "#071022"
   },
   "items": {
     "melee": [
@@ -41,7 +34,9 @@
         "id": "3",
         "title": "Melee III",
         "src": "/osrs/5/masteries/Melee_III.png",
-        "toolTipItems": ["Melee attack rate set to 80%, rounding down"]
+        "toolTipItems": [
+          "Melee attack rate set to 80%, rounding down"
+        ]
       },
       {
         "id": "4",
@@ -89,13 +84,17 @@
         "id": "3",
         "title": "Ranged III",
         "src": "/osrs/5/masteries/Ranged_III.png",
-        "toolTipItems": ["Ranged attack rate set to 80%, rounding down"]
+        "toolTipItems": [
+          "Ranged attack rate set to 80%, rounding down"
+        ]
       },
       {
         "id": "4",
         "title": "Ranged IV",
         "src": "/osrs/5/masteries/Ranged_IV.png",
-        "toolTipItems": ["Every 5th Ranged hit, heal 5 hitpoints"]
+        "toolTipItems": [
+          "Every 5th Ranged hit, heal 5 hitpoints"
+        ]
       },
       {
         "id": "5",
@@ -109,7 +108,9 @@
         "id": "6",
         "title": "Ranged VI",
         "src": "/osrs/5/masteries/Ranged_VI.png",
-        "toolTipItems": ["Never miss with Ranged (PvM only)"]
+        "toolTipItems": [
+          "Never miss with Ranged (PvM only)"
+        ]
       }
     ],
     "magic": [
@@ -133,7 +134,9 @@
         "id": "3",
         "title": "Magic III",
         "src": "/osrs/5/masteries/Magic_III.png",
-        "toolTipItems": ["Magic attack rate set to 80%, rounding down"]
+        "toolTipItems": [
+          "Magic attack rate set to 80%, rounding down"
+        ]
       },
       {
         "id": "4",

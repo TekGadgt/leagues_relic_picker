@@ -4,7 +4,6 @@
   "name": "Raging Echoes League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#071022",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Raging Echoes Relic Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/osrs/5/poster_relics.png",
     "ogImageAlt": "A Selection of Relics for OSRS Raging Echoes League.",
     "url": "https://relics.runetools.lol/osrs/5/"
-  },
-  "theme": {
-    "titleColor": "#8ce0ff",
-    "navItemColor": "#598fa3",
-    "headerBackgroundColor": "#0b1933",
-    "backgroundColor": "#071022"
   },
   "items": {
     "tier1": [
@@ -171,7 +164,9 @@
         "id": "2",
         "src": "/osrs/5/relics/Reloaded.png",
         "relicLabel": "Reloaded",
-        "toolTipItems": ["Choose another relic from any previous tier"]
+        "toolTipItems": [
+          "Choose another relic from any previous tier"
+        ]
       },
       {
         "id": "3",

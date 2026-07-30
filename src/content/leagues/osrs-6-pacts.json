@@ -4,7 +4,6 @@
   "name": "Demonic Pacts League",
   "pageType": "pacts",
   "layout": "graph",
-  "backgroundColor": "#0C0000",
   "exportFilename": "pacts.png",
   "meta": {
     "title": "Demonic Pacts Pact Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/osrs/6/poster_pacts.png",
     "ogImageAlt": "A Selection of Pacts for OSRS Demonic Pacts League.",
     "url": "https://relics.runetools.lol/osrs/6/pacts/"
-  },
-  "theme": {
-    "titleColor": "#c33232",
-    "navItemColor": "#7a0c0c",
-    "headerBackgroundColor": "#140202",
-    "backgroundColor": "#0C0000"
   },
   "items": {},
   "graph": {
