@@ -7,6 +7,7 @@ interface Props {
   ogUrl?: string;
   bodyClass?: string;
   enableThemeScript?: boolean;
+  themeKey?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   ogUrl = "https://relics.runetools.lol",
   bodyClass = "",
   enableThemeScript = false,
+  themeKey,
 } = Astro.props;
 
 const site = Astro.site || 'https://relics.runetools.lol';
@@ -24,7 +26,7 @@ const sitemapUrl = new URL("/sitemap-index.xml", site).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme={themeKey}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
