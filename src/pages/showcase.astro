@@ -12,12 +12,7 @@ type LeagueEntry = {
   leagueNumber: number;
   name: string;
   pageType: string;
-  theme: {
-    titleColor: string;
-    navItemColor: string;
-    headerBackgroundColor: string;
-    backgroundColor: string;
-  };
+  themeKey: string;
   items: Record<string, unknown>;
   graph?: unknown;
 };
@@ -39,7 +34,7 @@ for (const league of leagues) {
     leagueNumber: league.data.leagueNumber,
     name: league.data.name,
     pageType: league.data.pageType,
-    theme: league.data.theme,
+    themeKey: `${league.data.game}/${league.data.leagueNumber}`,
     items: league.data.items,
     graph: league.data.graph || null,
   };
