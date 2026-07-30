@@ -4,7 +4,6 @@
   "name": "Catalyst League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#0C0000",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Catalyst League Relic Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/rs3/1/poster_relics.png",
     "ogImageAlt": "A Selection of Relics for RS3 Catalyst League.",
     "url": "https://relics.runetools.lol/rs3/1/"
-  },
-  "theme": {
-    "titleColor": "#d5281a",
-    "navItemColor": "#9b1e14",
-    "headerBackgroundColor": "#160403",
-    "backgroundColor": "#0C0000"
   },
   "items": {
     "tier1": [

@@ -26,12 +26,7 @@ interface LeagueData {
   leagueNumber: number;
   name: string;
   pageType: 'relics' | 'masteries' | 'pacts';
-  theme: {
-    titleColor: string;
-    navItemColor: string;
-    headerBackgroundColor: string;
-    backgroundColor: string;
-  };
+  themeKey: string;
   items: Record<string, LeagueItem[]>;
   graph?: { nodes: GraphNode[] } | null;
 }
@@ -45,7 +40,7 @@ interface ParsedURL {
 interface BuildData {
   title: string;
   items: LeagueItem[];
-  theme: LeagueData['theme'];
+  themeKey: string;
   error?: string;
 }
 
@@ -177,19 +172,17 @@ function renderBuildRow(build: BuildData): HTMLElement {
     return row;
   }
 
-  // Apply theme colors to row
-  row.style.borderLeftColor = build.theme.titleColor;
-  row.style.backgroundColor = build.theme.backgroundColor;
+  // The row carries its own theme; global.css reads the inherited custom
+  // properties, so each row can show a different league on one page.
+  row.dataset.theme = build.themeKey;
 
   const titleSpan = document.createElement('span');
   titleSpan.className = 'showcase-row-title';
-  titleSpan.style.color = build.theme.titleColor;
   titleSpan.textContent = build.title;
   row.appendChild(titleSpan);
 
   const separator = document.createElement('span');
   separator.className = 'showcase-row-separator';
-  separator.style.color = build.theme.titleColor;
   separator.textContent = '|';
   row.appendChild(separator);
 
@@ -248,7 +241,7 @@ function processURLs(urls: string[]): BuildData[] {
       builds.push({
         title: trimmedUrl.substring(0, 50) + (trimmedUrl.length > 50 ? '...' : ''),
         items: [],
-        theme: { titleColor: '#ff6b6b', navItemColor: '', headerBackgroundColor: '', backgroundColor: '' },
+        themeKey: '',
         error: 'Invalid URL format'
       });
       continue;
@@ -260,7 +253,7 @@ function processURLs(urls: string[]): BuildData[] {
       builds.push({
         title: parsed.title,
         items: [],
-        theme: { titleColor: '#ff6b6b', navItemColor: '', headerBackgroundColor: '', backgroundColor: '' },
+        themeKey: '',
         error: `Unknown league: ${parsed.leagueKey}`
       });
       continue;
@@ -288,7 +281,7 @@ function processURLs(urls: string[]): BuildData[] {
     builds.push({
       title: parsed.title,
       items,
-      theme: league.theme
+      themeKey: league.themeKey
     });
   }
 

@@ -4,7 +4,6 @@
   "name": "Demonic Pacts League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#070101",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Demonic Pacts Relic Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/osrs/6/poster_relics.png",
     "ogImageAlt": "A Selection of Relics for OSRS Demonic Pacts League.",
     "url": "https://relics.runetools.lol/osrs/6/"
-  },
-  "theme": {
-    "titleColor": "#c33232",
-    "navItemColor": "#7a0c0c",
-    "headerBackgroundColor": "#140202",
-    "backgroundColor": "#070101"
   },
   "items": {
     "tier1": [

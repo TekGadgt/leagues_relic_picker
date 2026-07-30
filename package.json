@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build && npm run verify:themes",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "verify:themes": "node scripts/verify-themes.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

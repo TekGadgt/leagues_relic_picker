@@ -1,0 +1,63 @@
+/*
+ * Single source of truth for league theme colours.
+ *
+ * Selected via a data-theme attribute: server-rendered onto <html> for picker
+ * pages, set from localStorage by BaseLayout's pre-paint script on the homepage
+ * and showcase, and set per row by showcase.ts so one page can show many
+ * leagues at once.
+ *
+ * Selectors are element-level (no :root prefix) so any element can carry a
+ * theme; custom properties then inherit to its descendants. The default is
+ * wrapped in :where() to give it zero specificity, so an explicit data-theme
+ * always wins regardless of source order — no !important required.
+ */
+
+:where(:root),
+[data-theme="rs3/1"] {
+  --title-color: #d5281a;
+  --nav-item-color: #9b1e14;
+  --header-background-color: #160403;
+  --background-color: #0c0000;
+}
+
+[data-theme="osrs/1"] {
+  --title-color: #a3ce27;
+  --nav-item-color: #6a8418;
+  --header-background-color: #0f1406;
+  --background-color: #060804;
+}
+
+[data-theme="osrs/2"] {
+  --title-color: #f9ebb3;
+  --nav-item-color: #96896b;
+  --header-background-color: #14120b;
+  --background-color: #080704;
+}
+
+[data-theme="osrs/4"] {
+  --title-color: #cd7429;
+  --nav-item-color: #7a451a;
+  --header-background-color: #160b05;
+  --background-color: #090402;
+}
+
+[data-theme="osrs/5"] {
+  --title-color: #8ce0ff;
+  --nav-item-color: #598fa3;
+  --header-background-color: #0b1933;
+  --background-color: #071022;
+}
+
+[data-theme="osrs/6"] {
+  --title-color: #c33232;
+  --nav-item-color: #7a0c0c;
+  --header-background-color: #140202;
+  --background-color: #0c0000;
+}
+
+[data-theme="rs3/2"] {
+  --title-color: #2fbf63;
+  --nav-item-color: #1a8a4a;
+  --header-background-color: #07170f;
+  --background-color: #030b07;
+}

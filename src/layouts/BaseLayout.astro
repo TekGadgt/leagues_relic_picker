@@ -7,6 +7,7 @@ interface Props {
   ogUrl?: string;
   bodyClass?: string;
   enableThemeScript?: boolean;
+  themeKey?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   ogUrl = "https://relics.runetools.lol",
   bodyClass = "",
   enableThemeScript = false,
+  themeKey,
 } = Astro.props;
 
 const site = Astro.site || 'https://relics.runetools.lol';
@@ -24,30 +26,18 @@ const sitemapUrl = new URL("/sitemap-index.xml", site).href;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme={themeKey}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {enableThemeScript && (
       <script is:inline>
-        // Apply saved theme immediately to prevent flicker
-        (function() {
-          var themes = {
-            'osrs/1': { title: '#a3ce27', nav: '#6a8418', header: '#0f1406', bg: '#060804' },
-            'osrs/2': { title: '#f9ebb3', nav: '#96896b', header: '#14120b', bg: '#080704' },
-            'osrs/4': { title: '#cd7429', nav: '#7a451a', header: '#160b05', bg: '#090402' },
-            'osrs/5': { title: '#8ce0ff', nav: '#598fa3', header: '#0b1933', bg: '#071022' },
-            'osrs/6': { title: '#c33232', nav: '#cc0000', header: '#140202', bg: '#0c0000' },
-            'rs3/1': { title: '#d5281a', nav: '#802010', header: '#160403', bg: '#080201' },
-            'rs3/2': { title: '#2fbf63', nav: '#1a8a4a', header: '#07170f', bg: '#030b07' }
-          };
-          var saved = localStorage.getItem('selectedTheme');
-          var theme = saved && themes[saved] ? themes[saved] : themes['rs3/1'];
-          var style = document.createElement('style');
-          style.id = 'theme-variables-inline';
-          style.textContent = ':root{--title-color:' + theme.title + '!important;--nav-item-color:' + theme.nav + '!important;--header-background-color:' + theme.header + '!important;--background-color:' + theme.bg + '!important;}';
-          document.head.appendChild(style);
-        })();
+        // Apply the saved theme before first paint to prevent flicker.
+        // No saved key (or an unknown one) leaves data-theme unset, which
+        // matches no themes.css block and falls through to the CSS-level
+        // :where(:root) default — so the default lives in exactly one place.
+        var saved = localStorage.getItem('selectedTheme');
+        if (saved) document.documentElement.dataset.theme = saved;
       </script>
     )}
     <title>{title}</title>

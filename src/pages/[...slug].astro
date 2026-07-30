@@ -29,8 +29,7 @@ const { data } = league;
 
 <PickerLayout
   meta={data.meta}
-  theme={data.theme}
-  backgroundColor={data.backgroundColor}
+  themeKey={`${data.game}/${data.leagueNumber}`}
   exportFilename={data.exportFilename}
   pageType={data.pageType}
 >

@@ -4,7 +4,6 @@
   "name": "Twisted League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#060804",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Twisted League Relic Picker",
@@ -13,25 +12,24 @@
     "ogImageAlt": "A Selection of Relics for OSRS Twisted League.",
     "url": "https://relics.runetools.lol/osrs/1/"
   },
-  "theme": {
-    "titleColor": "#a3ce27",
-    "navItemColor": "#6a8418",
-    "headerBackgroundColor": "#0f1406",
-    "backgroundColor": "#060804"
-  },
   "items": {
     "tier1": [
       {
         "id": "1",
         "src": "/osrs/1/relics/Abyssal_Accumulator.png",
         "relicLabel": "Abyssal Accumulator",
-        "toolTipItems": ["Save 85% of their ammunition and runes"]
+        "toolTipItems": [
+          "Save 85% of their ammunition and runes"
+        ]
       },
       {
         "id": "2",
         "src": "/osrs/1/relics/Endless_Endurance.png",
         "relicLabel": "Endless Endurance",
-        "toolTipItems": ["Unlimited run energy", "Quadruple HP restore rate"]
+        "toolTipItems": [
+          "Unlimited run energy",
+          "Quadruple HP restore rate"
+        ]
       },
       {
         "id": "3",

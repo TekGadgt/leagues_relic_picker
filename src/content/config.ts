@@ -40,7 +40,6 @@ const leagueBaseSchema = z.object({
   leagueNumber: z.number(),
   name: z.string(),
   pageType: z.enum(['relics', 'masteries', 'pacts']),
-  backgroundColor: z.string(),
   exportFilename: z.string(),
   meta: z.object({
     title: z.string(),
@@ -48,12 +47,6 @@ const leagueBaseSchema = z.object({
     ogImage: z.string(),
     ogImageAlt: z.string(),
     url: z.string(),
-  }),
-  theme: z.object({
-    titleColor: z.string(),
-    navItemColor: z.string(),
-    headerBackgroundColor: z.string(),
-    backgroundColor: z.string(),
   }),
 });
 

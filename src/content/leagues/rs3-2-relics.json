@@ -4,7 +4,6 @@
   "name": "Equilibrium League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#030b07",
   "exportFilename": "relics.png",
   "meta": {
     "title": "Equilibrium League Relic Picker",
@@ -12,12 +11,6 @@
     "ogImage": "https://relics.runetools.lol/rs3/2/poster_relics.png",
     "ogImageAlt": "A Selection of Relics for RS3 Equilibrium League.",
     "url": "https://relics.runetools.lol/rs3/2/"
-  },
-  "theme": {
-    "titleColor": "#2fbf63",
-    "navItemColor": "#1a8a4a",
-    "headerBackgroundColor": "#07170f",
-    "backgroundColor": "#030b07"
   },
   "items": {
     "tier1": [
@@ -69,19 +62,25 @@
         "id": "1",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ],
     "tier3": [
@@ -89,19 +88,25 @@
         "id": "1",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "2",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       },
       {
         "id": "3",
         "src": "/assets/placeholders/relic_rs3.png",
         "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "toolTipItems": [
+          "Placeholder relic effect"
+        ]
       }
     ]
   }

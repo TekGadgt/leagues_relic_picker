@@ -12,28 +12,12 @@ interface Props {
     ogImageAlt: string;
     url: string;
   };
-  theme: {
-    titleColor: string;
-    navItemColor: string;
-    headerBackgroundColor: string;
-    backgroundColor: string;
-  };
-  backgroundColor: string;
+  themeKey: string;
   exportFilename: string;
   pageType: 'relics' | 'masteries' | 'pacts';
 }
 
-const { meta, theme, backgroundColor, exportFilename, pageType } = Astro.props;
-
-// Build the CSS variables string directly
-const themeCSS = `
-:root {
-  --title-color: ${theme.titleColor} !important;
-  --nav-item-color: ${theme.navItemColor} !important;
-  --header-background-color: ${theme.headerBackgroundColor} !important;
-  --background-color: ${theme.backgroundColor} !important;
-}
-`;
+const { meta, themeKey, exportFilename, pageType } = Astro.props;
 ---
 
 <BaseLayout
@@ -42,9 +26,9 @@ const themeCSS = `
   ogImage={meta.ogImage}
   ogImageAlt={meta.ogImageAlt}
   ogUrl={meta.url}
+  themeKey={themeKey}
 >
   <Fragment slot="head">
-    <style set:html={themeCSS}></style>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
       integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
@@ -63,9 +47,8 @@ const themeCSS = `
   <ExportButton showPactCounter={pageType === 'pacts'} />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ backgroundColor, exportFilename }}>
+  <script is:inline define:vars={{ exportFilename }}>
     window.PICKER_CONFIG = {
-      backgroundColor,
       exportFilename,
     };
   </script>

@@ -42,7 +42,8 @@ leagues_relic_picker/
 │   ├── scripts/
 │   │   └── picker.ts     # Client-side interactivity
 │   └── styles/
-│       └── global.css    # Global styles
+│       ├── global.css    # Global styles
+│       └── themes.css    # League theme colors (data-theme blocks)
 ├── public/               # Static assets
 │   ├── osrs/{1,2,4,5,6}/ # OSRS league assets (relics, logos)
 │   ├── rs3/{1,2}/        # RS3 league assets
@@ -64,10 +65,8 @@ League data is stored in `src/content/leagues/` as JSON files with this schema:
   pageType: 'relics' | 'masteries' | 'pacts',
   layout: 'columns' | 'rows',
   isRs3: boolean,
-  backgroundColor: string,
   exportFilename: string,
   meta: { title, description, ogImage, ogImageAlt, url },
-  theme: { titleColor, navItemColor, backgroundColor },
   items: Record<string, Item[]>
 }
 ```
@@ -95,12 +94,27 @@ This enables sharing builds via URL.
 
 1. Create a new JSON file in `src/content/leagues/` following the schema (e.g., `osrs-7-relics.json`)
 2. Add assets to `public/{game}/{number}/` (relics images, logo.png)
-3. Add theme variables to `public/{game}/{number}/variables.css` (for homepage theme selector)
+3. Add a `[data-theme="{game}/{number}"]` block to `src/styles/themes.css`
 4. Add navigation link in `src/pages/index.astro`
 
 ### Theme System
 
-Homepage has a theme picker that loads different `variables.css` files from league directories in `/public`. User selection persists in localStorage under `selectedTheme`.
+League colors live in one place: `src/styles/themes.css`, as element-level
+`[data-theme="{game}/{number}"]` blocks setting `--title-color`,
+`--nav-item-color`, `--header-background-color`, and `--background-color`.
+
+Picker pages get `data-theme` server-rendered onto `<html>` by `BaseLayout`, so
+they need no JavaScript to theme themselves. The homepage and showcase set it
+from `localStorage.selectedTheme` in a pre-paint inline script in `BaseLayout`,
+which is what keeps theme switching flicker-free. `Footer.astro`'s theme
+dropdown is a second, non-pre-paint path: on `change` it writes
+`localStorage.selectedTheme` and sets `dataset.theme` directly. Showcase rows
+each set their own `data-theme`, so one page can display several leagues at
+once.
+
+The default theme is `rs3/1`, expressed as the zero-specificity
+`:where(:root)` selector sharing its block. Run `npm run verify:themes` to
+assert no color is duplicated outside `themes.css`.
 
 ### Key Components
 
