@@ -1,43 +1,67 @@
 {
   "game": "rs3",
   "leagueNumber": 2,
-  "name": "RS3 League 2",
+  "name": "Equilibrium League",
   "pageType": "relics",
   "layout": "columns",
-  "backgroundColor": "#071022",
+  "backgroundColor": "#030b07",
   "exportFilename": "relics.png",
   "meta": {
-    "title": "RS3 League 2 Relic Picker",
+    "title": "Equilibrium League Relic Picker",
     "description": "Set a title, pick your relics, screenshot, and share",
     "ogImage": "https://relics.runetools.lol/rs3/2/poster_relics.png",
-    "ogImageAlt": "A Selection of Relics for RS3 League 2.",
+    "ogImageAlt": "A Selection of Relics for RS3 Equilibrium League.",
     "url": "https://relics.runetools.lol/rs3/2/"
   },
   "theme": {
-    "titleColor": "#9b59b6",
-    "navItemColor": "#6c3483",
-    "headerBackgroundColor": "#140a1c",
-    "backgroundColor": "#08040b"
+    "titleColor": "#2fbf63",
+    "navItemColor": "#1a8a4a",
+    "headerBackgroundColor": "#07170f",
+    "backgroundColor": "#030b07"
   },
   "items": {
     "tier1": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 1",
-        "toolTipItems": ["Placeholder relic effect"]
+        "src": "/rs3/2/relics/Endless_Harvest.png",
+        "relicLabel": "Endless Harvest",
+        "toolTipItems": [
+          "Automatically banks resources obtained for Archaeology, Farming, Fishing, Mining and Woodcutting",
+          "10% chance to upgrade your Fishing, Mining, and Woodcutting resources to the next tier",
+          "Tree felling rate is reduced and woodcutting resumes automatically when the tree regrows",
+          "Automatically follow fishing spots when they move",
+          "Permanently full stamina when mining",
+          "Always-active time sprite when excavating"
+        ]
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 2",
-        "toolTipItems": ["Placeholder relic effect"]
+        "src": "/rs3/2/relics/Survivalist.png",
+        "relicLabel": "Survivalist",
+        "toolTipItems": [
+          "Doubles the resources obtained for Archaeology, Fishing, Mining and Woodcutting",
+          "Grants the Survivalist's Bag, holding up to 150 of three different types of logs, ores, or fish at once",
+          "Provides the highest tier tools for Mining (Pickaxe of the Faithful), Fishing (Harpoon of the Pious), and Woodcutting (Hatchet of Devotion)",
+          "Rockertunities and critical swings deal double damage",
+          "Rockertunities immediately provide an ore",
+          "Time sprite focus gain is doubled",
+          "Discovering artefacts or lore pages immediately grants 100% sprite focus",
+          "50% chance artefacts are automatically restored, also granting the restoration XP"
+        ]
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 3",
-        "toolTipItems": ["Placeholder relic effect"]
+        "src": "/rs3/2/relics/Golden_Touch.png",
+        "relicLabel": "Golden Touch",
+        "toolTipItems": [
+          "Grants goldenhawk boots, offering passive Agility XP whilst moving, skilling, or using ultimate abilities",
+          "Chance to obtain goldenhawk feathers whilst training Agility or Thieving, which can be converted into Prayer XP or alchemised",
+          "Double base agility course XP and coins on completion, and prevents failures of obstacles and shortcuts",
+          "Guaranteed success on all Thieving pickpocketing attempts, with tripled and noted loot",
+          "Stalls never deplete and safes can be opened without a cooldown",
+          "Repeated Thieving actions continue automatically",
+          "All coins obtained via Thieving are increased by 100x, and chests and safes can reward bundles of herb and potion ingredients sent directly to your bank"
+        ]
       }
     ],
     "tier2": [
