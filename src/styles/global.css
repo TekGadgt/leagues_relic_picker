@@ -1,8 +1,6 @@
+@import "./themes.css";
+
 :root {
-  --title-color: #8ce0ff;
-  --nav-item-color: #598fa3;
-  --background-color: #071022;
-  --header-background-color: #071022;
   --font-size-title: 5em;
   --font-size-subtitle: 3em;
   --font-size-nav-item: 2em;
@@ -722,7 +720,7 @@ main.exporting .title {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--background-color);
   border-radius: 6px;
   border-left: 4px solid var(--title-color);
 }
