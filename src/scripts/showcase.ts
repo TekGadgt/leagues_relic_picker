@@ -172,7 +172,6 @@ function renderBuildRow(build: BuildData): HTMLElement {
     return row;
   }
 
-  // Apply theme colors to row
   // The row carries its own theme; global.css reads the inherited custom
   // properties, so each row can show a different league on one page.
   row.dataset.theme = build.themeKey;

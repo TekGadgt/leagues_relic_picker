@@ -119,8 +119,13 @@ values are normalized to lowercase.
 Values come from the JSON `theme` blocks, which are canonical — they are what visitors actually see
 on a picker page. The drifted homepage previews for `rs3/1` and `osrs/6` are corrected to match.
 
-**Property:** changing the site-wide default is a one-line edit — move `:where(:root),` onto another
-block — rather than editing three files that currently hold three different fallbacks.
+**Property:** changing the site-wide *CSS* default is a one-line edit — move `:where(:root),` onto
+another block — rather than editing three files that used to hold three different fallbacks.
+`BaseLayout`'s pre-paint script no longer supplies a fallback of its own (it only ever writes an
+explicit `localStorage` value, leaving the CSS default to govern otherwise), so it needs no edit.
+`Footer.astro` is the one remaining exception: its dropdown still holds a literal `'rs3/1'` because it
+needs a concrete key to preselect when nothing is saved yet, so changing the default also means
+updating that one literal.
 
 ### `src/styles/global.css`
 

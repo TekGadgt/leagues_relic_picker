@@ -20,7 +20,11 @@ const themeOptions = leagues
     leagueNumber: league.data.leagueNumber,
     label: league.data.name.replace(/ League$/, ''),
   }))
-  .filter((option) => (seen.has(option.key) ? false : seen.add(option.key)))
+  .filter((option) => {
+    if (seen.has(option.key)) return false;
+    seen.add(option.key);
+    return true;
+  })
   .sort((a, b) => a.game.localeCompare(b.game) || a.leagueNumber - b.leagueNumber);
 
 const osrsOptions = themeOptions.filter((option) => option.game === 'osrs');

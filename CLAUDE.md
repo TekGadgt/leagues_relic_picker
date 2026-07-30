@@ -106,8 +106,11 @@ League colors live in one place: `src/styles/themes.css`, as element-level
 Picker pages get `data-theme` server-rendered onto `<html>` by `BaseLayout`, so
 they need no JavaScript to theme themselves. The homepage and showcase set it
 from `localStorage.selectedTheme` in a pre-paint inline script in `BaseLayout`,
-which is what keeps theme switching flicker-free. Showcase rows each set their
-own `data-theme`, so one page can display several leagues at once.
+which is what keeps theme switching flicker-free. `Footer.astro`'s theme
+dropdown is a second, non-pre-paint path: on `change` it writes
+`localStorage.selectedTheme` and sets `dataset.theme` directly. Showcase rows
+each set their own `data-theme`, so one page can display several leagues at
+once.
 
 The default theme is `rs3/1`, expressed as the zero-specificity
 `:where(:root)` selector sharing its block. Run `npm run verify:themes` to

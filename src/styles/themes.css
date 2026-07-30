@@ -9,7 +9,7 @@
  * Selectors are element-level (no :root prefix) so any element can carry a
  * theme; custom properties then inherit to its descendants. The default is
  * wrapped in :where() to give it zero specificity, so an explicit data-theme
- * always wins regardless of source order.
+ * always wins regardless of source order — no !important required.
  */
 
 :where(:root),

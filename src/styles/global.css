@@ -726,6 +726,7 @@ main.exporting .title {
 }
 
 .showcase-row-error {
+  background-color: rgba(255, 255, 255, 0.03);
   border-left-color: #ff6b6b;
   opacity: 0.7;
 }
