@@ -1,10 +1,30 @@
 ---
+import { getCollection } from 'astro:content';
+
 // Footer component with social links and theme selector
 interface Props {
   showThemeSelector?: boolean;
 }
 
 const { showThemeSelector = false } = Astro.props;
+
+// One dropdown entry per league, derived from the content collection so a new
+// league can never show a stale hardcoded label. Several leagues have more than
+// one page (relics + masteries/pacts) but share a single theme, hence the dedupe.
+const leagues = await getCollection('leagues');
+const seen = new Set<string>();
+const themeOptions = leagues
+  .map((league) => ({
+    key: `${league.data.game}/${league.data.leagueNumber}`,
+    game: league.data.game,
+    leagueNumber: league.data.leagueNumber,
+    label: league.data.name.replace(/ League$/, ''),
+  }))
+  .filter((option) => (seen.has(option.key) ? false : seen.add(option.key)))
+  .sort((a, b) => a.game.localeCompare(b.game) || a.leagueNumber - b.leagueNumber);
+
+const osrsOptions = themeOptions.filter((option) => option.game === 'osrs');
+const rs3Options = themeOptions.filter((option) => option.game === 'rs3');
 ---
 
 <footer class="footer">
@@ -33,15 +53,14 @@ const { showThemeSelector = false } = Astro.props;
       <label for="theme-select">Theme:</label>
       <select id="theme-select">
         <optgroup label="OSRS">
-          <option value="osrs/1">Twisted League</option>
-          <option value="osrs/2">Trailblazer</option>
-          <option value="osrs/4">Trailblazer Reloaded</option>
-          <option value="osrs/5">Raging Echoes</option>
-          <option value="osrs/6">Demonic Pacts</option>
+          {osrsOptions.map((option) => (
+            <option value={option.key}>{option.label}</option>
+          ))}
         </optgroup>
         <optgroup label="RS3">
-          <option value="rs3/1">Catalyst</option>
-          <option value="rs3/2">Equilibrium</option>
+          {rs3Options.map((option) => (
+            <option value={option.key}>{option.label}</option>
+          ))}
         </optgroup>
       </select>
     </div>
@@ -54,32 +73,19 @@ const { showThemeSelector = false } = Astro.props;
       const themeSelect = document.getElementById('theme-select') as HTMLSelectElement | null;
       if (!themeSelect) return;
 
-      const themes: Record<string, { title: string; nav: string; header: string; bg: string }> = {
-        'osrs/1': { title: '#a3ce27', nav: '#6a8418', header: '#0f1406', bg: '#060804' },
-        'osrs/2': { title: '#f9ebb3', nav: '#96896b', header: '#14120b', bg: '#080704' },
-        'osrs/4': { title: '#cd7429', nav: '#7a451a', header: '#160b05', bg: '#090402' },
-        'osrs/5': { title: '#8ce0ff', nav: '#598fa3', header: '#0b1933', bg: '#071022' },
-        'osrs/6': { title: '#c33232', nav: '#cc0000', header: '#140202', bg: '#0c0000' },
-        'rs3/1': { title: '#d5281a', nav: '#802010', header: '#160403', bg: '#080201' },
-        'rs3/2': { title: '#2fbf63', nav: '#1a8a4a', header: '#07170f', bg: '#030b07' }
-      };
+      // Fall back to the default if the saved key is no longer offered, so the
+      // select never renders blank.
+      const saved = localStorage.getItem('selectedTheme');
+      const isKnown = Array.from(themeSelect.options).some((option) => option.value === saved);
+      const initial = isKnown && saved ? saved : 'rs3/1';
 
-      const savedTheme = localStorage.getItem('selectedTheme') || 'rs3/1';
-      themeSelect.value = savedTheme;
+      themeSelect.value = initial;
+      document.documentElement.dataset.theme = initial;
 
       themeSelect.addEventListener('change', function () {
-        const selectedTheme = this.value;
-        localStorage.setItem('selectedTheme', selectedTheme);
-        applyTheme(selectedTheme);
+        localStorage.setItem('selectedTheme', this.value);
+        document.documentElement.dataset.theme = this.value;
       });
-
-      function applyTheme(themeKey: string) {
-        const theme = themes[themeKey] || themes['rs3/1'];
-        const styleEl = document.getElementById('theme-variables-inline');
-        if (styleEl) {
-          styleEl.textContent = `:root{--title-color:${theme.title}!important;--nav-item-color:${theme.nav}!important;--header-background-color:${theme.header}!important;--background-color:${theme.bg}!important;}`;
-        }
-      }
     });
   </script>
 )}
