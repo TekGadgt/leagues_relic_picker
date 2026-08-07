@@ -32,6 +32,10 @@ const DOUBLE_TAP_THRESHOLD = 300;
 function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
   const params = Array.from(elements)
     .filter(element => element.classList.contains('selected'))
+    // Derived selections (e.g. blessing god tiers) are computed from the
+    // player's other picks, so storing them would let a URL encode an outcome
+    // the rules can't produce. They're recomputed on load instead.
+    .filter(element => !(element as HTMLElement).dataset.derived)
     .map(element => element.id);
   const titleElement = document.querySelector(titleSelector);
   const title = titleElement?.textContent || '';
@@ -39,6 +43,15 @@ function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: str
   url.searchParams.set('selected', params.join(','));
   url.searchParams.set('title', title);
   window.history.replaceState({}, '', url.toString());
+}
+
+/**
+ * Announce that the set of selected elements changed. picker.ts owns selection
+ * state, so anything derived from it (blessing god tiers) listens for this
+ * rather than guessing at script execution order.
+ */
+function notifySelectionChanged(): void {
+  document.dispatchEvent(new CustomEvent('picker:selectionchange'));
 }
 
 function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
@@ -75,17 +88,24 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
       updateElementOpacity(element as HTMLElement, false);
     }
   });
+
+  notifySelectionChanged();
 }
 
 function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>, titleSelector: string): void {
   // Prevent deselecting the center pact node
   if (element.id === 'node1' && element.classList.contains('selected')) return;
 
+  // Derived items (blessing god tiers) follow from other picks and can't be
+  // toggled directly. Right-click still opens their detail sidebar.
+  if (element.dataset.derived) return;
+
   const isSelected = element.classList.toggle('selected');
   updateElementOpacity(element, isSelected);
   updateURLParams(elements, titleSelector);
   updateEdgeStyles();
   updatePactCounter(elements);
+  notifySelectionChanged();
 }
 
 function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {

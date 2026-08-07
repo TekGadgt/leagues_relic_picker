@@ -32,6 +32,7 @@ const { data } = league;
   themeKey={`${data.game}/${data.leagueNumber}`}
   exportFilename={data.exportFilename}
   pageType={data.pageType}
+  derivedGroups={data.derivedGroups}
 >
   {data.layout === 'graph' ? (
     data.graph ? (
@@ -45,6 +46,7 @@ const { data } = league;
       layout={data.layout}
       pageType={data.pageType}
       game={data.game}
+      derivedGroups={data.derivedGroups}
     />
   )}
 </PickerLayout>

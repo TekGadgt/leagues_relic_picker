@@ -14,10 +14,11 @@ interface Props {
   };
   themeKey: string;
   exportFilename: string;
-  pageType: 'relics' | 'masteries' | 'pacts';
+  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
+  derivedGroups?: { group: string; from: string[] }[];
 }
 
-const { meta, themeKey, exportFilename, pageType } = Astro.props;
+const { meta, themeKey, exportFilename, pageType, derivedGroups = [] } = Astro.props;
 ---
 
 <BaseLayout
@@ -47,11 +48,13 @@ const { meta, themeKey, exportFilename, pageType } = Astro.props;
   <ExportButton showPactCounter={pageType === 'pacts'} />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ exportFilename }}>
+  <script is:inline define:vars={{ exportFilename, derivedGroups }}>
     window.PICKER_CONFIG = {
       exportFilename,
+      derivedGroups,
     };
   </script>
   <script src="../scripts/picker.ts"></script>
   <script src="../scripts/pact-graph.ts"></script>
+  <script src="../scripts/blessings.ts"></script>
 </BaseLayout>

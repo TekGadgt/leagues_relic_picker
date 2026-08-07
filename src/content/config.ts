@@ -7,7 +7,17 @@ const itemSchema = z.object({
   src: z.string(),
   relicLabel: z.string().optional(),
   title: z.string().optional(),
+  // Equilibrium League blessings belong to one of three paths. The path a
+  // player picks most across a run of tiers decides their god-tier blessing.
+  path: z.enum(['chaos', 'order', 'balance']).optional(),
   toolTipItems: z.array(toolTipItemSchema).default([]),
+});
+
+// A group whose selection is computed from the player's picks in other groups
+// rather than chosen directly.
+const derivedGroupSchema = z.object({
+  group: z.string(),
+  from: z.array(z.string()),
 });
 
 const graphNodeSchema = z.object({
@@ -39,8 +49,9 @@ const leagueBaseSchema = z.object({
   game: z.enum(['osrs', 'rs3']),
   leagueNumber: z.number(),
   name: z.string(),
-  pageType: z.enum(['relics', 'masteries', 'pacts']),
+  pageType: z.enum(['relics', 'masteries', 'pacts', 'blessings']),
   exportFilename: z.string(),
+  derivedGroups: z.array(derivedGroupSchema).optional(),
   meta: z.object({
     title: z.string(),
     description: z.string(),

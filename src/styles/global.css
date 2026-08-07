@@ -435,6 +435,15 @@ main > .rowContainer {
   cursor: pointer;
 }
 
+/*
+ * Derived items (blessing god tiers) follow from the player's other picks
+ * rather than being chosen, so they don't invite a click. Right-click still
+ * opens their details, which is why they stay fully interactive otherwise.
+ */
+.mastery.derived {
+  cursor: default;
+}
+
 .masteryImg {
   height: 150px;
   width: 140px;
