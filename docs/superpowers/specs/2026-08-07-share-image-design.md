@@ -1,7 +1,7 @@
 # Share Image Design
 
 **Date:** 2026-08-07
-**Status:** Spike built and measured locally; awaiting a deploy to answer the questions only Lambda can
+**Status:** Spike deployed and measured on Lambda. Viable, with pre-warming mandatory and fonts unresolved.
 **Revised:** recommendation changed from Satori to headless Chromium once the 60 s function timeout was confirmed
 
 ## Problem
@@ -240,6 +240,35 @@ this problem. Fixed by hiding fixed overlays before capture. Anything else
 
 Local numbers say nothing about Lambda cold start — unpacking the brotli
 Chromium plus Lambda init is the unmeasured part, and the reason to deploy.
+
+## Spike results (deployed)
+
+Measured against a deploy preview:
+
+| Request | Time | Cache status |
+|---|---|---|
+| Uncached render of a novel build | **6.77 s** | `fwd=miss; stored` |
+| Same URL again | 0.13 s | `hit` |
+| Earlier URL, ~1 min old | 0.19 s | `hit; ttl=31535956` |
+
+**The package fits and Chromium runs on Lambda.** That was the blocker; it's
+cleared. Output is ~310–354 KB, well inside the 6 MB payload limit.
+
+**Caching works as designed**, both edge and Netlify Durable. A given build
+renders once, ever.
+
+**6.77 s is the finding that matters.** Crawlers abandon unfurls well before
+that, so a cold render will not produce a card. Pre-warming via the Copy Image
+Link button moves from a nice optimisation to **a requirement** — without it,
+the first person to share any build gets nothing, which is exactly the case that
+matters.
+
+**Fonts fall back, visibly.** The deployed render uses a generic bold sans where
+the site uses Comic Sans MS, confirming the Lambda container has no system fonts.
+The card is otherwise pixel-faithful, so type is the single remaining difference
+between "screenshot of the page" and the page. `@sparticuz/chromium` ships
+`fonts.tar.br` and can load fonts at runtime, so this is solvable — but only with
+a font we're entitled to ship.
 
 ## Open questions
 
