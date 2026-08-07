@@ -3,7 +3,7 @@
   "leagueNumber": 2,
   "name": "Equilibrium League",
   "pageType": "blessings",
-  "layout": "rows",
+  "layout": "columns",
   "exportFilename": "blessings.png",
   "meta": {
     "title": "Equilibrium League Blessing Picker",

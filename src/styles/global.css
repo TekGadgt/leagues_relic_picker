@@ -444,6 +444,20 @@ main > .rowContainer {
   cursor: default;
 }
 
+/*
+ * A gold glow marks the god-tier blessing the player's path unlocked. The icons
+ * are transparent hexagons, so drop-shadow traces their actual silhouette where
+ * an outline would draw a box around it. Gold is deliberately outside every
+ * league palette, so "this was unlocked, not chosen" reads the same on any theme.
+ */
+.mastery.derived.selected .masteryImg {
+  filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
+}
+
+.mastery.derived.selected .masteryLabel {
+  color: #ffcc48;
+}
+
 .masteryImg {
   height: 150px;
   width: 140px;
