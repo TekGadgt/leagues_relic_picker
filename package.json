@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
+    "@zumer/snapdom": "^2.23.2",
     "astro": "^5.2.5",
     "html2canvas": "^1.4.1"
   },
