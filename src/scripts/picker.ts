@@ -574,6 +574,17 @@ function initPicker(): void {
   // Copy Image Link handler
   const copyImageLinkBtn = document.getElementById('copyImageLinkBtn') as HTMLButtonElement | null;
   if (copyImageLinkBtn && getPickerConfig().shareImage) {
+    const originalLabel = copyImageLinkBtn.textContent ?? 'Copy Image Link';
+    let resetLabel: ReturnType<typeof setTimeout> | null = null;
+
+    const setLabel = (text: string, revertAfter?: number) => {
+      if (resetLabel) clearTimeout(resetLabel);
+      copyImageLinkBtn.textContent = text;
+      if (revertAfter) {
+        resetLabel = setTimeout(() => { copyImageLinkBtn.textContent = originalLabel; }, revertAfter);
+      }
+    };
+
     copyImageLinkBtn.addEventListener('click', async function() {
       const current = new URL(window.location.href);
       // Path minus the leading and trailing slashes: 'rs3/2' or 'rs3/2/blessings'.
@@ -588,26 +599,33 @@ function initPicker(): void {
 
       const href = image.toString();
 
-      // Rendering a build takes several seconds — far longer than Discord or
-      // Slack will wait when unfurling. Requesting it now means the slow render
-      // happens while nobody is watching, so by the time the link is pasted the
-      // CDN has it. Deliberately not awaited: the copy shouldn't wait on it.
-      void fetch(href, { mode: 'no-cors' }).catch(() => {
-        // A failed warm just means the first viewer waits. Nothing to do here.
-      });
-
-      const original = copyImageLinkBtn.textContent;
+      // Copy first and synchronously, while the click still counts as user
+      // activation — browsers refuse clipboard writes made after an await.
+      let copied = true;
       try {
         await navigator.clipboard.writeText(href);
-        copyImageLinkBtn.textContent = 'Copied!';
       } catch {
-        // Clipboard is unavailable over plain HTTP and when permission is
-        // refused; showing the URL still lets someone copy it by hand.
+        copied = false;
+      }
+
+      if (!copied) {
         window.prompt('Copy this image link:', href);
-        copyImageLinkBtn.textContent = original;
         return;
       }
-      setTimeout(() => { copyImageLinkBtn.textContent = original; }, 1500);
+
+      // The first render of a build takes several seconds, and a link pasted
+      // before it finishes shows nothing — worse, chat clients cache that
+      // nothing against the URL, so it stays broken even once the image exists.
+      // Requesting it now means the wait happens here, and the label says so
+      // rather than claiming readiness the moment the text is on the clipboard.
+      setLabel('Copied — preparing image…');
+      try {
+        await fetch(href, { mode: 'no-cors', cache: 'no-store' });
+        setLabel('Ready to paste', 4000);
+      } catch {
+        // The link is still on the clipboard; the first viewer just waits.
+        setLabel('Copied', 4000);
+      }
     });
   }
 
