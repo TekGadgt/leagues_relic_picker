@@ -2,9 +2,12 @@
 import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
+import { getStrategy } from './randomizer';
 
 interface PickerConfig {
   exportFilename: string;
+  /** Names a randomizer strategy; absent means no Randomize button. */
+  randomizer?: string;
   /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
   onePickPerTier?: boolean;
 }
@@ -424,6 +427,37 @@ function initPicker(): void {
   if (titleElement) {
     titleElement.addEventListener('input', function() {
       updateURLParams(elements, titleSelector);
+    });
+  }
+
+  // Randomize button handler
+  const randomizeBtn = document.getElementById('randomizeBtn');
+  if (randomizeBtn) {
+    randomizeBtn.addEventListener('click', function() {
+      const strategy = getStrategy(getPickerConfig().randomizer);
+      const ctx = tierContext();
+      if (!strategy || !ctx) return;
+
+      strategy({
+        groups: ctx.groups,
+        clearSelection: () => {
+          for (const element of Array.from(elements)) {
+            if (!element.classList.contains('selected')) continue;
+            const item = element as HTMLElement;
+            item.classList.remove('selected');
+            item.removeAttribute('data-bonus');
+            updateElementOpacity(item, false);
+          }
+        },
+        // Route through the same rules a real click obeys, so the roll can't
+        // produce a build the player couldn't have made by hand.
+        click: (element) => { applyTierClick(element, ctx); },
+      });
+
+      updateURLParams(elements, titleSelector);
+      updateEdgeStyles();
+      updatePactCounter(elements);
+      notifySelectionChanged();
     });
   }
 

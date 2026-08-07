@@ -393,6 +393,7 @@ main > .colContainer {
 #exportBtn,
 #generateBtn,
 #addToShowcaseBtn,
+#randomizeBtn,
 .showcase-btn {
   color: black;
   border: none;
@@ -409,13 +410,15 @@ main > .colContainer {
 
 #exportBtn,
 #generateBtn,
-#addToShowcaseBtn {
+#addToShowcaseBtn,
+#randomizeBtn {
   background-color: var(--title-color);
 }
 
 #exportBtn:hover,
 #generateBtn:hover,
-#addToShowcaseBtn:hover {
+#addToShowcaseBtn:hover,
+#randomizeBtn:hover {
   background-color: var(--nav-item-color);
 }
 
@@ -1497,7 +1500,8 @@ main.exporting .pact-lg .pactImg {
   }
 
   #exportBtn,
-  #addToShowcaseBtn {
+  #addToShowcaseBtn,
+  #randomizeBtn {
     font-size: 14px;
     padding: 8px 16px;
   }
