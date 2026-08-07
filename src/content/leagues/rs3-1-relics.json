@@ -153,6 +153,7 @@
         "id": "2",
         "src": "/rs3/1/relics/Rejuvenated.png",
         "relicLabel": "Rejuvenated",
+        "grantsBonusPick": true,
         "toolTipItems": [
           "Pick another relic from tier 1, 2, or 3, instead of tier 4"
         ]

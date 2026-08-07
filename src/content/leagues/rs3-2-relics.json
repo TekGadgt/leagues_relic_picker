@@ -305,6 +305,7 @@
         "id": "2",
         "src": "/rs3/2/relics/Rejuvenated.png",
         "relicLabel": "Rejuvenated",
+        "grantsBonusPick": true,
         "toolTipItems": [
           "Allows the player to pick another relic from any of the previous tiers."
         ]

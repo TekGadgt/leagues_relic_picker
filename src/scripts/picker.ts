@@ -1,8 +1,11 @@
 // Main picker initialization script
 import { isTouchDevice, resolveObjectFitForExport } from './utils';
+import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
 
 interface PickerConfig {
   exportFilename: string;
+  /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
+  onePickPerTier?: boolean;
 }
 
 type ToolTipItem = string | string[];
@@ -42,6 +45,13 @@ function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: str
   const url = new URL(window.location.href);
   url.searchParams.set('selected', params.join(','));
   url.searchParams.set('title', title);
+
+  // Which relic is the extra can't be inferred from `selected` alone — a bonus
+  // spent in an otherwise-empty tier looks like an ordinary pick.
+  const ctx = getPickerConfig().onePickPerTier ? tierContext() : null;
+  const bonus = ctx ? bonusPickId(ctx) : null;
+  if (bonus) url.searchParams.set('bonus', bonus);
+  else url.searchParams.delete('bonus');
   window.history.replaceState({}, '', url.toString());
 }
 
@@ -89,7 +99,32 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
     }
   });
 
+  // Links shared before one-per-tier existed can hold several picks in a tier.
+  if (getPickerConfig().onePickPerTier) {
+    const ctx = tierContext();
+    if (ctx) {
+      reconcileRestoredSelection(ctx, urlParams.get('bonus'));
+      updateURLParams(elements, titleSelector);
+    }
+  }
+
   notifySelectionChanged();
+}
+
+/**
+ * Groups in render order, skipping derived ones (blessing god tiers), which
+ * follow from other picks rather than being chosen.
+ */
+function tierContext(): TierSelectionContext | null {
+  const container = document.querySelector('.colContainer, .rowContainer');
+  if (!container) return null;
+  const groups = Array.from(container.children).filter(
+    (child): child is HTMLElement =>
+      child instanceof HTMLElement && !child.classList.contains('derivedGroup'),
+  );
+  return groups.length
+    ? { groups, setSelected: (el, selected) => updateElementOpacity(el, selected) }
+    : null;
 }
 
 function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>, titleSelector: string): void {
@@ -99,6 +134,17 @@ function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>
   // Derived items (blessing god tiers) follow from other picks and can't be
   // toggled directly. Right-click still opens their detail sidebar.
   if (element.dataset.derived) return;
+
+  const config = getPickerConfig();
+  const ctx = config.onePickPerTier ? tierContext() : null;
+
+  if (ctx && applyTierClick(element, ctx)) {
+    updateURLParams(elements, titleSelector);
+    updateEdgeStyles();
+    updatePactCounter(elements);
+    notifySelectionChanged();
+    return;
+  }
 
   const isSelected = element.classList.toggle('selected');
   updateElementOpacity(element, isSelected);

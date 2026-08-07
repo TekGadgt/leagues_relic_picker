@@ -212,6 +212,32 @@ main > .colContainer {
   height: 100px;
 }
 
+/*
+ * The extra relic granted by Reloaded / Rejuvenated. Silver rather than the gold
+ * used for blessing god tiers: both are "not an ordinary pick", but they mean
+ * different things — gold is unlocked by your path, silver is an extra you chose
+ * and something in the build is paying for. Silver sits outside every league
+ * palette, so it reads the same on any theme.
+ */
+.relic[data-bonus] .relicImg,
+.mastery[data-bonus] .masteryImg {
+  filter: drop-shadow(0 0 4px #cfd8e3) drop-shadow(0 0 10px rgba(207, 216, 227, 0.5));
+}
+
+.relic[data-bonus] .relicLabel,
+.mastery[data-bonus] .masteryLabel {
+  color: #cfd8e3;
+}
+
+/* html2canvas ignores filters — same substitution as the god-tier glow. */
+main.exporting .relic[data-bonus] .relicImg,
+main.exporting .mastery[data-bonus] .masteryImg {
+  filter: none;
+  border: 2px solid #cfd8e3;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
 .relicLabel {
   font-size: 1.5em;
   margin-top: 5px;
@@ -829,10 +855,23 @@ main.exporting .title {
   filter: drop-shadow(0 0 2px #ffcc48) drop-shadow(0 0 5px rgba(255, 204, 72, 0.55));
 }
 
+/* The extra relic granted by Reloaded / Rejuvenated — silver, matching the
+   picker, and distinct from the gold used for unlocked god tiers. */
+.showcase-item-img.bonus {
+  filter: drop-shadow(0 0 2px #cfd8e3) drop-shadow(0 0 5px rgba(207, 216, 227, 0.5));
+}
+
 /* Same export substitution as the picker — see the note there. */
 .showcase-container.exporting .showcase-item-img.derived {
   filter: none;
   border: 1px solid #ffcc48;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.showcase-container.exporting .showcase-item-img.bonus {
+  filter: none;
+  border: 1px solid #cfd8e3;
   border-radius: 6px;
   box-sizing: border-box;
 }

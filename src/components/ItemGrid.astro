@@ -8,6 +8,7 @@ interface Item {
   relicLabel?: string;
   title?: string;
   path?: 'chaos' | 'order' | 'balance';
+  grantsBonusPick?: boolean;
   toolTipItems: (string | string[])[];
 }
 
@@ -46,6 +47,7 @@ const derivedKeys = new Set(derivedGroups.map((d) => d.group));
               src={item.src}
               label={label}
               toolTipItems={item.toolTipItems}
+              grantsBonusPick={item.grantsBonusPick}
               game={game}
             />
           );
@@ -57,6 +59,7 @@ const derivedKeys = new Set(derivedGroups.map((d) => d.group));
               label={label}
               toolTipItems={item.toolTipItems}
               path={item.path}
+              grantsBonusPick={item.grantsBonusPick}
               derived={derivedKeys.has(groupKey)}
               game={game}
             />

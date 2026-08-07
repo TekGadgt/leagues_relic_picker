@@ -366,6 +366,7 @@
         "id": "2",
         "src": "/osrs/6/relics/Reloaded.png",
         "relicLabel": "Reloaded",
+        "grantsBonusPick": true,
         "toolTipItems": [
           "Choose another relic from any tier below this one."
         ]

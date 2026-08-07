@@ -19,6 +19,10 @@ interface Props {
 }
 
 const { meta, themeKey, exportFilename, pageType, derivedGroups = [] } = Astro.props;
+
+// Relics and blessings activate one choice per tier. Masteries are cumulative
+// and pacts form a graph, so neither is constrained this way.
+const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
 ---
 
 <BaseLayout
@@ -48,10 +52,11 @@ const { meta, themeKey, exportFilename, pageType, derivedGroups = [] } = Astro.p
   <ExportButton showPactCounter={pageType === 'pacts'} />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ exportFilename, derivedGroups }}>
+  <script is:inline define:vars={{ exportFilename, derivedGroups, onePickPerTier }}>
     window.PICKER_CONFIG = {
       exportFilename,
       derivedGroups,
+      onePickPerTier,
     };
   </script>
   <script src="../scripts/picker.ts"></script>
