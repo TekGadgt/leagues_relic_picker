@@ -136,4 +136,22 @@ export default async function handler(request) {
   }
 }
 
-export const config = { path: '/api/share-image' };
+export const config = {
+  path: '/api/share-image',
+  /*
+   * Each uncached build costs a browser launch and several seconds of Lambda,
+   * so the abuse shape is someone walking distinct query strings — repeats are
+   * cached and cost nothing. Twenty a minute per IP leaves ample room for a
+   * person copying links and for a crawler unfurling a burst of them, while
+   * capping what a single client can force us to render.
+   *
+   * Rate limits for functions can only be declared here; netlify.toml is
+   * ignored for this.
+   */
+  rateLimit: {
+    windowSize: 60,
+    windowLimit: 20,
+    aggregateBy: ['ip'],
+    action: 'rate_limit',
+  },
+};
