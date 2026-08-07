@@ -435,9 +435,51 @@ main > .rowContainer {
   cursor: pointer;
 }
 
+/*
+ * Derived items (blessing god tiers) follow from the player's other picks
+ * rather than being chosen, so they don't invite a click. Right-click still
+ * opens their details, which is why they stay fully interactive otherwise.
+ */
+.mastery.derived {
+  cursor: default;
+}
+
+/*
+ * A gold glow marks the god-tier blessing the player's path unlocked. The icons
+ * are transparent hexagons, so drop-shadow traces their actual silhouette where
+ * an outline would draw a box around it. Gold is deliberately outside every
+ * league palette, so "this was unlocked, not chosen" reads the same on any theme.
+ */
+.mastery.derived.selected .masteryImg {
+  filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
+}
+
+.mastery.derived.selected .masteryLabel {
+  color: #ffcc48;
+}
+
 .masteryImg {
   height: 150px;
   width: 140px;
+}
+
+/*
+ * RS3 icons don't share OSRS's fixed aspect ratio — Equilibrium blessings range
+ * from square to roughly 9:8 — so the fixed box above stretches them.
+ *
+ * object-fit lets the icon keep its proportions inside that box rather than
+ * releasing the height. Both remove the distortion, but dropping to height:auto
+ * also lets each column set its own heights, which knocked the grid's rows out
+ * of line by up to 48px. Keeping the box preserves the row alignment that makes
+ * each row read as a single path.
+ *
+ * .masteryImg.rs3 outranks every plain .masteryImg rule on specificity, covering
+ * the desktop and both mobile breakpoints; the export rule is qualified by
+ * main.exporting and outranks it in turn, hence the second selector.
+ */
+.masteryImg.rs3,
+main.exporting .masteryImg.rs3 {
+  object-fit: contain;
 }
 
 .masteryLabel {

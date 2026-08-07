@@ -7,26 +7,34 @@ interface Item {
   src: string;
   relicLabel?: string;
   title?: string;
+  path?: 'chaos' | 'order' | 'balance';
   toolTipItems: (string | string[])[];
+}
+
+interface DerivedGroup {
+  group: string;
+  from: string[];
 }
 
 interface Props {
   items: Record<string, Item[]>;
   layout: 'columns' | 'rows';
-  pageType: 'relics' | 'masteries' | 'pacts';
+  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
   game: 'osrs' | 'rs3';
+  derivedGroups?: DerivedGroup[];
 }
 
-const { items, layout, pageType, game } = Astro.props;
+const { items, layout, pageType, game, derivedGroups = [] } = Astro.props;
 
 const containerClass = layout === 'columns' ? 'colContainer' : 'rowContainer';
 const groupClass = layout === 'columns' ? 'col' : 'row';
 const itemType = pageType === 'relics' ? 'relic' : 'mastery';
+const derivedKeys = new Set(derivedGroups.map((d) => d.group));
 ---
 
 <div class={containerClass} id={`${pageType}Container`}>
   {Object.entries(items).map(([groupKey, groupItems]) => (
-    <div class={groupClass} id={groupKey}>
+    <div class:list={[groupClass, { derivedGroup: derivedKeys.has(groupKey) }]} id={groupKey}>
       {groupItems.map((item) => {
         const label = item.relicLabel || item.title || '';
         const elementId = `${groupKey}-${item.id}`;
@@ -48,6 +56,9 @@ const itemType = pageType === 'relics' ? 'relic' : 'mastery';
               src={item.src}
               label={label}
               toolTipItems={item.toolTipItems}
+              path={item.path}
+              derived={derivedKeys.has(groupKey)}
+              game={game}
             />
           );
         }

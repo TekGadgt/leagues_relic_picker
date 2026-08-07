@@ -4,18 +4,27 @@ interface Props {
   src: string;
   label: string;
   toolTipItems: (string | string[])[];
+  path?: 'chaos' | 'order' | 'balance';
+  derived?: boolean;
+  game?: 'osrs' | 'rs3';
 }
 
-const { id, src, label, toolTipItems } = Astro.props;
+const { id, src, label, toolTipItems, path, derived = false, game = 'osrs' } = Astro.props;
 ---
 
 <div
-  class="mastery"
+  class:list={['mastery', { derived }]}
   id={id}
   data-label={label}
   data-image-src={src}
   data-items={JSON.stringify(toolTipItems)}
+  data-path={path}
+  data-derived={derived ? 'true' : undefined}
 >
-  <img class="masteryImg" src={src} alt={`${label} mastery icon`} />
+  <img
+    class:list={["masteryImg", { rs3: game === 'rs3' }]}
+    src={src}
+    alt={`${label} mastery icon`}
+  />
   <span class="masteryLabel">{label}</span>
 </div>
