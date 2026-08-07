@@ -1,6 +1,6 @@
 // Main picker initialization script
 import { isTouchDevice, resolveObjectFitForExport } from './utils';
-import { applyTierClick, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
+import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
 
 interface PickerConfig {
   exportFilename: string;
@@ -45,6 +45,13 @@ function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: str
   const url = new URL(window.location.href);
   url.searchParams.set('selected', params.join(','));
   url.searchParams.set('title', title);
+
+  // Which relic is the extra can't be inferred from `selected` alone — a bonus
+  // spent in an otherwise-empty tier looks like an ordinary pick.
+  const ctx = getPickerConfig().onePickPerTier ? tierContext() : null;
+  const bonus = ctx ? bonusPickId(ctx) : null;
+  if (bonus) url.searchParams.set('bonus', bonus);
+  else url.searchParams.delete('bonus');
   window.history.replaceState({}, '', url.toString());
 }
 
@@ -96,7 +103,7 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
   if (getPickerConfig().onePickPerTier) {
     const ctx = tierContext();
     if (ctx) {
-      reconcileRestoredSelection(ctx);
+      reconcileRestoredSelection(ctx, urlParams.get('bonus'));
       updateURLParams(elements, titleSelector);
     }
   }
