@@ -69,6 +69,19 @@ own; it also supports fetching its brotli-compressed binary from a remote URL at
 runtime, which sidesteps the bundle entirely at the cost of a download on cold
 start.
 
+### Which Chromium package
+
+`chrome-aws-lambda` is the smaller of the two — 49.7 MB unpacked against
+`@sparticuz/chromium`'s 69.7 MB — but its last release was **2021-07-17**,
+pinning it to Chromium ~92 and to runtimes we no longer use. `@sparticuz/chromium`
+is the maintained successor and the only realistic option.
+
+**Version pin matters.** `netlify.toml` sets `NODE_VERSION = "20"`, and the
+current `@sparticuz/chromium` 149.0.0 declares `engines.node ^22.17.0 || >=24.0.0`
+— it will not run as configured. Either pin **147.0.0** (2026-04-10,
+`node >=20.11.0`) or raise Netlify to Node 22. Decide deliberately; discovering
+this from a first-deploy failure would be an unpleasant hour.
+
 ## Options
 
 ### A. Serverless function + Satori
