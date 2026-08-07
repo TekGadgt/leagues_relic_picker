@@ -9,7 +9,9 @@ const { showPactCounter = false, showRandomizer = false } = Astro.props;
 
 <div class="picker-buttons">
   {showPactCounter && <span id="pactCounter" class="pact-counter">1 / 40</span>}
-  {showRandomizer && <button id="randomizeBtn">Randomize</button>}
+  {showRandomizer && <button id="rollNextBtn">Roll Next Tier</button>}
+  {showRandomizer && <button id="randomizeBtn">Randomize All</button>}
+  {showRandomizer && <button id="clearBtn">Clear</button>}
   <button id="exportBtn">Export Image</button>
   <button id="addToShowcaseBtn">Add to Showcase</button>
 </div>
