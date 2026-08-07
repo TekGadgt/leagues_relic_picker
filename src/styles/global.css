@@ -855,10 +855,23 @@ main.exporting .title {
   filter: drop-shadow(0 0 2px #ffcc48) drop-shadow(0 0 5px rgba(255, 204, 72, 0.55));
 }
 
+/* The extra relic granted by Reloaded / Rejuvenated — silver, matching the
+   picker, and distinct from the gold used for unlocked god tiers. */
+.showcase-item-img.bonus {
+  filter: drop-shadow(0 0 2px #cfd8e3) drop-shadow(0 0 5px rgba(207, 216, 227, 0.5));
+}
+
 /* Same export substitution as the picker — see the note there. */
 .showcase-container.exporting .showcase-item-img.derived {
   filter: none;
   border: 1px solid #ffcc48;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.showcase-container.exporting .showcase-item-img.bonus {
+  filter: none;
+  border: 1px solid #cfd8e3;
   border-radius: 6px;
   box-sizing: border-box;
 }

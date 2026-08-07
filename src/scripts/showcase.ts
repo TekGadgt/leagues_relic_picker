@@ -13,6 +13,8 @@ interface LeagueItem {
   path?: Path;
   /** Set for god-tier blessings, which follow from other picks. */
   derived?: boolean;
+  /** Set for the extra relic granted by Reloaded / Rejuvenated. */
+  bonus?: boolean;
   toolTipItems: ToolTipItem[];
 }
 
@@ -39,6 +41,8 @@ interface LeagueData {
 interface ParsedURL {
   leagueKey: string;
   selectedIds: string[];
+  /** Element id of the extra relic granted by Reloaded / Rejuvenated, if any. */
+  bonusId: string | null;
   title: string;
 }
 
@@ -90,7 +94,7 @@ function parseShareURL(urlString: string): ParsedURL | null {
     const rawTitle = url.searchParams.get('title');
     const title = rawTitle || 'Untitled Build';
 
-    return { leagueKey, selectedIds, title };
+    return { leagueKey, selectedIds, bonusId: url.searchParams.get('bonus'), title };
   } catch {
     return null;
   }
@@ -181,7 +185,11 @@ function getBlessingItems(selectedIds: string[], league: LeagueData): LeagueItem
 /**
  * For relics: get all selected items in tier order
  */
-function getAllSelectedItems(selectedIds: string[], items: Record<string, LeagueItem[]>): LeagueItem[] {
+function getAllSelectedItems(
+  selectedIds: string[],
+  items: Record<string, LeagueItem[]>,
+  bonusId?: string | null,
+): LeagueItem[] {
   const result: LeagueItem[] = [];
 
   // Convert selectedIds to Set for O(1) lookups
@@ -196,9 +204,10 @@ function getAllSelectedItems(selectedIds: string[], items: Record<string, League
 
     for (const item of group) {
       const elementId = `${groupKey}-${item.id}`;
-      if (selectedSet.has(elementId)) {
-        result.push(item);
-      }
+      if (!selectedSet.has(elementId)) continue;
+      // Clone rather than tag in place — these objects are the shared
+      // LEAGUE_DATA and are reused across every row on the page.
+      result.push(elementId === bonusId ? { ...item, bonus: true } : item);
     }
   }
 
@@ -252,7 +261,9 @@ function renderBuildRow(build: BuildData): HTMLElement {
       img.alt = item.relicLabel || item.title || 'Item';
       // Carries the picker's gold treatment into the row, so an unlocked god
       // tier still reads differently from a blessing the player chose.
-      img.className = item.derived ? 'showcase-item-img derived' : 'showcase-item-img';
+      img.className = ['showcase-item-img',
+        item.derived ? 'derived' : '',
+        item.bonus ? 'bonus' : ''].filter(Boolean).join(' ');
       img.title = item.relicLabel || item.title || '';
       itemsContainer.appendChild(img);
     }
@@ -321,7 +332,7 @@ function processURLs(urls: string[]): BuildData[] {
       }
       items = graphItems;
     } else if (league.pageType === 'relics') {
-      items = getAllSelectedItems(parsed.selectedIds, league.items);
+      items = getAllSelectedItems(parsed.selectedIds, league.items, parsed.bonusId);
     } else if (league.pageType === 'blessings') {
       // Every pick counts. Unlike masteries, whose tiers are cumulative so the
       // highest stands in for the rest, each blessing tier is its own choice and
