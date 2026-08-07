@@ -393,6 +393,14 @@ async function exportImage(): Promise<void> {
 
   if (!container) return;
 
+  // Rebuild from the textarea first, so the image always matches what's in the
+  // box. Otherwise editing after a preview exported the previous state — the
+  // rows still on screen — with nothing to indicate it. snapdom resolves images
+  // itself rather than reading painted pixels, so capturing straight after a
+  // rebuild is safe even though none of them have loaded yet.
+  generatePreview();
+  if (!container.querySelector('.showcase-row')) return; // nothing to export
+
   // Add exporting class for styling
   container.classList.add('exporting');
   if (exportBtn) {
@@ -446,6 +454,25 @@ async function exportImage(): Promise<void> {
   }
 }
 
+const STORAGE_KEY = 'showcaseUrls';
+
+/**
+ * Persist what's in the textarea.
+ *
+ * The picker's "Add to Showcase" writes this key too, as a JSON array of URLs,
+ * so the same shape is kept here. Previously only the picker ever wrote it and
+ * the showcase only read it, which meant every edit made on this page — fixing a
+ * title, deleting a line — survived until the next refresh and no further.
+ */
+function saveUrls(text: string): void {
+  const urls = text.split('\n').map(line => line.trim()).filter(Boolean);
+  if (urls.length === 0) {
+    localStorage.removeItem(STORAGE_KEY);
+    return;
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(urls));
+}
+
 /**
  * Load stored URLs from localStorage and populate textarea
  */
@@ -453,10 +480,16 @@ function loadStoredUrls(): void {
   const textarea = document.getElementById('urlInput') as HTMLTextAreaElement;
   if (!textarea) return;
 
-  const stored = localStorage.getItem('showcaseUrls');
-  if (stored) {
-    const urls: string[] = JSON.parse(stored);
-    textarea.value = urls.join('\n');
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (!stored) return;
+
+  try {
+    const urls: unknown = JSON.parse(stored);
+    if (Array.isArray(urls)) textarea.value = urls.join('\n');
+  } catch {
+    // Corrupt entry would otherwise throw here and leave the page uninitialised,
+    // with no way to clear it because the Clear button never got wired up.
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 
@@ -472,7 +505,7 @@ function clearShowcase(): void {
   if (container) container.innerHTML = '';
   if (exportBtn) exportBtn.style.display = 'none';
 
-  localStorage.removeItem('showcaseUrls');
+  localStorage.removeItem(STORAGE_KEY);
 }
 
 /**
@@ -485,6 +518,13 @@ function initShowcase(): void {
 
   // Load stored URLs on init
   loadStoredUrls();
+
+  const textarea = document.getElementById('urlInput') as HTMLTextAreaElement | null;
+  if (textarea) {
+    // Save as they type rather than only on Generate, so a refresh never loses
+    // an edit — including one made and then previewed but never regenerated.
+    textarea.addEventListener('input', () => saveUrls(textarea.value));
+  }
 
   if (generateBtn) {
     generateBtn.addEventListener('click', generatePreview);
