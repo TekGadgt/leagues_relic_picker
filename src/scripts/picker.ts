@@ -2,7 +2,8 @@
 import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
-import { getStrategy } from './randomizer';
+import { getStrategy, itemsIn, type RollPlan } from './randomizer';
+import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } from './roll-animation';
 
 interface PickerConfig {
   exportFilename: string;
@@ -131,7 +132,20 @@ function tierContext(): TierSelectionContext | null {
     : null;
 }
 
+/**
+ * True while a randomised roll is animating. Selection changes are refused
+ * during that window, so a stray click can't interleave with the picks the roll
+ * is about to apply.
+ */
+let rollInProgress = false;
+
+export function setRollInProgress(value: boolean): void {
+  rollInProgress = value;
+}
+
 function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>, titleSelector: string): void {
+  if (rollInProgress) return;
+
   // Prevent deselecting the center pact node
   if (element.id === 'node1' && element.classList.contains('selected')) return;
 
@@ -433,6 +447,15 @@ function initPicker(): void {
   // Randomizer handlers
   const strategy = getStrategy(getPickerConfig().randomizer);
   if (strategy) {
+    const rollNextBtn = document.getElementById('rollNextBtn') as HTMLButtonElement | null;
+    const randomizeBtn = document.getElementById('randomizeBtn') as HTMLButtonElement | null;
+    const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement | null;
+    const exportBtn = document.getElementById('exportBtn') as HTMLButtonElement | null;
+    const showcaseBtn = document.getElementById('addToShowcaseBtn') as HTMLButtonElement | null;
+    const lockable = [rollNextBtn, randomizeBtn, clearBtn, exportBtn, showcaseBtn];
+
+    let rolling = false;
+
     const clearSelection = () => {
       for (const element of Array.from(elements)) {
         if (!element.classList.contains('selected')) continue;
@@ -451,51 +474,91 @@ function initPicker(): void {
       refreshRollNextState();
     };
 
-    const buildContext = (ctx: TierSelectionContext) => ({
-      groups: ctx.groups,
-      clearSelection,
-      // Route through the same rules a real click obeys, so a roll can't produce
-      // a build the player couldn't have made by hand.
-      click: (element: HTMLElement) => { applyTierClick(element, ctx); },
-    });
-
-    const rollNextBtn = document.getElementById('rollNextBtn') as HTMLButtonElement | null;
-
     // Nothing left to reveal once every tier is filled.
     function refreshRollNextState(): void {
       if (!rollNextBtn) return;
       const ctx = tierContext();
-      const remaining = ctx?.groups.some(
-        group => !Array.from(group.querySelectorAll('.relic, .mastery'))
-          .some(item => item.classList.contains('selected')),
+      rollNextBtn.disabled = rolling || !ctx?.groups.some(
+        group => !itemsIn(group).some(item => item.classList.contains('selected')),
       );
-      rollNextBtn.disabled = !remaining;
     }
+
+    /**
+     * Reveal a plan, then apply it.
+     *
+     * The spin is decoration over an already-decided outcome, so the same picks
+     * are applied whether it played, was skipped, or was never shown. Controls
+     * stay locked throughout, which is what stops a half-settled board being
+     * exported or mutated.
+     */
+    const performRoll = async (plan: RollPlan) => {
+      if (rolling || plan.picks.length === 0) return;
+
+      const ctx = tierContext();
+      if (!ctx) return;
+
+      rolling = true;
+      setRollInProgress(true);
+      for (const button of lockable) if (button) button.disabled = true;
+
+      try {
+        if (plan.clearFirst) clearSelection();
+
+        const highlight = {
+          setHighlighted: (element: HTMLElement, on: boolean) => updateElementOpacity(element, on),
+        };
+        const reelFor = (pick: HTMLElement): Reel | null => {
+          const group = ctx.groups.find(candidate => candidate.contains(pick));
+          return group ? { group, landOn: pick } : null;
+        };
+
+        const reels = plan.picks.map(reelFor).filter((reel): reel is Reel => reel !== null);
+        const skipped = await animateRoll(reels, highlight);
+        for (const pick of plan.picks) applyTierClick(pick, ctx);
+
+        if (plan.bonusPick) {
+          const bonusReel = reelFor(plan.bonusPick);
+          // Beat between the granter landing and its extra rolling, so the two
+          // read as cause and effect rather than one simultaneous event. Dropped
+          // for anyone who skipped — they've asked not to wait.
+          if (bonusReel && !skipped) {
+            await pause(BONUS_BEAT_MS);
+            await animateRoll([{ ...bonusReel, asBonus: true }], highlight);
+          }
+          applyTierClick(plan.bonusPick, ctx);
+          // The real data-bonus attribute now drives the styling.
+          for (const el of Array.from(document.querySelectorAll('.' + ROLLING_BONUS_CLASS))) {
+            el.classList.remove(ROLLING_BONUS_CLASS);
+          }
+        }
+      } finally {
+        rolling = false;
+        setRollInProgress(false);
+        for (const button of lockable) if (button) button.disabled = false;
+        commit();
+      }
+    };
 
     if (rollNextBtn && strategy.rollNext) {
       rollNextBtn.addEventListener('click', function() {
         const ctx = tierContext();
-        if (!ctx) return;
-        if (strategy.rollNext!(buildContext(ctx))) commit();
+        if (ctx) void performRoll(strategy.rollNext!(ctx));
       });
     } else if (rollNextBtn) {
       // Strategy has no natural progression — don't offer a button that can't work.
       rollNextBtn.remove();
     }
 
-    const randomizeBtn = document.getElementById('randomizeBtn');
     if (randomizeBtn) {
       randomizeBtn.addEventListener('click', function() {
         const ctx = tierContext();
-        if (!ctx) return;
-        strategy.rollAll(buildContext(ctx));
-        commit();
+        if (ctx) void performRoll(strategy.rollAll(ctx));
       });
     }
 
-    const clearBtn = document.getElementById('clearBtn');
     if (clearBtn) {
       clearBtn.addEventListener('click', function() {
+        if (rolling) return;
         clearSelection();
         commit();
       });
