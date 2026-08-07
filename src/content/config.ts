@@ -10,6 +10,11 @@ const itemSchema = z.object({
   // Equilibrium League blessings belong to one of three paths. The path a
   // player picks most across a run of tiers decides their god-tier blessing.
   path: z.enum(['chaos', 'order', 'balance']).optional(),
+  // Reloaded (OSRS) and Rejuvenated (RS3) let the player take one extra relic
+  // from a tier below their own. Flagged in the data rather than matched by
+  // name, since the two are named differently and sit at different tiers in
+  // each league (osrs/5 t4, osrs/6 t7, rs3/1 t4, rs3/2 t6).
+  grantsBonusPick: z.boolean().optional(),
   toolTipItems: z.array(toolTipItemSchema).default([]),
 });
 

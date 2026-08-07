@@ -4,10 +4,11 @@ interface Props {
   src: string;
   label: string;
   toolTipItems: (string | string[])[];
+  grantsBonusPick?: boolean;
   game: 'osrs' | 'rs3';
 }
 
-const { id, src, label, toolTipItems, game } = Astro.props;
+const { id, src, label, toolTipItems, game, grantsBonusPick } = Astro.props;
 ---
 
 <div
@@ -16,6 +17,7 @@ const { id, src, label, toolTipItems, game } = Astro.props;
   data-label={label}
   data-image-src={src}
   data-items={JSON.stringify(toolTipItems)}
+  data-grants-bonus-pick={grantsBonusPick ? 'true' : undefined}
 >
   <img
     class:list={["relicImg", { rs3: game === 'rs3' }]}
