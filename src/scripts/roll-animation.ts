@@ -69,14 +69,21 @@ async function spinReel(
   skipped: () => boolean,
 ): Promise<void> {
   const items = itemsIn(reel.group);
-  const landIndex = items.indexOf(reel.landOn);
-  if (landIndex === -1 || items.length === 0) return;
 
   // Picks already made in this column stay lit while the reel spins over them.
   // The bonus lands in a tier that usually already holds a choice, and dimming
   // it would leave that relic looking unselected while it is still very much
   // selected — visible on refresh, when it came back bright.
   const alreadyChosen = new Set(items.filter((item) => item.classList.contains('selected')));
+
+  // A bonus reel cycles only what it could actually land on. Running the
+  // highlight over the tier's existing pick would flash the bonus styling across
+  // an ordinary choice, which says the wrong thing about a relic that isn't the
+  // extra. Ordinary reels cycle everything, since their tier is empty or about
+  // to be replaced.
+  const cycle = reel.asBonus ? items.filter((item) => !alreadyChosen.has(item)) : items;
+  const landIndex = cycle.indexOf(reel.landOn);
+  if (landIndex === -1 || cycle.length === 0) return;
   const light = (item: HTMLElement) => {
     options.setHighlighted(item, true);
     if (reel.asBonus) item.classList.add(ROLLING_BONUS_CLASS);
@@ -88,13 +95,13 @@ async function spinReel(
 
   if (startDelay > 0 && !skipped()) await wait(startDelay);
 
-  const steps = items.length * LOOPS + landIndex;
+  const steps = cycle.length * LOOPS + landIndex;
   let previous: HTMLElement | null = null;
 
   for (let step = 0; step <= steps; step++) {
     if (skipped()) break;
 
-    const current = items[step % items.length];
+    const current = cycle[step % cycle.length];
     if (previous && previous !== current) dim(previous);
     light(current);
     previous = current;
