@@ -19,12 +19,15 @@
         "src": "/rs3/2/relics/Endless_Harvest.png",
         "relicLabel": "Endless Harvest",
         "toolTipItems": [
-          "Automatically banks resources obtained for Archaeology, Farming, Fishing, Mining and Woodcutting",
-          "10% chance to upgrade your Fishing, Mining, and Woodcutting resources to the next tier",
-          "Tree felling rate is reduced and woodcutting resumes automatically when the tree regrows",
-          "Automatically follow fishing spots when they move",
-          "Permanently full stamina when mining",
-          "Always-active time sprite when excavating"
+          "Automatically banks resources obtained for Archaeology, Farming, Fishing, Mining and Woodcutting.",
+          "Provides a 10% chance to upgrade your Fishing, Mining, and Woodcutting resources to the next tier. For example, when this effect activates while obtaining oak logs, the player will receive willow logs instead.",
+          [
+            "This uses the same tables as the Polishing perk."
+          ],
+          "Tree felling rate is reduced and woodcutting resumes automatically when the tree regrows.",
+          "Grants permanently full stamina whilst mining.",
+          "Grants a permanently active time sprite whilst excavating.",
+          "The player will automatically follow fishing spots whenever they move."
         ]
       },
       {
@@ -32,14 +35,14 @@
         "src": "/rs3/2/relics/Survivalist.png",
         "relicLabel": "Survivalist",
         "toolTipItems": [
-          "Doubles the resources obtained for Archaeology, Fishing, Mining and Woodcutting",
-          "Grants the Survivalist's Bag, holding up to 150 of three different types of logs, ores, or fish at once",
-          "Provides the highest tier tools for Mining (Pickaxe of the Faithful), Fishing (Harpoon of the Pious), and Woodcutting (Hatchet of Devotion)",
-          "Rockertunities and critical swings deal double damage",
-          "Rockertunities immediately provide an ore",
-          "Time sprite focus gain is doubled",
-          "Discovering artefacts or lore pages immediately grants 100% sprite focus",
-          "50% chance artefacts are automatically restored, also granting the restoration XP"
+          "Doubles the resources obtained for Archaeology, Fishing, Mining and Woodcutting.",
+          "Grants the Survivalist's Bag, an enhanced storage container capable of holding up to 150 of three different types of logs, ores, or fish at once.",
+          "Provides the highest tier tools for Mining (Pickaxe of the Faithful), Fishing (Harpoon of the Pious), and Woodcutting (Hatchet of Devotion), improving efficiency.",
+          "Rockertunities and critical swings deal double damage.",
+          "Rockertunities immediately provide an ore.",
+          "Time sprite focus gain is doubled.",
+          "Upon discovering artefacts or lore pages, immediately gain 100% sprite focus.",
+          "Upon discovering artefacts, there is a 50% chance they are automatically restored as well as providing the XP that would've been gained from the restoration."
         ]
       },
       {
@@ -47,65 +50,318 @@
         "src": "/rs3/2/relics/Golden_Touch.png",
         "relicLabel": "Golden Touch",
         "toolTipItems": [
-          "Grants goldenhawk boots, offering passive Agility XP whilst moving, skilling, or using ultimate abilities",
-          "Chance to obtain goldenhawk feathers whilst training Agility or Thieving, which can be converted into Prayer XP or alchemised",
-          "Double base agility course XP and coins on completion, and prevents failures of obstacles and shortcuts",
-          "Guaranteed success on all Thieving pickpocketing attempts, with tripled and noted loot",
-          "Stalls never deplete and safes can be opened without a cooldown",
-          "Repeated Thieving actions continue automatically",
-          "All coins obtained via Thieving are increased by 100x, and chests and safes can reward bundles of herb and potion ingredients sent directly to your bank"
+          "Grants goldenhawk boots, a pair of tier 60, hybrid style boots which offer passive Agility XP whilst moving, skilling, or using ultimate abilities.",
+          "Gives a chance to obtain goldenhawk feathers whilst training Agility or Thieving, which can be converted into Prayer XP or alchemised.",
+          "Provides double the base amount of agility course XP, awards coins when the course is completed, and prevents failures of obstacles and shortcuts.",
+          "Gives guaranteed success on all Thieving pickpocketing attempts and gives both tripled and noted loot (except coins).",
+          "Stalls never deplete and safes can be opened without a cooldown.",
+          "Repeated Thieving actions continue automatically.",
+          "All coins obtained via Thieving are increased by 100x the usual amount, and chests and safes can reward additional bundles of herb and potion ingredients that are sent directly to your bank."
         ]
       }
     ],
     "tier2": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 1",
+        "src": "/rs3/2/relics/Animal_Wrangler.png",
+        "relicLabel": "Animal Wrangler",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Bank fish automatically when Fishing and bank Hunter loot when hunting.",
+          "2% chance to receive a random farm animal when capturing creatures with Hunter and when catching fish.",
+          [
+            "This can be toggled to either receive animals for Manor Farm or to receive animals for Anachronia Dinosaur Farm."
+          ],
+          "When catching fish, capturing creatures with Hunter, and harvesting farm animals, there is a 33% chance to obtain a random clean herb, herb seed, tree seed, or fruit tree seed, which is sent to your bank.",
+          "Farm animals always have 100% stats and never get hungry.",
+          "Hunter catch chance is 100%.",
+          "Buyers always pay the highest amount of beans for sold animals regardless of age or if diseased.",
+          "Hunter loot quantity and Hunter marks are increased by 5x.",
+          "Hunter traps attract creatures faster.",
+          "Fishing no longer requires bait.",
+          "Fishing will always grant an extra fish per catch.",
+          "Anachronia and Havenhythe Big Game Hunter creatures no longer require bait and are twice as slow to catch you.",
+          "Spirit moths provide 10x the usual amount of charms.",
+          "Farm animals are 20x more common from their sources."
         ]
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 2",
+        "src": "/rs3/2/relics/Superheated.png",
+        "relicLabel": "Superheated",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Provides a toggleable option to burn any log automatically when Woodcutting, regardless of your Firemaking level.",
+          "Provides a toggleable option to cook any fish automatically when Fishing, regardless of your Cooking level.",
+          "Logs are added to bonfires at a rate of 0.6 seconds per log.",
+          "Lighting a single incense stick will provide max potency for 60 minutes.",
+          "Fire spirits are replaced with blessed fire spirits, which spawn more frequently and can spawn whilst Smithing.",
+          "Smelting ores will always provide double the amount of bars, with a 3% chance to gain 50 bars.",
+          "The cap on the number of ores able to smelted at one time is increased to 60.",
+          "Fully smithing an item will provide invention materials equivalent to those the player would receive if they disassembled the item.",
+          "Grants constant max heat and triple base-progress per strike when smithing.",
+          "Completing ceremonial swords provides 5x Smithing XP and 50 bars of the metal you were using.",
+          "XP for burial sets is increased by 3x."
         ]
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 3",
+        "src": "/rs3/2/relics/Divine_Druid.png",
+        "relicLabel": "Divine Druid",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants Thera's Summoning pouch, which stores both grimy herbs and charms, replaces the need to have spirit shards or pouches when Summoning, and allows you to teleport to any (large) obelisk within your unlocked regions.",
+          "Provides a toggleable option to convert grimy herbs into unfinished potions when cleaning them.",
+          "Grimy herbs and charms can be found frequently when Mining, Fishing, Woodcutting, siphoning from Divination springs, or excavating from Archaeology hotspots.",
+          "All grimy herbs in your inventory are cleaned at once.",
+          "Provides a 75% chance to save secondary ingredients when creating potions.",
+          "Charm drop rates from monsters are increased by 5x.",
+          "Summoning familiars which can boost skills will now boost them by 3x the original amount.",
+          "Provides a 50% chance to create an extra pouch when Summoning that is sent directly to the bank; the equivalent XP is not rewarded for this.",
+          "Always grants 10 of the respective familiar's spell scroll when Summoning that is sent directly to the bank; the equivalent XP is not rewarded for this.",
+          "Always gather enriched memories when training Divination.",
+          "Converting both memories and divine energy requires half the amount of energy as usual, rounded down.",
+          "Converting memories provides a 10% chance to receive a porter or divine charge, sent directly to the bank.",
+          "Crafting items from divine energy requires half the amount of energy as usual, rounded down.",
+          "Memory strands are received at 10x the usual rate.",
+          "Catching chronicle fragments gives 2x the usual Hunter XP (before other Leagues multipliers are applied).",
+          "All Meilyr potion recipes are unlocked."
         ]
       }
     ],
     "tier3": [
       {
         "id": "1",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 1",
+        "src": "/rs3/2/relics/Nature_s_Network.png",
+        "relicLabel": "Nature's Network",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants a fairy mushroom, providing unlimited teleports to most spirit tree locations, fairy rings, and farming patches that the player has access to in their unlocked regions.",
+          "Crops instantly grow to full and their produce is automatically noted.",
+          "Planting 1 herb seed counts as 10.",
+          "Seeds planted in farming patches grow instantly to maturity.",
+          [
+            "Therefore, crops cannot be diseased."
+          ],
+          "All farming patches are automatically treated with ultracompost.",
+          "There is a 25% chance to save planted seeds when sowing."
         ]
       },
       {
         "id": "2",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 2",
+        "src": "/rs3/2/relics/Assassin_s_Insight.png",
+        "relicLabel": "Assassin's Insight",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Grants the Skull of Slaying, providing unlimited teleports to all Slayer Masters, Slayer dungeons, and a collection of Slayer targets that the player has access to in their unlocked regions.",
+          "Provides the choice of 2 Slayer assignments each time a new assignment is requested.",
+          "Provides the option to choose between the minimum or maximum amounts of monsters each time a new assignment is requested.",
+          "Grants the ability to add monsters to the prefer and block lists for free.",
+          "Elite monsters are more 5x more likely to spawn and will provide 5x the normal amount of Slayer XP.",
+          "Provides the effects of the corrupted slayer helmet.",
+          "Monsters are captured into ushabtis 100% of the time."
         ]
       },
       {
         "id": "3",
-        "src": "/assets/placeholders/relic_rs3.png",
-        "relicLabel": "Relic 3",
+        "src": "/rs3/2/relics/Voidwalker.png",
+        "relicLabel": "Voidwalker",
         "toolTipItems": [
-          "Placeholder relic effect"
+          "Provides void shards when skilling, always containing clue scrolls, and a roll from one of these categories: Invention materials, Ancient Summoning pouches, Blessed fire spirit rewards, Crystal essence, Divination materials (divine charges, core divine energy), Divine geodes, Dragon equipment, and Goldenhawk feathers.",
+          "Grants the abyssal conduit, providing unlimited teleports to any destination granted by the amulet of glory, combat bracelet, delver's anklet, dig site pendant, enlightened amulet, ferocious ring, games necklace, ring of duelling, ring of respawn, ring of slaying, ring of wealth, skills necklace, and traveller's necklace."
+        ]
+      }
+    ],
+    "tier4": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/Crystal_Grace.png",
+        "relicLabel": "Crystal Grace",
+        "toolTipItems": [
+          "Grants Seren's crystal tiara, which acts as an omni-tiara and offers unlimited teleports to all runecrafting altars in your unlocked regions.",
+          "Unlocks all Magic spells across all spellbooks.",
+          "Provides a 5% chance at obtaining crystal essence, which is stackable and can be used in place of pure and impure essence.",
+          "Rune quantity output is increased by 3x for all essence, and level-based rune multipliers are always the maximum regardless of Runecrafting level.",
+          "All Necromancy rituals act as having Multiply, Attraction, and Protection glyphs active without needing them to be drawn, at a level of 200%.",
+          "All Necromancy rituals act as having the Speed glyph active without needing it to be drawn, at a level of 50%, which is also the maximum speed boost a ritual can have.",
+          "Light sources and glyphs do not require ingredients to be created.",
+          "Burying a bone or offering it at an altar will provide additional XP equivalent to a dragon bone."
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/Transmutation.png",
+        "relicLabel": "Transmutation",
+        "toolTipItems": [
+          "Grants the Deities' Transmuter, granting access to the Alchemical Divergence spell, which transmutes up to 10 of a resource item into a lower tier, and access to the Alchemical Convergence spell, which transmutes up to 10 of a resource item into a higher tier.",
+          "There is no level requirement to use these two spells, and 10 Magic XP is rewarded (before League's multipliers) for each item transmuted.",
+          "These spells will automatically recast over time on a stack of noted items in the inventory.",
+          "These spells provide a togglable option to bank noted products when using the spell, and the Deities' Transmuter must be in the inventory to be able to cast them.",
+          "Resources can be used on the Deities' Transmuter to display what they can turn into."
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/Antiquarian.png",
+        "relicLabel": "Antiquarian",
+        "toolTipItems": [
+          "All Archaeology relics are available to use after completing the Archaeology tutorial.",
+          "Archaeology materials are automatically sent to the material storage container, or the bank if full.",
+          "The monolith provides 1,000 monolith energy.",
+          [
+            "The limit of 3 active relic powers remains unchanged."
+          ],
+          "The Archaeology journal acts a free soil screener.",
+          "Fixate is available straight away and doesn't have a cap.",
+          "Archaeology lore pages are 20% more common.",
+          [
+            "This is in addition to the tier 2 passive effect of being 30% more common."
+          ],
+          "Receive 10x the usual amount of chronotes when handing in collections.",
+          [
+            "This is in place of the tier 1 passive effect of increasing chronotes by 5x."
+          ],
+          "Restoring an artefact costs half as many materials.",
+          "Ancient caskets are received when completing a collection.",
+          "Immediately reach 100% focus when you receive an artefact or lore page.",
+          "Divine geodes can be found while excavating and contain Archaeology materials."
+        ]
+      }
+    ],
+    "tier5": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/Clue_Connoisseur.png",
+        "relicLabel": "Clue Connoisseur",
+        "toolTipItems": [
+          "Grants Uri's Briefcase, which stores sealed clue scrolls and caskets, and allows the player to teleport to any hidey-holes in their unlocked regions.",
+          "Grants the globetrotter outfit.",
+          "Earn charges for the globetrotter outfit 3x faster.",
+          "Receive 3x Treasure Trail Points from completing clues.",
+          "Receive an extra casket when completing clues.",
+          "Treasure Trails will have the minimum number of steps to complete.",
+          "Opening caskets will provide the maximum number of loot rolls.",
+          "All hidey-holes act as being full for the globetrotter outfit effect.",
+          "2x chance of receive a sealed clue scroll.",
+          "No limit to the number of sealed clue scrolls you can have."
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/Production_Master.png",
+        "relicLabel": "Production Master",
+        "toolTipItems": [
+          "Grants the Brooch of the Spirits which:",
+          [
+            "Supplies an unlimited number of exquisite urns.",
+            "Provides the benefits of portable skilling stations when worn.",
+            "Spawns Seren spirits, divine blessings, catalysts of alteration, and manifested knowledge, when worn."
+          ],
+          "Various production activities have their items processed at once.",
+          "Food never burns accidentally.",
+          "Masterwork items now take 1 action to complete.",
+          "Provides a +6 boost to Construction, Cooking, Crafting, Herblore, Fletching, and Smithing."
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/Devout.png",
+        "relicLabel": "Devout",
+        "toolTipItems": [
+          "Grants a Devout Yak Pouch, a summoning familiar that:",
+          [
+            "Has 32 inventory slots.",
+            "Allows the player to swap items to and from notes.",
+            "Allows the player to access the bank from anywhere."
+          ],
+          "Grants an Ethereal storage scroll, allowing the player to repeat the last unnote action.",
+          "Familiars which give you stat boosts also give 10 XP (before League multipliers) in the respective skill when gaining XP, up to every 6 seconds.",
+          [
+            "This includes familiars that provide an invisible skill boost."
+          ],
+          "Summoning scrolls are no longer consumed.",
+          "Familiar spell point costs are reduced to 10% of their original value.",
+          "Combat familiars deal more damage based on your Summoning level, up to a maximum of 500% more damage at 99 Summoning."
+        ]
+      }
+    ],
+    "tier6": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/Perkfection.png",
+        "relicLabel": "Perkfection",
+        "toolTipItems": [
+          "Grants the Inventor's Toolbox, which:",
+          [
+            "Acts as an XP capacitor that can store 10x max charges and charges 10x faster.",
+            "Has 2 gizmo slots which are applied in addition to any equipped perks, if you are using an augmented item.",
+            "Provides unlimited teleports to any Inventor's workbenches within your unlocked regions."
+          ],
+          "Provides a toggleable option to reduce your junk chance to 0% when disassembling items.",
+          "Obtain 10x more materials when disassembling.",
+          "Machines can be built from level 1 and run 10x faster.",
+          "Augmented items and machines consume no charge.",
+          "The capacity of machines is increased by 10x.",
+          "Helpful perks will trigger 20% more often; this doesn't stack with item level 20 benefit.",
+          "Unlocks all blueprints in the dwarven technology tree and cave goblin technology tree."
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/Rejuvenated.png",
+        "relicLabel": "Rejuvenated",
+        "toolTipItems": [
+          "Allows the player to pick another relic from any of the previous tiers."
+        ]
+      }
+    ],
+    "tier7": [
+      {
+        "id": "1",
+        "src": "/rs3/2/relics/Infernal_Fire.png",
+        "relicLabel": "Infernal Fire",
+        "toolTipItems": [
+          "Grants an Avernic Star which, when in your inventory or pocket slot, causes:",
+          [
+            "All combat styles to trigger Death Mark 100% of the time, meaning that target is instantly killed once it reaches 20% of its life points.",
+            "5% adrenaline gain when a target is killed by Death Mark."
+          ],
+          "When in your pocket slot, the Avernic Star provides:",
+          [
+            "18.7 Melee, Ranged, Magic, and Necromancy bonus.",
+            "15 Prayer bonus."
+          ]
+        ]
+      },
+      {
+        "id": "2",
+        "src": "/rs3/2/relics/Naragi_Edict.png",
+        "relicLabel": "Naragi Edict",
+        "toolTipItems": [
+          "Grants the Sliver of Edicts which can be activated every 90 seconds, lasts for 16.8 seconds (28 ticks), and:",
+          [
+            "Heals 10,000 life points 4 times, every 4.2 seconds (7 ticks).",
+            "Boosts your combat levels to 255.",
+            "Revives you if you die."
+          ],
+          "The sliver can be placed in your pocket slot, offering:",
+          [
+            "+300 armour",
+            "+14 Melee, Ranged, Magic, and Necromancy damage bonus",
+            "+1,500 life point bonus.",
+            "+15 Prayer bonus."
+          ]
+        ]
+      },
+      {
+        "id": "3",
+        "src": "/rs3/2/relics/Icyenic_Faith.png",
+        "relicLabel": "Icyenic Faith",
+        "toolTipItems": [
+          "Grants the Tome of the Icyene.",
+          "When worn, the Tome of the Icyene provides:",
+          [
+            "+50 Prayer bonus.",
+            "0.2% critical strike chance per 1 Prayer bonus.",
+            "0.2% base ability damage per 1 Prayer bonus."
+          ],
+          "Protection prayers and deflection curses block 100% of damage.",
+          "Protection prayers and deflection curses act as Soul Split being active."
         ]
       }
     ]
