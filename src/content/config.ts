@@ -57,6 +57,9 @@ const leagueBaseSchema = z.object({
   pageType: z.enum(['relics', 'masteries', 'pacts', 'blessings']),
   exportFilename: z.string(),
   derivedGroups: z.array(derivedGroupSchema).optional(),
+  // Names a strategy in src/scripts/randomizer.ts. Absent means no Randomize
+  // button, which is how past leagues stay untouched.
+  randomizer: z.enum(['one-per-tier']).optional(),
   meta: z.object({
     title: z.string(),
     description: z.string(),

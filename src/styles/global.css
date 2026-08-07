@@ -393,6 +393,9 @@ main > .colContainer {
 #exportBtn,
 #generateBtn,
 #addToShowcaseBtn,
+#randomizeBtn,
+#rollNextBtn,
+#clearBtn,
 .showcase-btn {
   color: black;
   border: none;
@@ -409,18 +412,37 @@ main > .colContainer {
 
 #exportBtn,
 #generateBtn,
-#addToShowcaseBtn {
+#addToShowcaseBtn,
+#randomizeBtn,
+#rollNextBtn {
   background-color: var(--title-color);
 }
 
 #exportBtn:hover,
 #generateBtn:hover,
-#addToShowcaseBtn:hover {
+#addToShowcaseBtn:hover,
+#randomizeBtn:hover,
+#rollNextBtn:hover {
   background-color: var(--nav-item-color);
 }
 
-.showcase-btn-clear {
+.showcase-btn-clear,
+#clearBtn {
   background-color: #f44336;
+}
+
+#clearBtn:hover {
+  background-color: #b82929;
+}
+
+/* Every tier is filled — there's nothing further to reveal. */
+#rollNextBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#rollNextBtn:disabled:hover {
+  background-color: var(--title-color);
 }
 
 .showcase-btn-clear:hover {
@@ -1497,7 +1519,10 @@ main.exporting .pact-lg .pactImg {
   }
 
   #exportBtn,
-  #addToShowcaseBtn {
+  #addToShowcaseBtn,
+  #randomizeBtn,
+  #rollNextBtn,
+  #clearBtn {
     font-size: 14px;
     padding: 8px 16px;
   }

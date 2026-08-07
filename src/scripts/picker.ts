@@ -2,9 +2,12 @@
 import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
+import { getStrategy } from './randomizer';
 
 interface PickerConfig {
   exportFilename: string;
+  /** Names a randomizer strategy; absent means no Randomize button. */
+  randomizer?: string;
   /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
   onePickPerTier?: boolean;
 }
@@ -425,6 +428,80 @@ function initPicker(): void {
     titleElement.addEventListener('input', function() {
       updateURLParams(elements, titleSelector);
     });
+  }
+
+  // Randomizer handlers
+  const strategy = getStrategy(getPickerConfig().randomizer);
+  if (strategy) {
+    const clearSelection = () => {
+      for (const element of Array.from(elements)) {
+        if (!element.classList.contains('selected')) continue;
+        const item = element as HTMLElement;
+        item.classList.remove('selected');
+        item.removeAttribute('data-bonus');
+        updateElementOpacity(item, false);
+      }
+    };
+
+    const commit = () => {
+      updateURLParams(elements, titleSelector);
+      updateEdgeStyles();
+      updatePactCounter(elements);
+      notifySelectionChanged();
+      refreshRollNextState();
+    };
+
+    const buildContext = (ctx: TierSelectionContext) => ({
+      groups: ctx.groups,
+      clearSelection,
+      // Route through the same rules a real click obeys, so a roll can't produce
+      // a build the player couldn't have made by hand.
+      click: (element: HTMLElement) => { applyTierClick(element, ctx); },
+    });
+
+    const rollNextBtn = document.getElementById('rollNextBtn') as HTMLButtonElement | null;
+
+    // Nothing left to reveal once every tier is filled.
+    function refreshRollNextState(): void {
+      if (!rollNextBtn) return;
+      const ctx = tierContext();
+      const remaining = ctx?.groups.some(
+        group => !Array.from(group.querySelectorAll('.relic, .mastery'))
+          .some(item => item.classList.contains('selected')),
+      );
+      rollNextBtn.disabled = !remaining;
+    }
+
+    if (rollNextBtn && strategy.rollNext) {
+      rollNextBtn.addEventListener('click', function() {
+        const ctx = tierContext();
+        if (!ctx) return;
+        if (strategy.rollNext!(buildContext(ctx))) commit();
+      });
+    } else if (rollNextBtn) {
+      // Strategy has no natural progression — don't offer a button that can't work.
+      rollNextBtn.remove();
+    }
+
+    const randomizeBtn = document.getElementById('randomizeBtn');
+    if (randomizeBtn) {
+      randomizeBtn.addEventListener('click', function() {
+        const ctx = tierContext();
+        if (!ctx) return;
+        strategy.rollAll(buildContext(ctx));
+        commit();
+      });
+    }
+
+    const clearBtn = document.getElementById('clearBtn');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function() {
+        clearSelection();
+        commit();
+      });
+    }
+
+    refreshRollNextState();
   }
 
   // Export button handler
