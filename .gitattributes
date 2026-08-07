@@ -1,0 +1,28 @@
+# Normalise line endings to LF on commit, regardless of the platform a file was
+# authored on. This repo began on Windows, so some files carried CRLF while
+# everything created since has been LF — a mix that turned small edits into
+# whole-file diffs and hid real changes.
+#
+# text=auto lets git decide what is text rather than binary, so images and
+# fonts are left alone.
+* text=auto eol=lf
+
+# Explicit for the formats here, so intent survives even if the default changes.
+*.astro   text eol=lf
+*.ts      text eol=lf
+*.js      text eol=lf
+*.mjs     text eol=lf
+*.css     text eol=lf
+*.json    text eol=lf
+*.md      text eol=lf
+*.yml     text eol=lf
+*.toml    text eol=lf
+*.html    text eol=lf
+
+# Binary assets: never touch these.
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.webp    binary
+*.ico     binary
+*.mp4     binary
