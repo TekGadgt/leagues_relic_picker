@@ -805,6 +805,15 @@ main.exporting .title {
   object-fit: contain;
 }
 
+/*
+ * Matches the gold glow the picker gives an unlocked god-tier blessing, so a
+ * showcase row distinguishes what was unlocked from what was chosen. Scaled down
+ * from the picker's values to suit a 45px icon.
+ */
+.showcase-item-img.derived {
+  filter: drop-shadow(0 0 2px #ffcc48) drop-shadow(0 0 5px rgba(255, 204, 72, 0.55));
+}
+
 .showcase-pact-composite {
   width: 45px;
   height: 45px;

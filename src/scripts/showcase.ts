@@ -1,5 +1,6 @@
 // Showcase page client-side logic
 import { isTouchDevice } from './utils';
+import { resolvePath, type Path } from './blessing-path';
 
 type ToolTipItem = string | string[];
 
@@ -9,6 +10,9 @@ interface LeagueItem {
   relicLabel?: string;
   title?: string;
   activeFrame?: string;
+  path?: Path;
+  /** Set for god-tier blessings, which follow from other picks. */
+  derived?: boolean;
   toolTipItems: ToolTipItem[];
 }
 
@@ -25,8 +29,9 @@ interface LeagueData {
   game: string;
   leagueNumber: number;
   name: string;
-  pageType: 'relics' | 'masteries' | 'pacts';
+  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
   themeKey: string;
+  derivedGroups?: { group: string; from: string[] }[];
   items: Record<string, LeagueItem[]>;
   graph?: { nodes: GraphNode[] } | null;
 }
@@ -57,14 +62,15 @@ function getLeagueData(): Record<string, LeagueData> {
  * - /osrs/5/masteries/ → osrs-5-masteries
  * - /osrs/6/pacts/     → osrs-6-pacts
  * - /rs3/1/            → rs3-1 (relics)
+ * - /rs3/2/blessings/  → rs3-2-blessings
  */
 function parseShareURL(urlString: string): ParsedURL | null {
   try {
     const url = new URL(urlString);
     const pathname = url.pathname;
 
-    // Match: /(osrs|rs3)/(\d+)(?:/(masteries|pacts))?/?
-    const match = pathname.match(/^\/(osrs|rs3)\/(\d+)(?:\/(masteries|pacts))?\/?$/);
+    // Match: /(osrs|rs3)/(\d+)(?:/(masteries|pacts|blessings))?/?
+    const match = pathname.match(/^\/(osrs|rs3)\/(\d+)(?:\/(masteries|pacts|blessings))?\/?$/);
     if (!match) return null;
 
     const [, game, number, pageType] = match;
@@ -129,6 +135,50 @@ function getHighestPerGroup(selectedIds: string[], items: Record<string, LeagueI
 }
 
 /**
+ * For blessings: every selected pick, plus the god tiers they unlocked.
+ *
+ * God tiers are deliberately absent from the share URL — they follow from the
+ * player's picks, so storing them would let a link encode an outcome the rules
+ * can't produce. That means the showcase has to reconstruct them, using the same
+ * rule the picker applies (./blessing-path).
+ *
+ * Walking the declared group order places each god tier where the picker shows
+ * it, rather than appending them at the end.
+ */
+function getBlessingItems(selectedIds: string[], league: LeagueData): LeagueItem[] {
+  const selectedSet = new Set(selectedIds);
+  const sourcesByGroup = new Map((league.derivedGroups ?? []).map(d => [d.group, d.from]));
+
+  const pathChosenIn = (groupKey: string): Path | null => {
+    for (const item of league.items[groupKey] ?? []) {
+      if (selectedSet.has(`${groupKey}-${item.id}`)) return item.path ?? null;
+    }
+    return null;
+  };
+
+  const result: LeagueItem[] = [];
+
+  for (const [groupKey, group] of Object.entries(league.items)) {
+    const sources = sourcesByGroup.get(groupKey);
+
+    if (sources) {
+      const resolved = resolvePath(sources.map(pathChosenIn));
+      if (resolved) {
+        const unlocked = group.find(item => item.path === resolved);
+        if (unlocked) result.push({ ...unlocked, derived: true });
+      }
+      continue;
+    }
+
+    for (const item of group) {
+      if (selectedSet.has(`${groupKey}-${item.id}`)) result.push(item);
+    }
+  }
+
+  return result;
+}
+
+/**
  * For relics: get all selected items in tier order
  */
 function getAllSelectedItems(selectedIds: string[], items: Record<string, LeagueItem[]>): LeagueItem[] {
@@ -137,15 +187,11 @@ function getAllSelectedItems(selectedIds: string[], items: Record<string, League
   // Convert selectedIds to Set for O(1) lookups
   const selectedSet = new Set(selectedIds);
 
-  // Sort groups by key (tier1, tier2, tier3, etc.)
-  const sortedGroups = Object.keys(items).sort((a, b) => {
-    // Extract numbers from group names for proper sorting
-    const numA = parseInt(a.replace(/\D/g, ''), 10) || 0;
-    const numB = parseInt(b.replace(/\D/g, ''), 10) || 0;
-    return numA - numB;
-  });
-
-  for (const groupKey of sortedGroups) {
+  // Declared order is display order — the same order the picker renders. Sorting
+  // by digits in the key looked equivalent for tier1..tierN, but blessings
+  // interleave god tiers (tier1, tier2, tier3, god1, tier4...) where it would
+  // read god1 as 1 and shuffle it next to tier1.
+  for (const groupKey of Object.keys(items)) {
     const group = items[groupKey];
 
     for (const item of group) {
@@ -204,7 +250,9 @@ function renderBuildRow(build: BuildData): HTMLElement {
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.relicLabel || item.title || 'Item';
-      img.className = 'showcase-item-img';
+      // Carries the picker's gold treatment into the row, so an unlocked god
+      // tier still reads differently from a blessing the player chose.
+      img.className = item.derived ? 'showcase-item-img derived' : 'showcase-item-img';
       img.title = item.relicLabel || item.title || '';
       itemsContainer.appendChild(img);
     }
@@ -274,6 +322,11 @@ function processURLs(urls: string[]): BuildData[] {
       items = graphItems;
     } else if (league.pageType === 'relics') {
       items = getAllSelectedItems(parsed.selectedIds, league.items);
+    } else if (league.pageType === 'blessings') {
+      // Every pick counts. Unlike masteries, whose tiers are cumulative so the
+      // highest stands in for the rest, each blessing tier is its own choice and
+      // a god tier doesn't summarise the picks that unlocked it.
+      items = getBlessingItems(parsed.selectedIds, league);
     } else {
       items = getHighestPerGroup(parsed.selectedIds, league.items);
     }
