@@ -2,6 +2,7 @@
 
 **Date:** 2026-08-07
 **Status:** Draft for review — no implementation yet
+**Revised:** recommendation changed from Satori to headless Chromium once the 60 s function timeout was confirmed
 
 ## Problem
 
@@ -47,20 +48,30 @@ of pure CPU. **Image generation therefore belongs in a serverless function, not
 an edge function** — different runtime, seconds of execution rather than
 milliseconds.
 
-A headless browser *is* technically possible in a serverless function via
-`@sparticuz/chromium`, and it's genuinely attractive here because it would render
-the real page — actual CSS, actual layout, glows included, no reimplementation
-and no drift. The costs are steep: a ~50 MB dependency against Lambda's bundle
-limits, multi-second cold starts, and the function must load the page and wait
-for 20 images before capturing. Discord and Slack abandon slow unfurls, so a
-cold start could mean no card at all.
+A headless browser *is* viable in a serverless function via `puppeteer-core` and
+`@sparticuz/chromium`, and the confirmed limits are far more generous than first
+assumed ([configuration
+docs](https://docs.netlify.com/build/functions/optional-configuration/)):
 
-**Exact serverless limits (timeout, memory, bundle) are not yet confirmed** and
-must be verified before committing — see Open Questions.
+| Limit | Value |
+|---|---|
+| Synchronous execution | **60 s**, not configurable |
+| Memory | **1024–4096 MB**, configurable |
+| Buffered response payload | 6 MB (~4.5 MB after base64) |
+| Streamed response payload | 20 MB |
+
+60 s dwarfs a 2–5 s cold start plus a 2–3 s render, and memory can be raised to
+where Chromium is comfortable. A 1200×630 PNG is well inside the payload limit.
+
+Deployment package size is the one real constraint and Netlify defers to AWS
+Lambda's limits (50 MB zipped). `@sparticuz/chromium` is close to that on its
+own; it also supports fetching its brotli-compressed binary from a remote URL at
+runtime, which sidesteps the bundle entirely at the cost of a download on cold
+start.
 
 ## Options
 
-### A. Serverless function + Satori (recommended)
+### A. Serverless function + Satori
 
 Compose the card as JSX in a Satori-supported CSS subset, rasterise with
 resvg-wasm, return `image/png`.
@@ -69,13 +80,17 @@ resvg-wasm, return `image/png`.
 - Card layout is reimplemented, so it can drift from the real export
 - **No CSS filter support** — the gold and silver glows won't render
 
-### B. Serverless function + headless Chromium
+### B. Serverless function + headless Chromium (recommended)
 
-Load the actual share URL in Chromium and screenshot `#main`.
+`puppeteer-core` drives `@sparticuz/chromium`, loads the actual share URL, and
+screenshots `#main` — the same element Export Image captures.
 
-- Perfect fidelity by construction; no second layout to maintain
-- Cold starts risk crawler timeouts; heavy bundle; renders the whole page to
-  produce one image; more moving parts to break
+- Perfect fidelity by construction: it *is* the page. No second layout, no drift,
+  glows and fonts included, and the card tracks any future design change for free
+- Deletes most of this design's complexity: no Satori CSS subset to work within,
+  no font embedding, no glow substitution, no rescaled reimplementation
+- Cold starts are the risk, and the Copy Image Link button neutralises it (below)
+- Bundle size is tight; the remote-binary option is the escape hatch
 
 ### C. Third-party screenshot API
 
@@ -94,19 +109,29 @@ Design one good poster per page. No dynamic images at all.
 
 ## Recommendation
 
-**A, with D as an immediate prerequisite.**
+**B, with D as an immediate prerequisite.**
 
 The posters are needed regardless — they're 404ing now and remain the `og:image`
-for page unfurls under the image-only approach. That's worth doing first and on
-its own.
+for page unfurls under the image-only approach. Worth doing first and on its own.
 
-A is recommended over B mainly on the crawler-timeout risk: a card that
-sometimes fails to appear is worse than one that's slightly simplified. B stays
-the fallback if fidelity turns out to matter more than latency in practice.
+An earlier draft of this document recommended A, on an assumed ~10 s function
+timeout that made cold starts look fatal. The real ceiling is 60 s, which removes
+that objection, and B is otherwise better on every axis that matters here: the
+card is the export rather than an imitation of it, and it cannot drift.
 
-The glow limitation is already solved: when html2canvas had the same gap we
-substituted a gold/silver border, and it read fine in exports for weeks. Same
-substitution applies.
+### Cold starts, and why the copy button fixes them
+
+The genuine risk was never Netlify's limits — it's that Discord and Slack abandon
+slow unfurls, so a cold start could mean no card at all.
+
+But the first request for a given image is one *we* trigger. When the player
+clicks Copy Image Link, the page fires a background `fetch` for that same URL.
+The slow render happens while nobody is waiting on it, and by the time the link
+is pasted seconds later the CDN has a cached PNG to serve.
+
+Residual gaps, both acceptable: a hand-crafted URL that never went through the
+button gets no pre-warm, and an evicted cache entry means one slow render later.
+Both degrade to the static poster rather than to a broken card.
 
 ## Shape
 
@@ -173,14 +198,18 @@ the poster rather than to a broken card.
 
 ## Open questions
 
-1. **Serverless function limits** — timeout, memory, bundle size on the legacy
-   plan. Determines whether B is viable at all and confirms A's headroom.
-2. **Does Satori fit the export layout** at 1200×630 with 7 tier columns, or does
-   the card want its own composition after all?
-3. **Font substitute** for Comic Sans MS.
+1. **Does `@sparticuz/chromium` fit the deployment package?** The one unresolved
+   blocker. If not, load the binary remotely at runtime.
+2. **Cold start and render duration, measured.** Determines whether pre-warming
+   is sufficient or whether the card needs a cheaper path after all.
+3. **What does the function load?** The live production URL, or a local render.
+   Loading production means the function fetches the site on each cold render,
+   which costs bandwidth and web requests.
 4. **Title policy** — cap length only, or filter content?
-5. **Measure before building:** a spike rendering one card with Satori would
-   settle both the CPU cost and the fidelity question in about an hour.
+5. **Aspect ratio.** The export is ~2.2:1 and cards want 1.91:1. Screenshot a
+   wider viewport and letterbox, or accept cropping.
+6. **Spike first:** stand the function up and render one card. Settles 1, 2 and 5
+   together, and is the cheapest way to find out if this is pleasant or painful.
 
 ## Out of scope
 
