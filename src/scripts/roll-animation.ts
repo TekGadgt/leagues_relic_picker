@@ -13,10 +13,26 @@
 
 import { itemsIn } from './randomizer';
 
+/** Marks the travelling highlight while a bonus is being rolled. */
+export const ROLLING_BONUS_CLASS = 'rolling-bonus';
+
 /** A column to spin, and the item it must stop on. */
 export interface Reel {
   group: HTMLElement;
   landOn: HTMLElement;
+  /**
+   * Dress the travelling highlight as the bonus rather than an ordinary pick.
+   *
+   * Without it the bonus reel is indistinguishable from a normal one, so a tier
+   * that already landed appears to re-roll and change its mind, with the silver
+   * glow snapping in only at the end. Carrying the styling through the spin makes
+   * it read as rolling the extra.
+   *
+   * A presentational class, deliberately not the data-bonus attribute the rules
+   * use: a transient marker there would make the selection logic think a bonus
+   * was already held and apply the pick as an ordinary swap.
+   */
+  asBonus?: boolean;
 }
 
 export interface RollAnimationOptions {
@@ -61,7 +77,12 @@ async function spinReel(
   // it would leave that relic looking unselected while it is still very much
   // selected — visible on refresh, when it came back bright.
   const alreadyChosen = new Set(items.filter((item) => item.classList.contains('selected')));
+  const light = (item: HTMLElement) => {
+    options.setHighlighted(item, true);
+    if (reel.asBonus) item.classList.add(ROLLING_BONUS_CLASS);
+  };
   const dim = (item: HTMLElement) => {
+    item.classList.remove(ROLLING_BONUS_CLASS);
     if (!alreadyChosen.has(item)) options.setHighlighted(item, false);
   };
 
@@ -75,7 +96,7 @@ async function spinReel(
 
     const current = items[step % items.length];
     if (previous && previous !== current) dim(previous);
-    options.setHighlighted(current, true);
+    light(current);
     previous = current;
 
     if (step === steps) break;
@@ -89,7 +110,7 @@ async function spinReel(
   // leaving the column's existing picks lit.
   if (previous && previous !== reel.landOn) dim(previous);
   for (const chosen of alreadyChosen) options.setHighlighted(chosen, true);
-  options.setHighlighted(reel.landOn, true);
+  light(reel.landOn);
 }
 
 /**

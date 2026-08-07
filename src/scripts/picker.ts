@@ -3,7 +3,7 @@ import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
 import { getStrategy, itemsIn, type RollPlan } from './randomizer';
-import { animateRoll, pause, BONUS_BEAT_MS, type Reel } from './roll-animation';
+import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } from './roll-animation';
 
 interface PickerConfig {
   exportFilename: string;
@@ -523,9 +523,13 @@ function initPicker(): void {
           // for anyone who skipped — they've asked not to wait.
           if (bonusReel && !skipped) {
             await pause(BONUS_BEAT_MS);
-            await animateRoll([bonusReel], highlight);
+            await animateRoll([{ ...bonusReel, asBonus: true }], highlight);
           }
           applyTierClick(plan.bonusPick, ctx);
+          // The real data-bonus attribute now drives the styling.
+          for (const el of Array.from(document.querySelectorAll('.' + ROLLING_BONUS_CLASS))) {
+            el.classList.remove(ROLLING_BONUS_CLASS);
+          }
         }
       } finally {
         rolling = false;

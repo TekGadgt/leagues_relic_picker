@@ -219,11 +219,20 @@ main > .colContainer {
  * and something in the build is paying for. Silver sits outside every league
  * palette, so it reads the same on any theme.
  */
+/*
+ * `.rolling-bonus` is the travelling highlight while a bonus is being rolled. It
+ * shares the settled styling so the spin reads as rolling the extra, rather than
+ * the tier appearing to re-roll with the glow arriving from nowhere at the end.
+ */
+.relic.rolling-bonus .relicImg,
+.mastery.rolling-bonus .masteryImg,
 .relic[data-bonus] .relicImg,
 .mastery[data-bonus] .masteryImg {
   filter: drop-shadow(0 0 4px #cfd8e3) drop-shadow(0 0 10px rgba(207, 216, 227, 0.5));
 }
 
+.relic.rolling-bonus .relicLabel,
+.mastery.rolling-bonus .masteryLabel,
 .relic[data-bonus] .relicLabel,
 .mastery[data-bonus] .masteryLabel {
   color: #cfd8e3;
