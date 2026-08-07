@@ -179,9 +179,15 @@ filtering. Worth deciding deliberately rather than discovering.
 
 ### Fonts
 
-Satori needs font files rather than CSS. The picker uses Comic Sans MS, which
-isn't ours to embed — a substitute is needed, which is a visible difference from
-the export.
+Still a problem under B, for a different reason: a Lambda container ships with no
+system fonts, so Comic Sans MS won't resolve there any more than it would in
+Satori and Chromium will fall back to something generic. `@sparticuz/chromium`
+can load font files at runtime, so the card can match the site — but only with a
+font we're entitled to ship. The picker relies on Comic Sans MS being present on
+the viewer's machine, which is fine in a browser and not an option server-side.
+
+Worth deciding what the card uses before building, since it's the most visible
+way a "screenshot of the real page" can still fail to look like the real page.
 
 ## Failure modes
 
