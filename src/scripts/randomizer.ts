@@ -26,6 +26,15 @@ export interface RollPlan {
   clearFirst: boolean;
   /** Items to pick, in the order they should be applied. */
   picks: HTMLElement[];
+  /**
+   * The extra allowed by Reloaded / Rejuvenated, kept apart from the ordinary
+   * picks so it can be revealed after them — it's a consequence of rolling the
+   * granter, and showing it at the same time hides that.
+   *
+   * Applied last, since the rules only read it as a bonus once the granter is
+   * actually selected.
+   */
+  bonusPick?: HTMLElement;
 }
 
 export interface RandomizerStrategy {
@@ -91,14 +100,14 @@ export const onePerTierStrategy: RandomizerStrategy = {
     }
 
     const granterIndex = picks.findIndex(grantsBonus);
+    let bonusPick: HTMLElement | undefined;
     if (granterIndex !== -1) {
       const granterGroupIndex = ctx.groups.findIndex((g) => g.contains(picks[granterIndex]));
       // Everything is about to be replaced, so only this plan's picks are taken.
-      const bonus = planBonus(ctx, granterGroupIndex, new Set(picks));
-      if (bonus) picks.push(bonus);
+      bonusPick = planBonus(ctx, granterGroupIndex, new Set(picks));
     }
 
-    return { clearFirst: true, picks };
+    return { clearFirst: true, picks, bonusPick };
   },
 
   rollNext: (ctx) => {
@@ -115,12 +124,11 @@ export const onePerTierStrategy: RandomizerStrategy = {
     // Unlocking the granter grants the extra pick immediately, as it would in
     // game — every earlier tier is already filled, so the extra stacks onto one.
     const holdsBonus = ctx.groups.some((g) => itemsIn(g).some((i) => i.hasAttribute('data-bonus')));
-    if (grantsBonus(choice) && !holdsBonus) {
-      const bonus = planBonus(ctx, ctx.groups.indexOf(next), new Set(picks));
-      if (bonus) picks.push(bonus);
-    }
+    const bonusPick = grantsBonus(choice) && !holdsBonus
+      ? planBonus(ctx, ctx.groups.indexOf(next), new Set(picks))
+      : undefined;
 
-    return { clearFirst: false, picks };
+    return { clearFirst: false, picks, bonusPick };
   },
 };
 

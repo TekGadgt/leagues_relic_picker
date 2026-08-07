@@ -3,7 +3,7 @@ import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
 import { getStrategy, itemsIn, type RollPlan } from './randomizer';
-import { animateRoll, type Reel } from './roll-animation';
+import { animateRoll, pause, BONUS_BEAT_MS, type Reel } from './roll-animation';
 
 interface PickerConfig {
   exportFilename: string;
@@ -504,20 +504,29 @@ function initPicker(): void {
       try {
         if (plan.clearFirst) clearSelection();
 
-        // One reel per group the plan touches. A bonus landing in a tier that
-        // already has a pick gets its own reel, so the extra is visibly rolled
-        // rather than just appearing.
-        const reels: Reel[] = [];
-        for (const pick of plan.picks) {
+        const highlight = {
+          setHighlighted: (element: HTMLElement, on: boolean) => updateElementOpacity(element, on),
+        };
+        const reelFor = (pick: HTMLElement): Reel | null => {
           const group = ctx.groups.find(candidate => candidate.contains(pick));
-          if (group) reels.push({ group, landOn: pick });
-        }
+          return group ? { group, landOn: pick } : null;
+        };
 
-        await animateRoll(reels, {
-          setHighlighted: (element, highlighted) => updateElementOpacity(element, highlighted),
-        });
-
+        const reels = plan.picks.map(reelFor).filter((reel): reel is Reel => reel !== null);
+        const skipped = await animateRoll(reels, highlight);
         for (const pick of plan.picks) applyTierClick(pick, ctx);
+
+        if (plan.bonusPick) {
+          const bonusReel = reelFor(plan.bonusPick);
+          // Beat between the granter landing and its extra rolling, so the two
+          // read as cause and effect rather than one simultaneous event. Dropped
+          // for anyone who skipped — they've asked not to wait.
+          if (bonusReel && !skipped) {
+            await pause(BONUS_BEAT_MS);
+            await animateRoll([bonusReel], highlight);
+          }
+          applyTierClick(plan.bonusPick, ctx);
+        }
       } finally {
         rolling = false;
         setRollInProgress(false);

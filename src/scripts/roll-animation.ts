@@ -95,14 +95,15 @@ async function spinReel(
 /**
  * Spin every reel, resolving once they've all landed.
  *
- * Returns immediately when reduced motion is requested, so the caller applies the
- * result with no spin at all.
+ * Resolves true when the spin was cut short or never shown — reduced motion, no
+ * reels, or the viewer skipping — so a caller can drop any follow-up flourish
+ * instead of making someone who just skipped sit through more of it.
  */
 export async function animateRoll(
   reels: Reel[],
   options: RollAnimationOptions,
-): Promise<void> {
-  if (reels.length === 0 || prefersReducedMotion()) return;
+): Promise<boolean> {
+  if (reels.length === 0 || prefersReducedMotion()) return true;
 
   let skipped = false;
 
@@ -149,4 +150,11 @@ export async function animateRoll(
     document.removeEventListener('pointerdown', skipByPointer, { capture: true });
     document.removeEventListener('keydown', skipByKey, { capture: true });
   }
+
+  return skipped;
 }
+
+/** Pause between a roll landing and its bonus reel starting. */
+export const BONUS_BEAT_MS = 420;
+
+export const pause = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
