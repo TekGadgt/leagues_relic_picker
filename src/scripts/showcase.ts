@@ -393,6 +393,14 @@ async function exportImage(): Promise<void> {
 
   if (!container) return;
 
+  // Rebuild from the textarea first, so the image always matches what's in the
+  // box. Otherwise editing after a preview exported the previous state — the
+  // rows still on screen — with nothing to indicate it. snapdom resolves images
+  // itself rather than reading painted pixels, so capturing straight after a
+  // rebuild is safe even though none of them have loaded yet.
+  generatePreview();
+  if (!container.querySelector('.showcase-row')) return; // nothing to export
+
   // Add exporting class for styling
   container.classList.add('exporting');
   if (exportBtn) {
