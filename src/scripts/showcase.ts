@@ -1,5 +1,6 @@
 // Showcase page client-side logic
-import { isTouchDevice, resolveObjectFitForExport } from './utils';
+import { snapdom } from '@zumer/snapdom';
+import { isTouchDevice } from './utils';
 import { resolvePath, type Path } from './blessing-path';
 
 type ToolTipItem = string | string[];
@@ -386,10 +387,10 @@ function generatePreview(): void {
 /**
  * Export the showcase as a PNG image
  */
-function exportImage(): void {
+async function exportImage(): Promise<void> {
   const container = document.getElementById('showcaseContainer');
   const exportBtn = document.getElementById('exportBtn') as HTMLButtonElement | null;
-  
+
   if (!container) return;
 
   // Add exporting class for styling
@@ -399,65 +400,36 @@ function exportImage(): void {
     exportBtn.classList.add('exporting');
   }
 
-  // Access html2canvas from window
-  const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
-
-  if (!w.html2canvas) {
-    // Clean up state and inform the user that export is not available.
-    // Nothing to restore here — the object-fit resolution hasn't run yet.
+  const restore = () => {
     container.classList.remove('exporting');
     if (exportBtn) {
       exportBtn.disabled = false;
       exportBtn.classList.remove('exporting');
     }
-    window.alert('Export is not available - html2canvas library failed to load.');
-    return;
-  }
+  };
 
-  // html2canvas ignores object-fit, so resolve it to real dimensions first.
-  // Measured after .exporting is applied, so the boxes match what gets captured.
-  const restoreObjectFit = resolveObjectFitForExport(container);
+  try {
+    // snapdom captures through SVG, so the browser renders the CSS — filters
+    // and object-fit come out as seen on screen.
+    const canvas = await snapdom.toCanvas(container, { scale: 2 });
 
-  w.html2canvas(container, {
-    useCORS: true,
-    allowTaint: true,
-    backgroundColor: '#000000',
-    scale: 2 // Higher quality
-  }).then(async function(canvas: HTMLCanvasElement) {
     // Try Web Share API for mobile only (lets users save to Photos)
     if (isTouchDevice() && navigator.share && navigator.canShare) {
       try {
         const blob = await new Promise<Blob>((resolve, reject) => {
           canvas.toBlob((result) => {
-            if (result) {
-              resolve(result);
-            } else {
-              reject(new Error('Failed to convert canvas to Blob'));
-            }
+            if (result) resolve(result);
+            else reject(new Error('Failed to convert canvas to Blob'));
           }, 'image/png');
         });
         const file = new File([blob], 'showcase.png', { type: 'image/png' });
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file] });
-          restoreObjectFit();
-          container.classList.remove('exporting');
-          if (exportBtn) {
-            exportBtn.disabled = false;
-            exportBtn.classList.remove('exporting');
-          }
           return;
         }
       } catch (shareError) {
         // User cancelled share or share failed - fall through to download
-        if (shareError instanceof Error && shareError.name === 'AbortError') {
-          restoreObjectFit();
-          container.classList.remove('exporting');
-          if (exportBtn) {
-            exportBtn.disabled = false;
-            exportBtn.classList.remove('exporting');
-          }
-          return;
-        }
+        if (shareError instanceof Error && shareError.name === 'AbortError') return;
       }
     }
 
@@ -466,29 +438,12 @@ function exportImage(): void {
     link.download = 'showcase.png';
     link.href = canvas.toDataURL();
     link.click();
-
-    // Remove exporting class and reset button state
-    restoreObjectFit();
-    container.classList.remove('exporting');
-    if (exportBtn) {
-      exportBtn.disabled = false;
-      exportBtn.classList.remove('exporting');
-    }
-  }).catch(function(error: unknown) {
-    // Log the error for debugging
+  } catch (error) {
     console.error('Failed to export showcase image', error);
-
-    // Remove exporting class and reset button state
-    restoreObjectFit();
-    container.classList.remove('exporting');
-    if (exportBtn) {
-      exportBtn.disabled = false;
-      exportBtn.classList.remove('exporting');
-    }
-
-    // Surface a visible error message to the user
     window.alert('Failed to export image. This may be caused by browser security restrictions (CORS) or image loading issues.');
-  });
+  } finally {
+    restore();
+  }
 }
 
 /**

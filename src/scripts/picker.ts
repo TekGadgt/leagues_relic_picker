@@ -1,5 +1,6 @@
 // Main picker initialization script
-import { isTouchDevice, resolveObjectFitForExport } from './utils';
+import { snapdom } from '@zumer/snapdom';
+import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
 
 interface PickerConfig {
@@ -453,66 +454,56 @@ function initPicker(): void {
       mainElement.style.paddingBottom = '50px';
 
       // Wait for repaint before capturing
-      requestAnimationFrame(() => {
-        // Must run after .exporting is applied, so boxes are measured against
-        // the layout html2canvas will actually see.
-        const restoreObjectFit = resolveObjectFitForExport(mainElement);
-        const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
-
+      requestAnimationFrame(async () => {
         const restoreLayout = () => {
-          restoreObjectFit();
           mainElement.classList.remove('exporting');
           mainElement.style.paddingTop = '';
           mainElement.style.paddingBottom = '';
           mainElement.style.backgroundColor = '';
           if (wExport.restorePactGraphTransform) wExport.restorePactGraphTransform();
         };
-        
-        if (w.html2canvas) {
-          w.html2canvas(mainElement, {
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: exportBackgroundColor
-          }).then(async function(canvas: HTMLCanvasElement) {
-            restoreLayout();
 
-            // Try Web Share API for mobile only (lets users save to Photos)
-            if (isTouchDevice() && navigator.share && navigator.canShare) {
-              try {
-                const blob = await new Promise<Blob>((resolve, reject) => {
-                  canvas.toBlob((b) => {
-                    if (b) {
-                      resolve(b);
-                    } else {
-                      reject(new Error('Failed to generate image blob'));
-                    }
-                  }, 'image/png');
-                });
-                const file = new File([blob], config.exportFilename, { type: 'image/png' });
-                if (navigator.canShare({ files: [file] })) {
-                  await navigator.share({ files: [file] });
-                  return;
-                }
-              } catch (shareError) {
-                // User cancelled or share failed - fall through to download
-                if (shareError instanceof Error && shareError.name === 'AbortError') return;
-              }
-            }
-
-            // Fallback: standard download
-            const link = document.createElement('a');
-            link.download = config.exportFilename;
-            link.href = canvas.toDataURL();
-            link.click();
-          }).catch((error) => {
-            restoreLayout();
-            console.error('Export failed:', error);
-            alert('Failed to export image. Please try again.');
+        try {
+          // snapdom captures through SVG, so the browser renders the CSS and
+          // filters, object-fit and modern colour functions come out as seen.
+          // Only #main is captured, which keeps the navbar out of the image.
+          const canvas = await snapdom.toCanvas(mainElement, {
+            backgroundColor: exportBackgroundColor,
           });
-        } else {
           restoreLayout();
-          console.error('html2canvas library not loaded');
-          alert('Export functionality is not available. Please refresh the page and try again.');
+
+          // Try Web Share API for mobile only (lets users save to Photos)
+          if (isTouchDevice() && navigator.share && navigator.canShare) {
+            try {
+              const blob = await new Promise<Blob>((resolve, reject) => {
+                canvas.toBlob((b) => {
+                  if (b) {
+                    resolve(b);
+                  } else {
+                    reject(new Error('Failed to generate image blob'));
+                  }
+                }, 'image/png');
+              });
+              const file = new File([blob], config.exportFilename, { type: 'image/png' });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file] });
+                return;
+              }
+            } catch (shareError) {
+              // User cancelled or share failed - fall through to download
+              if (shareError instanceof Error && shareError.name === 'AbortError') return;
+            }
+          }
+
+          // Fallback: standard download
+          const link = document.createElement('a');
+          link.download = config.exportFilename;
+          link.href = canvas.toDataURL();
+          link.click();
+        } catch (error) {
+          restoreLayout();
+          console.error('Export failed:', error);
+          alert('Failed to export image. Please try again.');
         }
       });
     });
