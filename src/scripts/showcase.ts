@@ -1,5 +1,5 @@
 // Showcase page client-side logic
-import { isTouchDevice } from './utils';
+import { isTouchDevice, resolveObjectFitForExport } from './utils';
 import { resolvePath, type Path } from './blessing-path';
 
 type ToolTipItem = string | string[];
@@ -392,7 +392,8 @@ function exportImage(): void {
   const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
 
   if (!w.html2canvas) {
-    // Clean up state and inform the user that export is not available
+    // Clean up state and inform the user that export is not available.
+    // Nothing to restore here — the object-fit resolution hasn't run yet.
     container.classList.remove('exporting');
     if (exportBtn) {
       exportBtn.disabled = false;
@@ -401,6 +402,10 @@ function exportImage(): void {
     window.alert('Export is not available - html2canvas library failed to load.');
     return;
   }
+
+  // html2canvas ignores object-fit, so resolve it to real dimensions first.
+  // Measured after .exporting is applied, so the boxes match what gets captured.
+  const restoreObjectFit = resolveObjectFitForExport(container);
 
   w.html2canvas(container, {
     useCORS: true,
@@ -423,6 +428,7 @@ function exportImage(): void {
         const file = new File([blob], 'showcase.png', { type: 'image/png' });
         if (navigator.canShare({ files: [file] })) {
           await navigator.share({ files: [file] });
+          restoreObjectFit();
           container.classList.remove('exporting');
           if (exportBtn) {
             exportBtn.disabled = false;
@@ -433,6 +439,7 @@ function exportImage(): void {
       } catch (shareError) {
         // User cancelled share or share failed - fall through to download
         if (shareError instanceof Error && shareError.name === 'AbortError') {
+          restoreObjectFit();
           container.classList.remove('exporting');
           if (exportBtn) {
             exportBtn.disabled = false;
@@ -450,6 +457,7 @@ function exportImage(): void {
     link.click();
 
     // Remove exporting class and reset button state
+    restoreObjectFit();
     container.classList.remove('exporting');
     if (exportBtn) {
       exportBtn.disabled = false;
@@ -460,6 +468,7 @@ function exportImage(): void {
     console.error('Failed to export showcase image', error);
 
     // Remove exporting class and reset button state
+    restoreObjectFit();
     container.classList.remove('exporting');
     if (exportBtn) {
       exportBtn.disabled = false;

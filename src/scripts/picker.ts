@@ -1,5 +1,5 @@
 // Main picker initialization script
-import { isTouchDevice } from './utils';
+import { isTouchDevice, resolveObjectFitForExport } from './utils';
 
 interface PickerConfig {
   exportFilename: string;
@@ -408,9 +408,13 @@ function initPicker(): void {
 
       // Wait for repaint before capturing
       requestAnimationFrame(() => {
+        // Must run after .exporting is applied, so boxes are measured against
+        // the layout html2canvas will actually see.
+        const restoreObjectFit = resolveObjectFitForExport(mainElement);
         const w = window as Window & { html2canvas?: (element: HTMLElement, options?: object) => Promise<HTMLCanvasElement> };
 
         const restoreLayout = () => {
+          restoreObjectFit();
           mainElement.classList.remove('exporting');
           mainElement.style.paddingTop = '';
           mainElement.style.paddingBottom = '';

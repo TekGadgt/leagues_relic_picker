@@ -454,6 +454,21 @@ main > .rowContainer {
   filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
 }
 
+/*
+ * html2canvas doesn't implement CSS filters, so the glow above is simply absent
+ * from exported images — the gold label survives, but the icon loses its cue.
+ * During export only, swap in a gold ring, which html2canvas does draw. It reads
+ * differently from the on-screen glow but carries the same meaning, and an
+ * export that silently drops the distinction is worse than one that states it
+ * another way.
+ */
+main.exporting .mastery.derived.selected .masteryImg {
+  filter: none;
+  border: 2px solid #ffcc48;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
 .mastery.derived.selected .masteryLabel {
   color: #ffcc48;
 }
@@ -812,6 +827,14 @@ main.exporting .title {
  */
 .showcase-item-img.derived {
   filter: drop-shadow(0 0 2px #ffcc48) drop-shadow(0 0 5px rgba(255, 204, 72, 0.55));
+}
+
+/* Same export substitution as the picker — see the note there. */
+.showcase-container.exporting .showcase-item-img.derived {
+  filter: none;
+  border: 1px solid #ffcc48;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
 
 .showcase-pact-composite {
