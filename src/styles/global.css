@@ -463,6 +463,25 @@ main > .rowContainer {
   width: 140px;
 }
 
+/*
+ * RS3 icons don't share OSRS's fixed aspect ratio — Equilibrium blessings range
+ * from square to roughly 9:8 — so the fixed box above stretches them.
+ *
+ * object-fit lets the icon keep its proportions inside that box rather than
+ * releasing the height. Both remove the distortion, but dropping to height:auto
+ * also lets each column set its own heights, which knocked the grid's rows out
+ * of line by up to 48px. Keeping the box preserves the row alignment that makes
+ * each row read as a single path.
+ *
+ * .masteryImg.rs3 outranks every plain .masteryImg rule on specificity, covering
+ * the desktop and both mobile breakpoints; the export rule is qualified by
+ * main.exporting and outranks it in turn, hence the second selector.
+ */
+.masteryImg.rs3,
+main.exporting .masteryImg.rs3 {
+  object-fit: contain;
+}
+
 .masteryLabel {
   font-size: 1.5em;
   margin-top: 5px;
