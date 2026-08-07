@@ -13,6 +13,7 @@ type LeagueEntry = {
   name: string;
   pageType: string;
   themeKey: string;
+  derivedGroups?: { group: string; from: string[] }[];
   items: Record<string, unknown>;
   graph?: unknown;
 };
@@ -35,6 +36,7 @@ for (const league of leagues) {
     name: league.data.name,
     pageType: league.data.pageType,
     themeKey: `${league.data.game}/${league.data.leagueNumber}`,
+    derivedGroups: league.data.derivedGroups,
     items: league.data.items,
     graph: league.data.graph || null,
   };

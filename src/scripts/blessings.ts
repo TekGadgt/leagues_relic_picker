@@ -1,48 +1,22 @@
 /**
- * Derived-group selection for Equilibrium League blessings.
- *
- * Each blessing belongs to one of three paths (chaos, order, balance), and each
- * tier offers exactly one of each. A god tier isn't chosen — it's decided by the
- * paths picked in the tiers feeding it: two or more of one path unlocks that
- * path's god blessing, and one of each unlocks balance.
- *
- * Because three picks across three paths either contain a majority or are all
- * distinct, the rule is total. It also resolves early: once two picks share a
- * path, no third pick can overturn them, so the result is shown immediately
- * rather than waiting for the tier run to be complete.
+ * Applies the god-tier rule to the picker page. The rule itself lives in
+ * ./blessing-path, shared with the showcase.
  *
  * Derived selections are presentational only. They carry data-derived, which
  * keeps them out of the shareable URL, so the URL records what the player chose
  * and the outcome is always recomputed from it.
  */
 
-type Path = 'chaos' | 'order' | 'balance';
+import { resolvePath, type Path } from './blessing-path';
 
 interface DerivedGroup {
   group: string;
   from: string[];
 }
 
-const PATHS: Path[] = ['chaos', 'order', 'balance'];
-
 function getDerivedGroups(): DerivedGroup[] {
   const w = window as Window & { PICKER_CONFIG?: { derivedGroups?: DerivedGroup[] } };
   return w.PICKER_CONFIG?.derivedGroups ?? [];
-}
-
-/**
- * The path a run of source groups resolves to, or null while still undecided.
- * Undecided means fewer than three picks with no path yet holding two.
- */
-export function resolvePath(picked: (Path | null)[]): Path | null {
-  const paths = picked.filter((p): p is Path => p !== null);
-
-  for (const path of PATHS) {
-    if (paths.filter((p) => p === path).length >= 2) return path;
-  }
-  // No majority yet. Only a complete run of three can resolve, and a complete
-  // run with no majority is necessarily one of each.
-  return paths.length >= 3 ? 'balance' : null;
 }
 
 function pickedPathsFor(sourceGroups: string[]): (Path | null)[] {
