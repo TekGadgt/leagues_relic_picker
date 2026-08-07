@@ -56,6 +56,15 @@ async function spinReel(
   const landIndex = items.indexOf(reel.landOn);
   if (landIndex === -1 || items.length === 0) return;
 
+  // Picks already made in this column stay lit while the reel spins over them.
+  // The bonus lands in a tier that usually already holds a choice, and dimming
+  // it would leave that relic looking unselected while it is still very much
+  // selected — visible on refresh, when it came back bright.
+  const alreadyChosen = new Set(items.filter((item) => item.classList.contains('selected')));
+  const dim = (item: HTMLElement) => {
+    if (!alreadyChosen.has(item)) options.setHighlighted(item, false);
+  };
+
   if (startDelay > 0 && !skipped()) await wait(startDelay);
 
   const steps = items.length * LOOPS + landIndex;
@@ -65,7 +74,7 @@ async function spinReel(
     if (skipped()) break;
 
     const current = items[step % items.length];
-    if (previous && previous !== current) options.setHighlighted(previous, false);
+    if (previous && previous !== current) dim(previous);
     options.setHighlighted(current, true);
     previous = current;
 
@@ -76,8 +85,10 @@ async function spinReel(
     await wait(FIRST_STEP_MS + (LAST_STEP_MS - FIRST_STEP_MS) * progress * progress);
   }
 
-  // However the loop ended — landed, or cut short — settle on the winner.
-  if (previous && previous !== reel.landOn) options.setHighlighted(previous, false);
+  // However the loop ended — landed, or cut short — settle on the winner while
+  // leaving the column's existing picks lit.
+  if (previous && previous !== reel.landOn) dim(previous);
+  for (const chosen of alreadyChosen) options.setHighlighted(chosen, true);
   options.setHighlighted(reel.landOn, true);
 }
 
