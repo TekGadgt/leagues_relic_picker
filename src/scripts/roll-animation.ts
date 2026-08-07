@@ -84,6 +84,7 @@ async function spinReel(
   const cycle = reel.asBonus ? items.filter((item) => !alreadyChosen.has(item)) : items;
   const landIndex = cycle.indexOf(reel.landOn);
   if (landIndex === -1 || cycle.length === 0) return;
+
   const light = (item: HTMLElement) => {
     options.setHighlighted(item, true);
     if (reel.asBonus) item.classList.add(ROLLING_BONUS_CLASS);
@@ -92,6 +93,15 @@ async function spinReel(
     item.classList.remove(ROLLING_BONUS_CLASS);
     if (!alreadyChosen.has(item)) options.setHighlighted(item, false);
   };
+
+  // Nothing to choose between: spinning would sit on the same relic for a second
+  // and read as a stall rather than a roll. Reachable when a bonus lands in a
+  // two-relic tier that already holds a pick — no league is shaped that way
+  // today, but nothing stops one being.
+  if (cycle.length === 1) {
+    light(reel.landOn);
+    return;
+  }
 
   if (startDelay > 0 && !skipped()) await wait(startDelay);
 
