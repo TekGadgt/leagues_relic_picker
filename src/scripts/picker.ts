@@ -7,6 +7,10 @@ import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } fro
 
 interface PickerConfig {
   exportFilename: string;
+  /** Offers Copy Image Link, backed by the share-image function. */
+  shareImage?: boolean;
+  /** e.g. 'relics' or 'blessings'; part of the share-image page key. */
+  pageType?: string;
   /** Names a randomizer strategy; absent means no Randomize button. */
   randomizer?: string;
   /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
@@ -565,6 +569,46 @@ function initPicker(): void {
     }
 
     refreshRollNextState();
+  }
+
+  // Copy Image Link handler
+  const copyImageLinkBtn = document.getElementById('copyImageLinkBtn') as HTMLButtonElement | null;
+  if (copyImageLinkBtn && getPickerConfig().shareImage) {
+    copyImageLinkBtn.addEventListener('click', async function() {
+      const current = new URL(window.location.href);
+      // Path minus the leading and trailing slashes: 'rs3/2' or 'rs3/2/blessings'.
+      const page = current.pathname.replace(/^\/|\/$/g, '');
+
+      const image = new URL('/api/share-image', window.location.origin);
+      image.searchParams.set('page', page);
+      for (const key of ['selected', 'bonus', 'title'] as const) {
+        const value = current.searchParams.get(key);
+        if (value) image.searchParams.set(key, value);
+      }
+
+      const href = image.toString();
+
+      // Rendering a build takes several seconds — far longer than Discord or
+      // Slack will wait when unfurling. Requesting it now means the slow render
+      // happens while nobody is watching, so by the time the link is pasted the
+      // CDN has it. Deliberately not awaited: the copy shouldn't wait on it.
+      void fetch(href, { mode: 'no-cors' }).catch(() => {
+        // A failed warm just means the first viewer waits. Nothing to do here.
+      });
+
+      const original = copyImageLinkBtn.textContent;
+      try {
+        await navigator.clipboard.writeText(href);
+        copyImageLinkBtn.textContent = 'Copied!';
+      } catch {
+        // Clipboard is unavailable over plain HTTP and when permission is
+        // refused; showing the URL still lets someone copy it by hand.
+        window.prompt('Copy this image link:', href);
+        copyImageLinkBtn.textContent = original;
+        return;
+      }
+      setTimeout(() => { copyImageLinkBtn.textContent = original; }, 1500);
+    });
   }
 
   // Export button handler

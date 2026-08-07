@@ -119,10 +119,13 @@ export default async function handler(request) {
     return new Response(png, {
       headers: {
         'Content-Type': 'image/png',
-        // The URL fully determines the image, so it only ever renders once.
-        // Cached responses are also cheaper than invocations.
         'Cache-Control': 'public, max-age=31536000, immutable',
         'Netlify-CDN-Cache-Control': 'public, max-age=31536000, durable',
+        // Netlify invalidates the durable cache on every deploy by default. A
+        // custom cache ID opts out, so warmed images survive a deploy — which
+        // matters most during a league launch, when deploys and sharing spike
+        // together. Bump the prefix to force a re-render after a design change.
+        'Netlify-Cache-ID': `share-image-v1:${url.search}`,
       },
     });
   } catch (error) {

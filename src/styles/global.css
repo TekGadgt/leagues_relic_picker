@@ -1,5 +1,30 @@
 @import "./themes.css";
 
+/*
+ * Comic Neue, self-hosted. It replaces Comic Sans MS, which was only ever
+ * available if the viewer's machine happened to have it — and never on a server,
+ * so the share-image renderer fell back to a generic sans and the card didn't
+ * match the site. A web font is just a CSS asset, so headless Chromium loads it
+ * like any browser and the difference disappears.
+ *
+ * SIL Open Font License, so it can be shipped.
+ */
+@font-face {
+  font-family: "Comic Neue";
+  src: url("/fonts/comic-neue-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comic Neue";
+  src: url("/fonts/comic-neue-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font-size-title: 5em;
   --font-size-subtitle: 3em;
@@ -12,7 +37,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--background-color);
-  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  font-family: "Comic Neue", "Comic Sans MS", "Comic Sans", sans-serif;
   min-height: 90vh;
   margin: 0;
   padding: 0;
@@ -171,7 +196,7 @@ body {
 }
 
 .title > input {
-  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  font-family: "Comic Neue", "Comic Sans MS", "Comic Sans", sans-serif;
   background-color: var(--background-color);
   font-size: 5em;
   color: var(--title-color);
@@ -218,11 +243,10 @@ main > .colContainer {
  * different things — gold is unlocked by your path, silver is an extra you chose
  * and something in the build is paying for. Silver sits outside every league
  * palette, so it reads the same on any theme.
- */
-/*
- * `.rolling-bonus` is the travelling highlight while a bonus is being rolled. It
- * shares the settled styling so the spin reads as rolling the extra, rather than
- * the tier appearing to re-roll with the glow arriving from nowhere at the end.
+ *
+ * `.rolling-bonus` is the travelling highlight while that extra is being rolled.
+ * It shares this rule so the spin reads as rolling the extra, rather than the
+ * tier appearing to re-roll with the glow arriving from nowhere at the end.
  */
 .relic.rolling-bonus .relicImg,
 .mastery.rolling-bonus .masteryImg,
@@ -389,7 +413,7 @@ main > .colContainer {
 }
 
 .pact-counter {
-  font-family: "Comic Sans MS", "Comic Sans", sans-serif;
+  font-family: "Comic Neue", "Comic Sans MS", "Comic Sans", sans-serif;
   font-size: 1.2em;
   font-weight: bold;
   color: var(--title-color);
@@ -405,6 +429,7 @@ main > .colContainer {
 #randomizeBtn,
 #rollNextBtn,
 #clearBtn,
+#copyImageLinkBtn,
 .showcase-btn {
   color: black;
   border: none;
@@ -423,7 +448,8 @@ main > .colContainer {
 #generateBtn,
 #addToShowcaseBtn,
 #randomizeBtn,
-#rollNextBtn {
+#rollNextBtn,
+#copyImageLinkBtn {
   background-color: var(--title-color);
 }
 
@@ -431,7 +457,8 @@ main > .colContainer {
 #generateBtn:hover,
 #addToShowcaseBtn:hover,
 #randomizeBtn:hover,
-#rollNextBtn:hover {
+#rollNextBtn:hover,
+#copyImageLinkBtn:hover {
   background-color: var(--nav-item-color);
 }
 

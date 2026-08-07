@@ -60,6 +60,8 @@ const leagueBaseSchema = z.object({
   // Names a strategy in src/scripts/randomizer.ts. Absent means no Randomize
   // button, which is how past leagues stay untouched.
   randomizer: z.enum(['one-per-tier']).optional(),
+  // Offers a Copy Image Link button, backed by the share-image function.
+  shareImage: z.boolean().optional(),
   meta: z.object({
     title: z.string(),
     description: z.string(),
