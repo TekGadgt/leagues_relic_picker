@@ -51,6 +51,7 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
     showPactCounter={pageType === 'pacts'}
     showRandomizer={Boolean(randomizer)}
     showShareImage={Boolean(shareImage)}
+    randomizerNoun={pageType === 'regions' ? 'Region' : 'Tier'}
   />
   <DetailSidebar />
 
@@ -68,4 +69,5 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
   <script src="../scripts/picker.ts"></script>
   <script src="../scripts/pact-graph.ts"></script>
   <script src="../scripts/blessings.ts"></script>
+  <script src="../scripts/region-rail.ts"></script>
 </BaseLayout>

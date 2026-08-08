@@ -1574,10 +1574,16 @@ main.exporting .pact-lg .pactImg {
  * the middle of every region. Clicks on a path are forwarded to the badge in
  * picker.ts, which is the element selection is actually tracked on.
  */
+/*
+ * Sized so the whole page clears a 1080p screen without scrolling. The reserve
+ * covers the navbar, title, rail and button row; the width is derived from
+ * what's left rather than the height being capped, because the badges are
+ * positioned as percentages and rely on the box keeping its exact ratio.
+ */
 .regionMap {
+  --map-chrome: 365px;
   position: relative;
-  width: 100%;
-  max-width: 1000px;
+  width: min(100%, 880px, calc((100vh - var(--map-chrome)) * var(--map-ratio)));
   margin: 0 auto;
   aspect-ratio: var(--map-aspect);
 }
@@ -1687,6 +1693,99 @@ main.exporting .pact-lg .pactImg {
   }
 
   .regionLabel {
+    font-size: 10px;
+  }
+}
+
+/*
+ * The unlock rail. Given regions and chosen ones are distinguished by the lock
+ * marker and a dimmer border rather than by colour alone, so the row still reads
+ * correctly in an exported image.
+ */
+/*
+ * Three columns, which falls out as one row of the regions you're given and one
+ * of the regions you choose. Letting it wrap freely split them 4 and 2 and lost
+ * that reading.
+ */
+.regionRail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  list-style: none;
+  margin: 0 auto 10px;
+  padding: 0;
+  width: min(100%, 660px);
+}
+
+.railSlot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 7px;
+  border-radius: 7px;
+  background: rgba(6, 18, 13, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  min-width: 0;
+}
+
+.railSlot.given {
+  border-color: rgba(255, 204, 72, 0.35);
+}
+
+.railSlot.filled {
+  border-color: rgba(255, 204, 72, 0.6);
+}
+
+.railBadge {
+  width: 26px;
+  height: 26px;
+}
+
+/* Holds the row height steady whether or not a badge is showing. */
+.railBadge[hidden] {
+  display: block;
+  visibility: hidden;
+}
+
+.railName {
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+
+.railSlot:not(.filled):not(.given) .railName {
+  opacity: 0.45;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.railNote {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.6;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.railSlot.given .railNote::after {
+  content: " \1F512";
+}
+
+@media (max-width: 700px) {
+  .regionRail {
+    gap: 5px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .railSlot {
+    padding: 4px 8px 4px 5px;
+  }
+
+  .railName {
+    font-size: 11px;
+  }
+
+  .railNote {
     font-size: 10px;
   }
 }

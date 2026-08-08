@@ -59,7 +59,17 @@ const placed = regions.map((region) => {
 });
 ---
 
-<div class="regionMap" style={`--map-aspect: ${geometry.width} / ${geometry.height};`}>
+<!--
+  Two forms of the same ratio. `--map-aspect` holds the box's shape; `--map-ratio`
+  is the numeric version, used to derive a width from the available height. The
+  badges are placed with percentage offsets, so the container's aspect ratio has
+  to stay exact — capping its height instead would letterbox the SVG and slide
+  every badge off its landmass.
+-->
+<div
+  class="regionMap"
+  style={`--map-aspect: ${geometry.width} / ${geometry.height}; --map-ratio: ${(geometry.width / geometry.height).toFixed(4)};`}
+>
   <svg
     class="regionShapes"
     viewBox={geometry.viewBox}

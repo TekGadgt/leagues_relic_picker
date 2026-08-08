@@ -4,13 +4,15 @@ interface Props {
   showPactCounter?: boolean;
   showRandomizer?: boolean;
   showShareImage?: boolean;
+  /** What one roll advances by — "Tier" everywhere except the region map. */
+  randomizerNoun?: string;
 }
-const { showPactCounter = false, showRandomizer = false, showShareImage = false } = Astro.props;
+const { showPactCounter = false, showRandomizer = false, showShareImage = false, randomizerNoun = 'Tier' } = Astro.props;
 ---
 
 <div class="picker-buttons">
   {showPactCounter && <span id="pactCounter" class="pact-counter">1 / 40</span>}
-  {showRandomizer && <button id="rollNextBtn">Roll Next Tier</button>}
+  {showRandomizer && <button id="rollNextBtn">Roll Next {randomizerNoun}</button>}
   {showRandomizer && <button id="randomizeBtn">Randomize All</button>}
   {showRandomizer && <button id="clearBtn">Clear</button>}
   <button id="exportBtn">Export Image</button>
