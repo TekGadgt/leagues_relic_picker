@@ -15,7 +15,7 @@ import puppeteer from 'puppeteer-core';
 import chromium from '@sparticuz/chromium';
 
 /** Mirrors the routes [...slug].astro generates. */
-const PAGE_PATTERN = /^(osrs|rs3)\/\d+(\/(relics|masteries|pacts|blessings))?$/;
+const PAGE_PATTERN = /^(osrs|rs3)\/\d+(\/(relics|masteries|pacts|blessings|regions))?$/;
 
 /** Long enough to be expressive, short enough not to break the layout. */
 const MAX_TITLE_LENGTH = 60;
@@ -89,7 +89,20 @@ export async function renderShareImage({ origin, page, selected, bonus, title })
     // an element screenshot even though it isn't inside #main. snapdom composes
     // from the DOM tree and never had this problem; a real browser capture does.
     await tab.addStyleTag({
-      content: '.navbar, .detail-sidebar, .picker-buttons { display: none !important; }',
+      content: [
+        '.navbar, .detail-sidebar, .picker-buttons { display: none !important; }',
+        // The region map is centred inside a full-width #main, so a straight
+        // capture is over half dead space. Collapsing #main onto its content
+        // needs the title's 99vw released and definite widths for the map and
+        // rail, otherwise the shrink-to-fit pass has nothing to measure and they
+        // collapse instead. Scoped to regions so cards already cached for the
+        // other pickers keep rendering exactly as they were.
+        '#main[data-page-type="regions"] { padding: 40px 24px !important; }',
+        '#main[data-page-type="regions"] .title { min-width: 100% !important; margin-top: 0 !important; white-space: nowrap !important; font-size: 3em !important; }',
+        '#main[data-page-type="regions"] .regionMap { width: 880px !important; }',
+        '#main[data-page-type="regions"] .regionRail { width: 880px !important; }',
+        '#main[data-page-type="regions"] .railName { white-space: nowrap !important; }',
+      ].join('\n'),
     });
 
     const shotStart = performance.now();

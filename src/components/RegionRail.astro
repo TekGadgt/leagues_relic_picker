@@ -1,0 +1,58 @@
+---
+/**
+ * The six unlock slots, in the order a run fills them.
+ *
+ * Three are given — two from the start and Karamja forced at 50 tasks — and the
+ * other three are the player's picks at 175, 300 and 450. Showing the real slot
+ * numbers and thresholds rather than renumbering 1-6 keeps the information a
+ * shared build is actually carrying: what gets rushed first, and at what cost.
+ *
+ * Choice slots render empty and are filled by region-rail.ts as picks change.
+ */
+interface Region {
+  id: string;
+  name: string;
+  src: string;
+}
+
+interface RegionRules {
+  starting: string[];
+  forced: { region: string; slot: number; tasks: number }[];
+  choices: { slot: number; tasks: number }[];
+}
+
+interface Props {
+  regions: Region[];
+  regionRules: RegionRules;
+}
+
+const { regions, regionRules } = Astro.props;
+
+const byId = new Map(regions.map((region) => [region.id, region]));
+
+const given = [
+  ...regionRules.starting.map((id) => ({ region: byId.get(id)!, note: 'Start' })),
+  ...regionRules.forced.map(({ region, tasks }) => ({
+    region: byId.get(region)!,
+    note: `${tasks} tasks`,
+  })),
+];
+---
+
+<ol class="regionRail">
+  {given.map(({ region, note }) => (
+    <li class="railSlot given">
+      <img class="railBadge" src={region.src} alt="" />
+      <span class="railName">{region.name}</span>
+      <span class="railNote">{note}</span>
+    </li>
+  ))}
+
+  {regionRules.choices.map(({ slot, tasks }) => (
+    <li class="railSlot" data-rail-slot={slot}>
+      <img class="railBadge" src="" alt="" hidden />
+      <span class="railName">Pick a region</span>
+      <span class="railNote">{tasks} tasks</span>
+    </li>
+  ))}
+</ol>

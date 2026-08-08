@@ -14,13 +14,18 @@ interface Props {
   };
   themeKey: string;
   exportFilename: string;
-  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
+  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings' | 'regions';
   derivedGroups?: { group: string; from: string[] }[];
   randomizer?: string;
   shareImage?: boolean;
+  regionRules?: {
+    starting: string[];
+    forced: { region: string; slot: number; tasks: number }[];
+    choices: { slot: number; tasks: number }[];
+  };
 }
 
-const { meta, themeKey, exportFilename, pageType, derivedGroups = [], randomizer, shareImage } = Astro.props;
+const { meta, themeKey, exportFilename, pageType, derivedGroups = [], randomizer, shareImage, regionRules } = Astro.props;
 
 // Relics and blessings activate one choice per tier. Masteries are cumulative
 // and pacts form a graph, so neither is constrained this way.
@@ -37,7 +42,7 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
 >
   <Navbar itemType={pageType} showShowcaseLink={true} />
 
-  <main id="main">
+  <main id="main" data-page-type={pageType}>
     <h1 class="title" contenteditable="true">Change Me</h1>
     <slot />
   </main>
@@ -46,10 +51,11 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
     showPactCounter={pageType === 'pacts'}
     showRandomizer={Boolean(randomizer)}
     showShareImage={Boolean(shareImage)}
+    randomizerNoun={pageType === 'regions' ? 'Region' : 'Tier'}
   />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ exportFilename, derivedGroups, onePickPerTier, randomizer, shareImage, pageType }}>
+  <script is:inline define:vars={{ exportFilename, derivedGroups, onePickPerTier, randomizer, shareImage, pageType, regionRules }}>
     window.PICKER_CONFIG = {
       exportFilename,
       derivedGroups,
@@ -57,9 +63,11 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
       randomizer,
       shareImage,
       pageType,
+      regionRules,
     };
   </script>
   <script src="../scripts/picker.ts"></script>
   <script src="../scripts/pact-graph.ts"></script>
   <script src="../scripts/blessings.ts"></script>
+  <script src="../scripts/region-rail.ts"></script>
 </BaseLayout>

@@ -1563,3 +1563,322 @@ main.exporting .pact-lg .pactImg {
     padding: 8px 16px;
   }
 }
+
+/*
+ * ---------------------------------------------------------------------------
+ * Region map (RS3 Equilibrium)
+ * ---------------------------------------------------------------------------
+ *
+ * The landmass is the hit target, so the SVG paths take pointer events and the
+ * badge sitting on top does not — otherwise the badge would punch a dead spot in
+ * the middle of every region. Clicks on a path are forwarded to the badge in
+ * picker.ts, which is the element selection is actually tracked on.
+ */
+/*
+ * Rebalance the space around the title.
+ *
+ * `.title` is an h1, so it carries a default 0.67em margin — 53.6px at this font
+ * size — top and bottom. That left a chasm above the rail while the top margin
+ * was still shorter than the fixed navbar, tucking the title box underneath it.
+ *
+ * Scoped to this page rather than fixed on `.title` itself: the other pickers
+ * have cached share cards pinned for a year, and restyling shared chrome would
+ * strand every one of them showing the old layout.
+ */
+main[data-page-type="regions"] .title {
+  margin-top: 80px;
+  margin-bottom: 10px;
+}
+
+/*
+ * Sized so the whole page clears a 1080p screen without scrolling. The reserve
+ * covers the navbar, title, rail and button row; the width is derived from
+ * what's left rather than the height being capped, because the badges are
+ * positioned as percentages and rely on the box keeping its exact ratio.
+ */
+.regionMap {
+  --map-chrome: 365px;
+  position: relative;
+  width: min(100%, 880px, calc((100vh - var(--map-chrome)) * var(--map-ratio)));
+  margin: 0 auto;
+  aspect-ratio: var(--map-aspect);
+}
+
+.regionShapes {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.regionShape {
+  fill: #24483a;
+  stroke: #0b1a14;
+  stroke-width: 0.35;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill 120ms ease-out;
+}
+
+.regionShape:hover {
+  fill: #2f5c4a;
+}
+
+/*
+ * Picked regions take the league's own colour, so the map themes itself.
+ * `.rolling` is the travelling highlight during a randomised roll and looks
+ * identical — it's a separate class only because `.selected` here is the real
+ * selection, which a spin must not touch.
+ */
+.regionShape.selected,
+.regionShape.rolling {
+  fill: var(--title-color);
+}
+
+/*
+ * Mandatory regions are lit but inert: they read as unlocked without implying
+ * the player spent a choice on them.
+ */
+.regionShape.mandatory {
+  fill: var(--nav-item-color);
+  cursor: default;
+}
+
+.regionShape.mandatory:hover {
+  fill: var(--nav-item-color);
+}
+
+.region {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.regionImg {
+  width: 40px;
+  height: 40px;
+  opacity: 0.35;
+  transition: opacity 120ms ease-out, filter 120ms ease-out;
+}
+
+/*
+ * Names sit on a plaque rather than bare text: the coastline behind them varies
+ * from dark sea to a lit region fill, and a shadow alone isn't enough to stay
+ * legible across both.
+ */
+.regionLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.45;
+  white-space: nowrap;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(6, 18, 13, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: opacity 120ms ease-out, border-color 120ms ease-out;
+}
+
+/*
+ * The gold glow already used for unlocked god-tier blessings, reused here so a
+ * chosen region reads the same way across the site. Badges are transparent
+ * discs, so drop-shadow traces the silhouette rather than boxing it.
+ */
+.region.selected .regionImg,
+.region.rolling .regionImg,
+.region.mandatory .regionImg {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
+}
+
+.region.selected .regionLabel,
+.region.rolling .regionLabel,
+.region.mandatory .regionLabel {
+  opacity: 1;
+  border-color: rgba(255, 204, 72, 0.55);
+}
+
+/* A region that was handed to you rather than chosen. */
+.region.mandatory .regionLabel::after {
+  content: " \1F512";
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+@media (max-width: 700px) {
+  .regionImg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .regionLabel {
+    font-size: 10px;
+  }
+}
+
+/*
+ * The unlock rail. Given regions and chosen ones are distinguished by the lock
+ * marker and a dimmer border rather than by colour alone, so the row still reads
+ * correctly in an exported image.
+ */
+/*
+ * Three columns, which falls out as one row of the regions you're given and one
+ * of the regions you choose. Letting it wrap freely split them 4 and 2 and lost
+ * that reading.
+ */
+.regionRail {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  list-style: none;
+  margin: 0 auto 10px;
+  padding: 0;
+  width: min(100%, 660px);
+}
+
+.railSlot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 7px;
+  border-radius: 7px;
+  background: rgba(6, 18, 13, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  min-width: 0;
+}
+
+.railSlot.given {
+  border-color: rgba(255, 204, 72, 0.35);
+}
+
+.railSlot.filled {
+  border-color: rgba(255, 204, 72, 0.6);
+}
+
+.railBadge {
+  width: 26px;
+  height: 26px;
+}
+
+/* Holds the row height steady whether or not a badge is showing. */
+.railBadge[hidden] {
+  display: block;
+  visibility: hidden;
+}
+
+.railName {
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+
+.railSlot:not(.filled):not(.given) .railName {
+  opacity: 0.45;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.railNote {
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.6;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.railSlot.given .railNote::after {
+  content: " \1F512";
+}
+
+@media (max-width: 700px) {
+  .regionRail {
+    gap: 5px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .railSlot {
+    padding: 4px 8px 4px 5px;
+  }
+
+  .railName {
+    font-size: 11px;
+  }
+
+  .railNote {
+    font-size: 10px;
+  }
+}
+
+/*
+ * Export sizing for the region map.
+ *
+ * `main.exporting .title` drops the title's 99vw to 100%, which leaves #main
+ * shrink-to-fit. The map and rail are both sized with percentages and viewport
+ * units, so against an indefinite width they collapse — #main came out 611px
+ * wide and the rail's three columns crushed their contents.
+ *
+ * Definite widths give the shrink-to-fit pass something real to measure.
+ */
+/*
+ * Side margins for the exported frame. The rail is as wide as the map, so
+ * without this its outer borders sit flush on the image edge and read as cut
+ * off. Longhand because the export sets padding-top/bottom inline and a
+ * shorthand here would fight it.
+ */
+main.exporting[data-page-type="regions"] {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/*
+ * The title's top margin exists to clear the fixed navbar, which isn't in the
+ * capture — keeping it just leaves a dead band above the title.
+ */
+/*
+ * The title's top margin exists to clear the fixed navbar, which isn't in the
+ * capture — keeping it just leaves a dead band above the title.
+ *
+ * nowrap for the same reason the rail names get it: the export frame is sized to
+ * its content, so the title fits its own box exactly, and snapdom's slightly
+ * wider metrics tip it into a second line that overflows the box and lands on
+ * the rail. One line, and the frame widens to suit.
+ */
+main.exporting[data-page-type="regions"] .title {
+  margin-top: 0;
+  white-space: nowrap;
+  /*
+   * Smaller than on screen. The export frame is sized to its content, so at 5em
+   * a normal-length title is wider than the map and drags the whole frame out
+   * with it. At 3em the map sets the width and the title sits inside it.
+   */
+  font-size: 3em;
+}
+
+main.exporting .regionMap {
+  width: 880px;
+}
+
+/*
+ * The rail widens to the map's width for export, and names are pinned to one
+ * line.
+ *
+ * On screen 660px is comfortable, but snapdom re-measures text against the
+ * fonts it embeds, and metrics that differ by a hair re-wrap the two longest
+ * names — "Fremennik Province" and "Kharidian Desert" — while the box heights
+ * come from the original layout, so the second line spilled outside the cell.
+ * Matching the map's width leaves enough slack that no plausible metric
+ * difference can trigger a wrap, and nowrap makes that guarantee rather than a
+ * hope.
+ */
+main.exporting .regionRail {
+  width: 880px;
+}
+
+main.exporting .railName {
+  white-space: nowrap;
+}

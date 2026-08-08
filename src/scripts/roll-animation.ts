@@ -11,14 +11,18 @@
  * identical.
  */
 
-import { itemsIn } from './randomizer';
-
 /** Marks the travelling highlight while a bonus is being rolled. */
 export const ROLLING_BONUS_CLASS = 'rolling-bonus';
 
-/** A column to spin, and the item it must stop on. */
+/**
+ * A set of items to spin through, and the one it must stop on.
+ *
+ * Items rather than a container: on a tier page they're a column, but on the
+ * region map they're whichever regions are still available, which is no part of
+ * the DOM tree.
+ */
 export interface Reel {
-  group: HTMLElement;
+  items: HTMLElement[];
   landOn: HTMLElement;
   /**
    * Dress the travelling highlight as the bonus rather than an ordinary pick.
@@ -68,7 +72,7 @@ async function spinReel(
   startDelay: number,
   skipped: () => boolean,
 ): Promise<void> {
-  const items = itemsIn(reel.group);
+  const items = reel.items;
 
   // Picks already made in this column stay lit while the reel spins over them.
   // The bonus lands in a tier that usually already holds a choice, and dimming

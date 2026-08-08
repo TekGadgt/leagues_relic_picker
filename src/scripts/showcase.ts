@@ -32,11 +32,15 @@ interface LeagueData {
   game: string;
   leagueNumber: number;
   name: string;
-  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
+  pageType: 'relics' | 'masteries' | 'pacts' | 'blessings' | 'regions';
   themeKey: string;
   derivedGroups?: { group: string; from: string[] }[];
   items: Record<string, LeagueItem[]>;
   graph?: { nodes: GraphNode[] } | null;
+  /** Region maps only: one entry per region, mandatory ones included. */
+  regions?: (LeagueItem & { mandatory?: boolean })[];
+  /** Region maps only: how many regions a player actually chooses. */
+  regionSlots?: number;
 }
 
 interface ParsedURL {
@@ -74,8 +78,8 @@ function parseShareURL(urlString: string): ParsedURL | null {
     const url = new URL(urlString);
     const pathname = url.pathname;
 
-    // Match: /(osrs|rs3)/(\d+)(?:/(masteries|pacts|blessings))?/?
-    const match = pathname.match(/^\/(osrs|rs3)\/(\d+)(?:\/(masteries|pacts|blessings))?\/?$/);
+    // Match: /(osrs|rs3)/(\d+)(?:/(masteries|pacts|blessings|regions))?/?
+    const match = pathname.match(/^\/(osrs|rs3)\/(\d+)(?:\/(masteries|pacts|blessings|regions))?\/?$/);
     if (!match) return null;
 
     const [, game, number, pageType] = match;
@@ -178,6 +182,34 @@ function getBlessingItems(selectedIds: string[], league: LeagueData): LeagueItem
     for (const item of group) {
       if (selectedSet.has(`${groupKey}-${item.id}`)) result.push(item);
     }
+  }
+
+  return result;
+}
+
+/**
+ * For regions: the chosen regions, in unlock order.
+ *
+ * The URL's order *is* the slot order, so it's replayed rather than treated as a
+ * set. Only the three picks are shown: the other three are handed to every
+ * player alike, so including them would repeat the same badges on every row
+ * without saying anything about the build.
+ *
+ * A link can be hand-edited, so this drops whatever the rules can't justify, the
+ * same way the picker does on load.
+ */
+function getRegionItems(selectedIds: string[], league: LeagueData): LeagueItem[] {
+  const byId = new Map((league.regions ?? []).map((region) => [region.id, region]));
+  const capacity = league.regionSlots ?? 0;
+  const result: LeagueItem[] = [];
+  const seen = new Set<string>();
+
+  for (const id of selectedIds) {
+    const region = byId.get(id);
+    if (!region || region.mandatory || seen.has(id)) continue;
+    if (result.length >= capacity) break;
+    seen.add(id);
+    result.push(region);
   }
 
   return result;
@@ -332,6 +364,8 @@ function processURLs(urls: string[]): BuildData[] {
         }
       }
       items = graphItems;
+    } else if (league.pageType === 'regions') {
+      items = getRegionItems(parsed.selectedIds, league);
     } else if (league.pageType === 'relics') {
       items = getAllSelectedItems(parsed.selectedIds, league.items, parsed.bonusId);
     } else if (league.pageType === 'blessings') {

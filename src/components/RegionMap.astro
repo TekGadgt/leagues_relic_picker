@@ -1,0 +1,102 @@
+---
+/**
+ * The region map: an SVG of the world's regions with a badge over each one.
+ *
+ * Shapes are generated from the game's chunk grid — see
+ * scripts/build-region-shapes.mjs — and looked up by the same id the content
+ * file uses, so a region's geometry and its copy never drift apart.
+ *
+ * The clickable thing is the landmass itself, not a box around the badge. But
+ * the element picker.ts tracks is the HTML badge, so all the existing selection,
+ * sidebar and export handling keeps working unchanged; the path just forwards
+ * its clicks. Keeping the SVG out of that machinery avoids teaching every
+ * `instanceof HTMLElement` check about SVG elements.
+ */
+interface Region {
+  id: string;
+  name: string;
+  src: string;
+  mandatory: boolean;
+  toolTipItems: (string | string[])[];
+}
+
+interface Props {
+  regions: Region[];
+  shapes: string;
+}
+
+const { regions, shapes } = Astro.props;
+
+const shapeFiles = import.meta.glob<{ default: RegionShapes }>(
+  '../data/*-region-shapes.json',
+  { eager: true },
+);
+
+interface RegionShapes {
+  viewBox: string;
+  width: number;
+  height: number;
+  shapes: Record<string, { path: string; anchor: { x: number; y: number } }>;
+}
+
+const entry = Object.entries(shapeFiles).find(([path]) => path.endsWith(`/${shapes}.json`));
+if (!entry) throw new Error(`No region shapes found for "${shapes}"`);
+const geometry = entry[1].default;
+
+const missing = regions.filter((region) => !geometry.shapes[region.id]);
+if (missing.length) {
+  throw new Error(`No shape for region(s): ${missing.map((r) => r.id).join(', ')}`);
+}
+
+const placed = regions.map((region) => {
+  const shape = geometry.shapes[region.id];
+  return {
+    ...region,
+    path: shape.path,
+    left: (shape.anchor.x / geometry.width) * 100,
+    top: (shape.anchor.y / geometry.height) * 100,
+  };
+});
+---
+
+<!--
+  Two forms of the same ratio. `--map-aspect` holds the box's shape; `--map-ratio`
+  is the numeric version, used to derive a width from the available height. The
+  badges are placed with percentage offsets, so the container's aspect ratio has
+  to stay exact — capping its height instead would letterbox the SVG and slide
+  every badge off its landmass.
+-->
+<div
+  class="regionMap"
+  style={`--map-aspect: ${geometry.width} / ${geometry.height}; --map-ratio: ${(geometry.width / geometry.height).toFixed(4)};`}
+>
+  <svg
+    class="regionShapes"
+    viewBox={geometry.viewBox}
+    preserveAspectRatio="xMidYMid meet"
+    aria-hidden="true"
+  >
+    {placed.map((region) => (
+      <path
+        class:list={['regionShape', { mandatory: region.mandatory }]}
+        d={region.path}
+        data-region={region.id}
+      />
+    ))}
+  </svg>
+
+  {placed.map((region) => (
+    <div
+      class:list={['region', { mandatory: region.mandatory }]}
+      id={region.id}
+      style={`left: ${region.left}%; top: ${region.top}%;`}
+      data-label={region.name}
+      data-image-src={region.src}
+      data-items={JSON.stringify(region.toolTipItems)}
+      data-mandatory={region.mandatory ? 'true' : undefined}
+    >
+      <span class="regionLabel">{region.name}</span>
+      <img class="regionImg" src={region.src} alt={`${region.name} region badge`} />
+    </div>
+  ))}
+</div>

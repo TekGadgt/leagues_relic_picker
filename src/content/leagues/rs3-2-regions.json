@@ -1,0 +1,132 @@
+{
+  "game": "rs3",
+  "leagueNumber": 2,
+  "name": "Equilibrium League",
+  "pageType": "regions",
+  "layout": "map",
+  "exportFilename": "regions.png",
+  "randomizer": "regions",
+  "shareImage": true,
+  "shapes": "rs3-2-region-shapes",
+  "meta": {
+    "title": "Equilibrium League Region Picker",
+    "description": "Set a title, pick your regions, screenshot, and share",
+    "ogImage": "https://relics.runetools.lol/rs3/2/poster_regions.png",
+    "ogImageAlt": "A Selection of Regions for RS3 Equilibrium League.",
+    "url": "https://relics.runetools.lol/rs3/2/regions/"
+  },
+  "regionRules": {
+    "starting": ["misthalin", "havenhythe"],
+    "forced": [{ "region": "karamja", "slot": 3, "tasks": 50 }],
+    "choices": [
+      { "slot": 4, "tasks": 175 },
+      { "slot": 5, "tasks": 300 },
+      { "slot": 6, "tasks": 450 }
+    ]
+  },
+  "regions": [
+    {
+      "id": "misthalin",
+      "name": "Misthalin",
+      "src": "/rs3/2/regions/Misthalin.png",
+      "mandatory": true,
+      "toolTipItems": [
+        "Covers the entire Kingdom of Misthalin.",
+        "Instances of areas in Misthalin and underground areas with an entrance in Misthalin will also be included."
+      ]
+    },
+    {
+      "id": "havenhythe",
+      "name": "Havenhythe",
+      "src": "/rs3/2/regions/Havenhythe.png",
+      "mandatory": true,
+      "toolTipItems": [
+        "Includes the newly released Havenhythe continent.",
+        "Instances of areas in Havenhythe and underground areas with an entrance in Havenhythe will also be included."
+      ]
+    },
+    {
+      "id": "karamja",
+      "name": "Karamja",
+      "src": "/rs3/2/regions/Karamja.png",
+      "mandatory": true,
+      "toolTipItems": [
+        "Covers the entire island of Karamja.",
+        "Instances of areas in Karamja and underground areas with an entrance in Karamja will also be included."
+      ]
+    },
+    {
+      "id": "anachronia",
+      "name": "Anachronia",
+      "src": "/rs3/2/regions/Anachronia.png",
+      "toolTipItems": [
+        "Covers the entire island of Anachronia.",
+        "Instances of areas in Anachronia and underground areas with an entrance in Anachronia will also be included."
+      ]
+    },
+    {
+      "id": "asgarnia",
+      "name": "Asgarnia",
+      "src": "/rs3/2/regions/Asgarnia.png",
+      "toolTipItems": [
+        "Covers the entire Kingdom of Asgarnia.",
+        "Instances of areas in Asgarnia and underground areas with an entrance in Asgarnia will also be included."
+      ]
+    },
+    {
+      "id": "fremennik",
+      "name": "Fremennik Province",
+      "src": "/rs3/2/regions/Fremennik.png",
+      "toolTipItems": [
+        "Covers the entire Fremennik province.",
+        "Instances of areas in Fremennik province and underground areas with an entrance in Fremennik province will also be included."
+      ]
+    },
+    {
+      "id": "kandarin",
+      "name": "Kandarin",
+      "src": "/rs3/2/regions/Kandarin.png",
+      "toolTipItems": [
+        "Covers the entire Kingdom of Kandarin.",
+        "Instances of areas in Kandarin and underground areas with an entrance in Kandarin will also be included.",
+        "The White Wolf Mountain underground is part of Kandarin, not Asgarnia."
+      ]
+    },
+    {
+      "id": "kharidian-desert",
+      "name": "Kharidian Desert",
+      "src": "/rs3/2/regions/Kharidian_Desert.png",
+      "toolTipItems": [
+        "Covers the entire Kharidian Desert.",
+        "Instances of areas in the Kharidian Desert and underground areas with an entrance in the Kharidian Desert will also be included."
+      ]
+    },
+    {
+      "id": "morytania",
+      "name": "Morytania",
+      "src": "/rs3/2/regions/Morytania.png",
+      "toolTipItems": [
+        "Covers the entirety of Morytania along with the island of Mos Le'Harmless, Braindeath Island, Dragontooth Island and Harmony Island.",
+        "Instances of areas in Morytania and underground areas with an entrance in Morytania will also be included."
+      ]
+    },
+    {
+      "id": "tirannwn",
+      "name": "Tirannwn",
+      "src": "/rs3/2/regions/Tirannwn.png",
+      "toolTipItems": [
+        "Covers the entirety of Tirannwn along with the Temple of Light, The Lost Grove, the Poison Waste, the Underground Pass, and Prifddinas.",
+        "Instances of areas in Tirannwn and underground areas with an entrance in Tirannwn will also be included."
+      ]
+    },
+    {
+      "id": "wilderness",
+      "name": "Wilderness",
+      "src": "/rs3/2/regions/Wilderness.png",
+      "toolTipItems": [
+        "Covers the entirety of the Wilderness, including the Daemonheim peninsula.",
+        "Excludes the Mahjarrat Ritual Site and Fort Forinthry."
+      ]
+    }
+  ]
+}

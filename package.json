@@ -8,7 +8,8 @@
     "build": "astro check && astro build && npm run verify:themes",
     "preview": "astro preview",
     "astro": "astro",
-    "verify:themes": "node scripts/verify-themes.mjs"
+    "verify:themes": "node scripts/verify-themes.mjs",
+    "build:regions": "node scripts/build-region-shapes.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",

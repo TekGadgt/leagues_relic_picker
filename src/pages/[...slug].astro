@@ -3,6 +3,8 @@ import { getCollection } from 'astro:content';
 import PickerLayout from '../layouts/PickerLayout.astro';
 import ItemGrid from '../components/ItemGrid.astro';
 import PactGraph from '../components/PactGraph.astro';
+import RegionMap from '../components/RegionMap.astro';
+import RegionRail from '../components/RegionRail.astro';
 
 export async function getStaticPaths() {
   const leagues = await getCollection('leagues');
@@ -35,6 +37,7 @@ const { data } = league;
   derivedGroups={data.derivedGroups}
   randomizer={data.randomizer}
   shareImage={data.shareImage}
+  regionRules={data.layout === 'map' ? data.regionRules : undefined}
 >
   {data.layout === 'graph' ? (
     data.graph ? (
@@ -42,6 +45,11 @@ const { data } = league;
     ) : (
       <p style="color: red; text-align: center;">Error: graph layout requires graph data</p>
     )
+  ) : data.layout === 'map' ? (
+    <>
+      <RegionRail regions={data.regions} regionRules={data.regionRules} />
+      <RegionMap regions={data.regions} shapes={data.shapes} />
+    </>
   ) : (
     <ItemGrid
       items={data.items}

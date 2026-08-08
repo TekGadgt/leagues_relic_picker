@@ -16,6 +16,8 @@ type LeagueEntry = {
   derivedGroups?: { group: string; from: string[] }[];
   items: Record<string, unknown>;
   graph?: unknown;
+  regions?: unknown[];
+  regionSlots?: number;
 };
 
 const leagueData: Record<string, LeagueEntry> = {};
@@ -38,7 +40,22 @@ for (const league of leagues) {
     themeKey: `${league.data.game}/${league.data.leagueNumber}`,
     derivedGroups: league.data.derivedGroups,
     items: league.data.items,
-    graph: league.data.graph || null,
+    graph: 'graph' in league.data ? league.data.graph ?? null : null,
+    // Regions live outside `items` — one badge per region, not grouped by tier.
+    // The slot count travels with them so the showcase can apply the same cap
+    // the picker does to a hand-edited link.
+    regions: 'regions' in league.data
+      ? league.data.regions.map((region) => ({
+          id: region.id,
+          src: region.src,
+          relicLabel: region.name,
+          mandatory: region.mandatory,
+          toolTipItems: region.toolTipItems,
+        }))
+      : undefined,
+    regionSlots: 'regionRules' in league.data
+      ? league.data.regionRules.choices.length
+      : undefined,
   };
 }
 ---
