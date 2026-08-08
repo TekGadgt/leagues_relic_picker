@@ -1,14 +1,11 @@
 /**
  * Renders a share image for a build by screenshotting the real picker page.
  *
- * SPIKE — not wired into the UI. Exists to answer three questions that can only
- * be answered by deploying: does the Chromium bundle fit, how long does a cold
- * start actually take, and does the capture look like Export Image.
- *
  * Screenshotting the live page rather than recomposing the card means there is
  * no second layout to maintain and no drift: whatever the picker looks like is
- * what gets shared. The cost is a browser in a Lambda, which is what the spike
- * is measuring.
+ * what gets shared. The cost is a browser in a Lambda: a first render takes
+ * roughly 7s for relics and 10s for blessings, so the Copy Image Link button
+ * warms the cache before anyone can paste. Repeats serve from cache in ~0.15s.
  *
  * Deliberately lives on its own path. Page requests never invoke a function —
  * only a deliberate request for an image does.

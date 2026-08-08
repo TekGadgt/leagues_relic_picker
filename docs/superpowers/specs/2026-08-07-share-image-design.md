@@ -1,7 +1,7 @@
 # Share Image Design
 
 **Date:** 2026-08-07
-**Status:** Spike deployed and measured on Lambda. Viable, with pre-warming mandatory and fonts unresolved.
+**Status:** Built and working on a deploy preview. Fonts resolved by self-hosting Comic Neue.
 **Revised:** recommendation changed from Satori to headless Chromium once the 60 s function timeout was confirmed
 
 ## Problem
@@ -269,6 +269,23 @@ The card is otherwise pixel-faithful, so type is the single remaining difference
 between "screenshot of the page" and the page. `@sparticuz/chromium` ships
 `fonts.tar.br` and can load fonts at runtime, so this is solvable — but only with
 a font we're entitled to ship.
+
+## Resolved during implementation
+
+- **Bundle fits.** `@sparticuz/chromium` 147 deploys and runs.
+- **Fonts.** Self-hosting Comic Neue removes the problem at its root rather than
+  loading fonts into the container: a web font is a CSS asset, so headless
+  Chromium resolves it like any browser. The site changed too, so card and page
+  match.
+- **Pre-warming is required, and had to be visible.** The button said "Copied!"
+  while the render still had seconds to run; pasting immediately produced
+  nothing, and Discord cached that nothing against the URL. The label now
+  reports real readiness.
+- **Rate limiting.** 20 requests/minute per IP, declared in the function's
+  `config` export — `netlify.toml` is ignored for function rate limits.
+- **Cache survives deploys** via `Netlify-Cache-ID`; without it every deploy
+  dumps every warmed image.
+- **Posters** are committed static files generated from real rolled builds.
 
 ## Open questions
 

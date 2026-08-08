@@ -15,7 +15,6 @@
     "@sparticuz/chromium": "^147.0.0",
     "@zumer/snapdom": "^2.23.2",
     "astro": "^5.2.5",
-    "html2canvas": "^1.4.1",
     "puppeteer-core": "^25.5.0"
   },
   "devDependencies": {
