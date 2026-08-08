@@ -73,16 +73,43 @@ ambiguous.
 
 ## Visual approach
 
+**Superseded.** The section below records an earlier plan to use the in-game
+screenshot as a background plate. See "Vector map — what we built" for what
+shipped and why the plate was dropped.
+
+<details>
+<summary>Earlier plate-based plan (not built)</summary>
+
+
 The wiki's `Equilibrium_League_regions.png` is a 904×667 in-game screenshot: tab
 chrome baked in, every locked region flat-shaded the same muted green, region
 shapes not separable from the plate.
 
-**Chosen approach — illustrated plate plus badge nodes.** Crop the chrome off,
-use the map as a static background, and position the eleven 50×50 region badges
-on top as absolutely-placed nodes. Selection state rides entirely on the badge:
-picked is full opacity plus the gold glow already used on blessings, unpicked is
-dimmed and desaturated. This is the `PactGraph` pattern minus edges and minus
-zoom.
+**Chosen approach — illustrated plate plus badge nodes.** Crop the chrome off and
+use the map as a static background, with absolutely-placed nodes on top. This is
+the `PactGraph` pattern minus edges and minus zoom.
+
+The plate turned out to already have the badges drawn on it, **desaturated for
+locked regions and bright for the two starting ones**. That is precisely the
+locked state we want, so rather than fighting it:
+
+- The plate supplies the unpicked appearance for all eleven regions.
+- The interactive layer supplies a transparent hit target per region, carrying
+  the `data-label` / `data-image-src` / `data-items` attributes the sidebar and
+  export already read.
+- Picking overlays the bright 50×50 wiki badge, slightly larger than the baked
+  one, plus the gold glow used on blessings. Overlaying larger is deliberate: it
+  fully conceals the dull badge underneath, and any residual rim is absorbed by
+  the glow.
+- Mandatory regions render in that lit state permanently. Karamja is baked dull
+  despite being forced, so it needs the overlay from the start; Misthalin and
+  Havenhythe are baked bright and would look right either way, but get the same
+  treatment for consistency.
+
+This also removes the coordinate guesswork — positions come from the baked art.
+
+Plate is 828×372, palette-reduced to 256 colours (299K → 95K, RMSE 1.1%). Baked
+badge diameter is ~36px, so the lit overlay should render a little above that.
 
 **Rejected — traced region polygons.** thersguide does this and it looks sharp,
 but it costs eleven hand-traced landmasses and lands on an austere vector
@@ -131,6 +158,66 @@ visual verification against the rendered page.**
 Badge files are `{Region}_League_Region_Badge.png` on the wiki, except the desert
 which is `Desert_League_Region_Badge.png`. All are 50×50. Low-res, but uniformly
 so, which matches the rest of the RS3/2 assets.
+
+</details>
+
+## Vector map — what we built
+
+The plate was dropped. On a 1200×630 share card it would be upscaling an 828px
+screenshot; it bakes in unlock state we don't control; hit areas would be
+invisible rectangles rather than the landmass a player is aiming at; and it's a
+lifted UI capture that can't be themed.
+
+Deriving the shapes from the screenshot by flood fill was tried and abandoned.
+The internal boundaries are one anti-aliased pixel wide, so fills leak between
+regions through the gaps, and a threshold wide enough to seal them starts eating
+coastline instead.
+
+**The chunk grid is the real source.** The game assigns every chunk of the world
+map to a League region, published as a 128×96 grid, so region shapes are a fact
+about the game and recoverable exactly.
+`scripts/build-region-shapes.mjs` walks the boundary between in-region and
+out-of-region chunks and chains the edges into closed loops.
+
+Provenance: the grid was extracted from region map data published by
+thersguide.com, normalised into `scripts/data/rs3-2-region-chunks.json`, and
+verified against the wiki's in-game map — including the unlabelled south-western
+landmass, which both sources agree is Misthalin. Only the chunk assignments are
+taken; shapes, smoothing, styling and rendering are ours. **Credit them in the
+page footer.**
+
+### Coast is rounded, borders are not
+
+Smoothing everything made the map look like melted wax and, worse, would let two
+neighbours' shared frontier drift apart into slivers. Each boundary edge already
+knows what's on the other side, so it's tagged coast (sea beyond) or border
+(another region beyond). Chaikin corner-cutting and curve fitting apply only
+where coast meets coast; frontiers stay ruler-straight on the chunk grid. That
+reads like a real map and keeps neighbours tiling exactly.
+
+Two bugs worth remembering:
+
+- **Corner touches.** Where chunks meet at only a corner, a vertex has two
+  outgoing edges. Keying edges by start point drops one and closes the loop
+  across the diagonal — large triangular bites out of Wilderness, Anachronia and
+  Havenhythe. Fixed by keeping all outgoing edges and taking the most clockwise
+  turn, which also keeps the rings separate rather than splicing them into a
+  figure-eight.
+- **Speckle.** Some chunks inside a region are unassigned and some regions have
+  one- or two-chunk offshore slivers, neither visible in game. Holes up to 6
+  chunks are filled, islands under 3 dropped. Most regions fall to one or two
+  loops; Fremennik stays at 8, which is correct — it really is scattered.
+
+Badge anchors are the chunk furthest from any edge **within the largest
+landmass**; plain maximum clearance stranded Fremennik's badge on an islet.
+
+`SMOOTH_PASSES` defaults to 2. Output is 56KB of path data, 12.5KB brotli.
+Coordinates are rounded to a tenth of a chunk, well under a pixel at any size
+this renders at.
+
+Regenerate with `npm run build:regions`. Geometry is generated, so it lives in
+`src/data/rs3-2-region-shapes.json`, apart from the hand-authored league content
+file — fix a wrong shape in the chunk data, never in the output.
 
 ## Randomizer
 
