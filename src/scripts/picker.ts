@@ -183,6 +183,16 @@ function updateElementOpacity(element: HTMLElement, isSelected: boolean): void {
     return;
   }
 
+  // A region's badge is the tracked element, but the landmass behind it is what
+  // the player sees change colour, so the state has to be mirrored onto the path.
+  if (element.classList.contains('region')) {
+    element.classList.toggle('selected', isSelected);
+    document
+      .querySelector(`.regionShape[data-region="${CSS.escape(element.id)}"]`)
+      ?.classList.toggle('selected', isSelected);
+    return;
+  }
+
   const img = element.querySelector('.relicImg, .masteryImg') as HTMLElement | null;
   const label = element.querySelector('.relicLabel, .masteryLabel') as HTMLElement | null;
 
@@ -340,8 +350,20 @@ function getExportBackgroundColor(): string {
 
 // Initialize the picker
 function initPicker(): void {
-  const itemClass = document.querySelector('.pact') ? 'pact' : document.querySelector('.relic') ? 'relic' : 'mastery';
+  const itemClass = document.querySelector('.pact') ? 'pact'
+    : document.querySelector('.region') ? 'region'
+    : document.querySelector('.relic') ? 'relic'
+    : 'mastery';
   const elements = document.getElementsByClassName(itemClass);
+
+  // The landmass is the hit target, not the badge, so clicks arriving on a path
+  // are handed to the badge that stands for that region.
+  for (const shape of Array.from(document.querySelectorAll<SVGPathElement>('.regionShape'))) {
+    shape.addEventListener('click', () => {
+      const id = shape.dataset.region;
+      if (id) document.getElementById(id)?.click();
+    });
+  }
   const isPactGraph = itemClass === 'pact';
   const titleSelector = '.title';
 

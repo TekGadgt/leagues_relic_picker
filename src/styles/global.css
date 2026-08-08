@@ -1563,3 +1563,121 @@ main.exporting .pact-lg .pactImg {
     padding: 8px 16px;
   }
 }
+
+/*
+ * ---------------------------------------------------------------------------
+ * Region map (RS3 Equilibrium)
+ * ---------------------------------------------------------------------------
+ *
+ * The landmass is the hit target, so the SVG paths take pointer events and the
+ * badge sitting on top does not — otherwise the badge would punch a dead spot in
+ * the middle of every region. Clicks on a path are forwarded to the badge in
+ * picker.ts, which is the element selection is actually tracked on.
+ */
+.regionMap {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  aspect-ratio: var(--map-aspect);
+}
+
+.regionShapes {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.regionShape {
+  fill: #24483a;
+  stroke: #0b1a14;
+  stroke-width: 0.35;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill 120ms ease-out;
+}
+
+.regionShape:hover {
+  fill: #2f5c4a;
+}
+
+/* Picked regions take the league's own colour, so the map themes itself. */
+.regionShape.selected {
+  fill: var(--title-color);
+}
+
+/*
+ * Mandatory regions are lit but inert: they read as unlocked without implying
+ * the player spent a choice on them.
+ */
+.regionShape.mandatory {
+  fill: var(--nav-item-color);
+  cursor: default;
+}
+
+.regionShape.mandatory:hover {
+  fill: var(--nav-item-color);
+}
+
+.region {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  text-align: center;
+}
+
+.regionImg {
+  width: 40px;
+  height: 40px;
+  opacity: 0.35;
+  transition: opacity 120ms ease-out, filter 120ms ease-out;
+}
+
+.regionLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.35;
+  text-shadow: 0 0 3px #000, 0 0 3px #000;
+  white-space: nowrap;
+  transition: opacity 120ms ease-out;
+}
+
+/*
+ * The gold glow already used for unlocked god-tier blessings, reused here so a
+ * chosen region reads the same way across the site. Badges are transparent
+ * discs, so drop-shadow traces the silhouette rather than boxing it.
+ */
+.region.selected .regionImg,
+.region.mandatory .regionImg {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
+}
+
+.region.selected .regionLabel,
+.region.mandatory .regionLabel {
+  opacity: 1;
+}
+
+/* A region that was handed to you rather than chosen. */
+.region.mandatory .regionLabel::after {
+  content: " \1F512";
+  font-size: 10px;
+  opacity: 0.75;
+}
+
+@media (max-width: 700px) {
+  .regionImg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .regionLabel {
+    font-size: 10px;
+  }
+}

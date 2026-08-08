@@ -38,7 +38,7 @@ for (const league of leagues) {
     themeKey: `${league.data.game}/${league.data.leagueNumber}`,
     derivedGroups: league.data.derivedGroups,
     items: league.data.items,
-    graph: league.data.graph || null,
+    graph: 'graph' in league.data ? league.data.graph ?? null : null,
   };
 }
 ---
