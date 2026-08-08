@@ -1824,10 +1824,45 @@ main[data-page-type="regions"] .title {
  *
  * Definite widths give the shrink-to-fit pass something real to measure.
  */
+/*
+ * Side margins for the exported frame. The rail is as wide as the map, so
+ * without this its outer borders sit flush on the image edge and read as cut
+ * off. Longhand because the export sets padding-top/bottom inline and a
+ * shorthand here would fight it.
+ */
+main.exporting {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/*
+ * The title's top margin exists to clear the fixed navbar, which isn't in the
+ * capture — keeping it just leaves a dead band above the title.
+ */
+main.exporting[data-page-type="regions"] .title {
+  margin-top: 0;
+}
+
 main.exporting .regionMap {
   width: 880px;
 }
 
+/*
+ * The rail widens to the map's width for export, and names are pinned to one
+ * line.
+ *
+ * On screen 660px is comfortable, but snapdom re-measures text against the
+ * fonts it embeds, and metrics that differ by a hair re-wrap the two longest
+ * names — "Fremennik Province" and "Kharidian Desert" — while the box heights
+ * come from the original layout, so the second line spilled outside the cell.
+ * Matching the map's width leaves enough slack that no plausible metric
+ * difference can trigger a wrap, and nowrap makes that guarantee rather than a
+ * hope.
+ */
 main.exporting .regionRail {
-  width: 660px;
+  width: 880px;
+}
+
+main.exporting .railName {
+  white-space: nowrap;
 }
