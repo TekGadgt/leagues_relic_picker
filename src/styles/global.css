@@ -1830,7 +1830,7 @@ main[data-page-type="regions"] .title {
  * off. Longhand because the export sets padding-top/bottom inline and a
  * shorthand here would fight it.
  */
-main.exporting {
+main.exporting[data-page-type="regions"] {
   padding-left: 24px;
   padding-right: 24px;
 }
