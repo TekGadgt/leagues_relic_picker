@@ -371,12 +371,27 @@ for (const [code, id] of Object.entries(legend)) {
   };
 }
 
+/**
+ * Breathing room around the map, in chunks.
+ *
+ * The grid is cropped tight to occupied chunks, so Havenhythe and Tirannwn sit
+ * flush against the edges and read as clipped — most visibly in an exported
+ * image, where the map fills the frame exactly. Padding the viewBox rather than
+ * the container keeps the badges' percentage offsets in step with the shapes.
+ */
+const PAD = 2;
+
 const result = {
   _generated: 'scripts/build-region-shapes.mjs — do not edit by hand',
-  viewBox: `0 0 ${width} ${height}`,
-  width,
-  height,
-  shapes,
+  viewBox: `${-PAD} ${-PAD} ${width + PAD * 2} ${height + PAD * 2}`,
+  width: width + PAD * 2,
+  height: height + PAD * 2,
+  shapes: Object.fromEntries(
+    Object.entries(shapes).map(([id, shape]) => [id, {
+      ...shape,
+      anchor: { ...shape.anchor, x: shape.anchor.x + PAD, y: shape.anchor.y + PAD },
+    }]),
+  ),
 };
 
 writeFileSync(OUTPUT, `${JSON.stringify(result, null, 2)}\n`);

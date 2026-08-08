@@ -1813,3 +1813,21 @@ main[data-page-type="regions"] .title {
     font-size: 10px;
   }
 }
+
+/*
+ * Export sizing for the region map.
+ *
+ * `main.exporting .title` drops the title's 99vw to 100%, which leaves #main
+ * shrink-to-fit. The map and rail are both sized with percentages and viewport
+ * units, so against an indefinite width they collapse — #main came out 611px
+ * wide and the rail's three columns crushed their contents.
+ *
+ * Definite widths give the shrink-to-fit pass something real to measure.
+ */
+main.exporting .regionMap {
+  width: 880px;
+}
+
+main.exporting .regionRail {
+  width: 660px;
+}
