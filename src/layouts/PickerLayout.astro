@@ -17,9 +17,10 @@ interface Props {
   pageType: 'relics' | 'masteries' | 'pacts' | 'blessings';
   derivedGroups?: { group: string; from: string[] }[];
   randomizer?: string;
+  shareImage?: boolean;
 }
 
-const { meta, themeKey, exportFilename, pageType, derivedGroups = [], randomizer } = Astro.props;
+const { meta, themeKey, exportFilename, pageType, derivedGroups = [], randomizer, shareImage } = Astro.props;
 
 // Relics and blessings activate one choice per tier. Masteries are cumulative
 // and pacts form a graph, so neither is constrained this way.
@@ -41,15 +42,21 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
     <slot />
   </main>
 
-  <ExportButton showPactCounter={pageType === 'pacts'} showRandomizer={Boolean(randomizer)} />
+  <ExportButton
+    showPactCounter={pageType === 'pacts'}
+    showRandomizer={Boolean(randomizer)}
+    showShareImage={Boolean(shareImage)}
+  />
   <DetailSidebar />
 
-  <script is:inline define:vars={{ exportFilename, derivedGroups, onePickPerTier, randomizer }}>
+  <script is:inline define:vars={{ exportFilename, derivedGroups, onePickPerTier, randomizer, shareImage, pageType }}>
     window.PICKER_CONFIG = {
       exportFilename,
       derivedGroups,
       onePickPerTier,
       randomizer,
+      shareImage,
+      pageType,
     };
   </script>
   <script src="../scripts/picker.ts"></script>

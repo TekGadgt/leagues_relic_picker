@@ -7,6 +7,10 @@ import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } fro
 
 interface PickerConfig {
   exportFilename: string;
+  /** Offers Copy Image Link, backed by the share-image function. */
+  shareImage?: boolean;
+  /** e.g. 'relics' or 'blessings'; part of the share-image page key. */
+  pageType?: string;
   /** Names a randomizer strategy; absent means no Randomize button. */
   randomizer?: string;
   /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
@@ -565,6 +569,64 @@ function initPicker(): void {
     }
 
     refreshRollNextState();
+  }
+
+  // Copy Image Link handler
+  const copyImageLinkBtn = document.getElementById('copyImageLinkBtn') as HTMLButtonElement | null;
+  if (copyImageLinkBtn && getPickerConfig().shareImage) {
+    const originalLabel = copyImageLinkBtn.textContent ?? 'Copy Image Link';
+    let resetLabel: ReturnType<typeof setTimeout> | null = null;
+
+    const setLabel = (text: string, revertAfter?: number) => {
+      if (resetLabel) clearTimeout(resetLabel);
+      copyImageLinkBtn.textContent = text;
+      if (revertAfter) {
+        resetLabel = setTimeout(() => { copyImageLinkBtn.textContent = originalLabel; }, revertAfter);
+      }
+    };
+
+    copyImageLinkBtn.addEventListener('click', async function() {
+      const current = new URL(window.location.href);
+      // Path minus the leading and trailing slashes: 'rs3/2' or 'rs3/2/blessings'.
+      const page = current.pathname.replace(/^\/|\/$/g, '');
+
+      const image = new URL('/api/share-image', window.location.origin);
+      image.searchParams.set('page', page);
+      for (const key of ['selected', 'bonus', 'title'] as const) {
+        const value = current.searchParams.get(key);
+        if (value) image.searchParams.set(key, value);
+      }
+
+      const href = image.toString();
+
+      // Copy first and synchronously, while the click still counts as user
+      // activation — browsers refuse clipboard writes made after an await.
+      let copied = true;
+      try {
+        await navigator.clipboard.writeText(href);
+      } catch {
+        copied = false;
+      }
+
+      if (!copied) {
+        window.prompt('Copy this image link:', href);
+        return;
+      }
+
+      // The first render of a build takes several seconds, and a link pasted
+      // before it finishes shows nothing — worse, chat clients cache that
+      // nothing against the URL, so it stays broken even once the image exists.
+      // Requesting it now means the wait happens here, and the label says so
+      // rather than claiming readiness the moment the text is on the clipboard.
+      setLabel('Copied — preparing image…');
+      try {
+        await fetch(href, { mode: 'no-cors', cache: 'no-store' });
+        setLabel('Ready to paste', 4000);
+      } catch {
+        // The link is still on the clipboard; the first viewer just waits.
+        setLabel('Copied', 4000);
+      }
+    });
   }
 
   // Export button handler

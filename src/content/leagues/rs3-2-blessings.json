@@ -6,6 +6,7 @@
   "layout": "columns",
   "exportFilename": "blessings.png",
   "randomizer": "one-per-tier",
+  "shareImage": true,
   "meta": {
     "title": "Equilibrium League Blessing Picker",
     "description": "Set a title, pick your blessings, screenshot, and share",

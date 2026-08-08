@@ -3,8 +3,9 @@
 interface Props {
   showPactCounter?: boolean;
   showRandomizer?: boolean;
+  showShareImage?: boolean;
 }
-const { showPactCounter = false, showRandomizer = false } = Astro.props;
+const { showPactCounter = false, showRandomizer = false, showShareImage = false } = Astro.props;
 ---
 
 <div class="picker-buttons">
@@ -14,4 +15,5 @@ const { showPactCounter = false, showRandomizer = false } = Astro.props;
   {showRandomizer && <button id="clearBtn">Clear</button>}
   <button id="exportBtn">Export Image</button>
   <button id="addToShowcaseBtn">Add to Showcase</button>
+  {showShareImage && <button id="copyImageLinkBtn">Copy Image Link</button>}
 </div>

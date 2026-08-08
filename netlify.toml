@@ -4,3 +4,13 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# SPIKE: share image rendering. Chromium must stay out of the esbuild bundle and
+# its brotli archives shipped alongside, or the binary won't exist at runtime.
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["@sparticuz/chromium", "puppeteer-core"]
+
+[functions."share-image"]
+  memory = 2048
+  included_files = ["node_modules/@sparticuz/chromium/bin/**"]

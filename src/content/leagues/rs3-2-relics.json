@@ -6,6 +6,7 @@
   "layout": "columns",
   "exportFilename": "relics.png",
   "randomizer": "one-per-tier",
+  "shareImage": true,
   "meta": {
     "title": "Equilibrium League Relic Picker",
     "description": "Set a title, pick your relics, screenshot, and share",

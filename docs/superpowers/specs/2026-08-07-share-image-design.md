@@ -1,7 +1,7 @@
 # Share Image Design
 
 **Date:** 2026-08-07
-**Status:** Draft for review — no implementation yet
+**Status:** Built and working on a deploy preview. Fonts resolved by self-hosting Comic Neue.
 **Revised:** recommendation changed from Satori to headless Chromium once the 60 s function timeout was confirmed
 
 ## Problem
@@ -215,12 +215,86 @@ way a "screenshot of the real page" can still fail to look like the real page.
 The static `og:image` is the safety net throughout: every failure degrades to
 the poster rather than to a broken card.
 
+## Spike results (local)
+
+`netlify/functions/share-image.mjs` renders a build by loading the real page and
+screenshotting `#main`. Measured against the dev server with system Chrome:
+
+| Case | Total | Launch | Navigate | Screenshot | Size |
+|---|---|---|---|---|---|
+| Relics, with bonus | 3469 ms | 532 | **2706** | 88 | 370 KB |
+| Blessings | 3219 ms | 347 | **2621** | 116 | 568 KB |
+
+**Fidelity is exact.** The silver bonus glow, both gold god tiers, theme colours,
+dimming and fonts all render, because it is the page. Nothing was reimplemented.
+
+**Navigation dominates**, and it's `waitUntil: 'networkidle0'` waiting on ~20
+relic images. Against a CDN-served static page this should be well under the
+2.6 s seen here against the Astro dev server.
+
+**One finding worth keeping:** the navbar appeared in the first capture despite
+screenshotting `#main`. It's `position: fixed`, so it paints over `#main`'s box
+and a real browser composites it; snapdom builds from the DOM tree and never had
+this problem. Fixed by hiding fixed overlays before capture. Anything else
+`position: fixed` will need the same treatment.
+
+Local numbers say nothing about Lambda cold start — unpacking the brotli
+Chromium plus Lambda init is the unmeasured part, and the reason to deploy.
+
+## Spike results (deployed)
+
+Measured against a deploy preview:
+
+| Request | Time | Cache status |
+|---|---|---|
+| Uncached render of a novel build | **6.77 s** | `fwd=miss; stored` |
+| Same URL again | 0.13 s | `hit` |
+| Earlier URL, ~1 min old | 0.19 s | `hit; ttl=31535956` |
+
+**The package fits and Chromium runs on Lambda.** That was the blocker; it's
+cleared. Output is ~310–354 KB, well inside the 6 MB payload limit.
+
+**Caching works as designed**, both edge and Netlify Durable. A given build
+renders once, ever.
+
+**6.77 s is the finding that matters.** Crawlers abandon unfurls well before
+that, so a cold render will not produce a card. Pre-warming via the Copy Image
+Link button moves from a nice optimisation to **a requirement** — without it,
+the first person to share any build gets nothing, which is exactly the case that
+matters.
+
+**Fonts fall back, visibly.** The deployed render uses a generic bold sans where
+the site uses Comic Sans MS, confirming the Lambda container has no system fonts.
+The card is otherwise pixel-faithful, so type is the single remaining difference
+between "screenshot of the page" and the page. `@sparticuz/chromium` ships
+`fonts.tar.br` and can load fonts at runtime, so this is solvable — but only with
+a font we're entitled to ship.
+
+## Resolved during implementation
+
+- **Bundle fits.** `@sparticuz/chromium` 147 deploys and runs.
+- **Fonts.** Self-hosting Comic Neue removes the problem at its root rather than
+  loading fonts into the container: a web font is a CSS asset, so headless
+  Chromium resolves it like any browser. The site changed too, so card and page
+  match.
+- **Pre-warming is required, and had to be visible.** The button said "Copied!"
+  while the render still had seconds to run; pasting immediately produced
+  nothing, and Discord cached that nothing against the URL. The label now
+  reports real readiness.
+- **Rate limiting.** 20 requests/minute per IP, declared in the function's
+  `config` export — `netlify.toml` is ignored for function rate limits.
+- **Cache survives deploys** via `Netlify-Cache-ID`; without it every deploy
+  dumps every warmed image.
+- **Posters** are committed static files generated from real rolled builds.
+
 ## Open questions
 
-1. **Does `@sparticuz/chromium` fit the deployment package?** The one unresolved
-   blocker. If not, load the binary remotely at runtime.
-2. **Cold start and render duration, measured.** Determines whether pre-warming
-   is sufficient or whether the card needs a cheaper path after all.
+1. **Does `@sparticuz/chromium` fit the deployment package?** Still the one
+   unresolved blocker — 66 MB installed, against Lambda's 50 MB zipped limit. If
+   it doesn't fit, load the binary remotely at runtime.
+2. **Cold start, measured on Lambda.** Local warm render is ~3.2–3.5 s, of which
+   ~2.6 s is navigation against a slow dev server. Cold start adds Chromium
+   unpacking and Lambda init, both unmeasured.
 3. **What does the function load?** The live production URL, or a local render.
    Loading production means the function fetches the site on each cold render,
    which costs bandwidth and web requests.
