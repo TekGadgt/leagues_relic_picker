@@ -1638,14 +1638,22 @@ main.exporting .pact-lg .pactImg {
   transition: opacity 120ms ease-out, filter 120ms ease-out;
 }
 
+/*
+ * Names sit on a plaque rather than bare text: the coastline behind them varies
+ * from dark sea to a lit region fill, and a shadow alone isn't enough to stay
+ * legible across both.
+ */
 .regionLabel {
   font-size: 13px;
   font-weight: 700;
   color: #fff;
-  opacity: 0.35;
-  text-shadow: 0 0 3px #000, 0 0 3px #000;
+  opacity: 0.45;
   white-space: nowrap;
-  transition: opacity 120ms ease-out;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(6, 18, 13, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: opacity 120ms ease-out, border-color 120ms ease-out;
 }
 
 /*
@@ -1662,6 +1670,7 @@ main.exporting .pact-lg .pactImg {
 .region.selected .regionLabel,
 .region.mandatory .regionLabel {
   opacity: 1;
+  border-color: rgba(255, 204, 72, 0.55);
 }
 
 /* A region that was handed to you rather than chosen. */

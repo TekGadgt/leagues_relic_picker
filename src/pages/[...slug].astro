@@ -36,6 +36,7 @@ const { data } = league;
   derivedGroups={data.derivedGroups}
   randomizer={data.randomizer}
   shareImage={data.shareImage}
+  regionRules={data.layout === 'map' ? data.regionRules : undefined}
 >
   {data.layout === 'graph' ? (
     data.graph ? (

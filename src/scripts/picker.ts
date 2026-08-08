@@ -2,6 +2,12 @@
 import { snapdom } from '@zumer/snapdom';
 import { isTouchDevice } from './utils';
 import { applyTierClick, bonusPickId, reconcileRestoredSelection, type TierSelectionContext } from './tier-selection';
+import {
+  applyRegionClick,
+  chosenRegionIds,
+  reconcileRestoredRegions,
+  type RegionSelectionContext,
+} from './region-selection';
 import { getStrategy, itemsIn, type RollPlan } from './randomizer';
 import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } from './roll-animation';
 
@@ -15,6 +21,12 @@ interface PickerConfig {
   randomizer?: string;
   /** Relics and blessings allow one pick per tier; masteries and pacts don't. */
   onePickPerTier?: boolean;
+  /** Present on region pages; describes how many picks and in what order. */
+  regionRules?: {
+    starting: string[];
+    forced: { region: string; slot: number; tasks: number }[];
+    choices: { slot: number; tasks: number }[];
+  };
 }
 
 type ToolTipItem = string | string[];
@@ -42,7 +54,10 @@ const DOUBLE_TAP_THRESHOLD = 300;
 
 // URL State Management
 function updateURLParams(elements: HTMLCollectionOf<Element>, titleSelector: string): void {
-  const params = Array.from(elements)
+  // Regions are ordered: which slot a pick occupies is carried by its position
+  // in the list, so they can't be collected in DOM order like everything else.
+  const regionCtx = regionContext();
+  const params = regionCtx ? chosenRegionIds(regionCtx) : Array.from(elements)
     .filter(element => element.classList.contains('selected'))
     // Derived selections (e.g. blessing god tiers) are computed from the
     // player's other picks, so storing them would let a URL encode an outcome
@@ -108,6 +123,16 @@ function setInitialSelections(elements: HTMLCollectionOf<Element>, titleSelector
     }
   });
 
+  // The order of `selected` is the slot order, so it's replayed rather than
+  // treated as a set — and anything the rules can't justify is dropped.
+  const regionCtx = regionContext();
+  if (regionCtx) {
+    reconcileRestoredRegions(regionCtx, urlParams.get('selected'));
+    updateURLParams(elements, titleSelector);
+    notifySelectionChanged();
+    return;
+  }
+
   // Links shared before one-per-tier existed can hold several picks in a tier.
   if (getPickerConfig().onePickPerTier) {
     const ctx = tierContext();
@@ -137,6 +162,25 @@ function tierContext(): TierSelectionContext | null {
 }
 
 /**
+ * Regions and their slot schedule, or null on any other page. Slots come from
+ * the content data rather than being hardcoded, so a future league with a
+ * different number of picks needs no change here.
+ */
+function regionContext(): RegionSelectionContext | null {
+  const rules = getPickerConfig().regionRules;
+  if (!rules) return null;
+
+  const regions = Array.from(document.querySelectorAll<HTMLElement>('.region'));
+  if (!regions.length) return null;
+
+  return {
+    regions,
+    slots: rules.choices.map((choice) => choice.slot),
+    setSelected: (el, selected) => updateElementOpacity(el, selected),
+  };
+}
+
+/**
  * True while a randomised roll is animating. Selection changes are refused
  * during that window, so a stray click can't interleave with the picks the roll
  * is about to apply.
@@ -158,6 +202,14 @@ function toggleElement(element: HTMLElement, elements: HTMLCollectionOf<Element>
   if (element.dataset.derived) return;
 
   const config = getPickerConfig();
+
+  const regionCtx = regionContext();
+  if (regionCtx && applyRegionClick(element, regionCtx)) {
+    updateURLParams(elements, titleSelector);
+    notifySelectionChanged();
+    return;
+  }
+
   const ctx = config.onePickPerTier ? tierContext() : null;
 
   if (ctx && applyTierClick(element, ctx)) {
