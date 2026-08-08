@@ -790,10 +790,27 @@ main.exporting .relicImg.rs3 {
   height: 100px;
 }
 
+/*
+ * Labels stay on one line in an export, with room to spare.
+ *
+ * snapdom takes box geometry from the live layout but re-flows the text itself,
+ * so a label that fits by a few pixels here can wrap there — and because the box
+ * keeps its original height, the second line lands on top of the relic below.
+ * Seen on relics, and the same mechanism as the region rail.
+ *
+ * nowrap alone isn't enough: at eight groups the widest label ("Barbarian
+ * Gathering") cleared its column by 5px, so any re-measure would have swapped
+ * wrapping for a collision with the next column. Dropping to 1.25em buys about
+ * 40px of headroom, which absorbs even a full fallback-font substitution.
+ *
+ * Export-only. The share-image function renders in a real browser and never adds
+ * this class, so cards already cached are untouched.
+ */
 main.exporting .relicLabel,
 main.exporting .masteryLabel {
-  font-size: 1.5em;
+  font-size: 1.25em;
   max-width: none;
+  white-space: nowrap;
 }
 
 main.exporting .relic {
