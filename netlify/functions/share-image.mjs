@@ -98,7 +98,7 @@ export async function renderShareImage({ origin, page, selected, bonus, title })
         // collapse instead. Scoped to regions so cards already cached for the
         // other pickers keep rendering exactly as they were.
         '#main[data-page-type="regions"] { padding: 40px 24px !important; }',
-        '#main[data-page-type="regions"] .title { min-width: 100% !important; margin-top: 0 !important; }',
+        '#main[data-page-type="regions"] .title { min-width: 100% !important; margin-top: 0 !important; white-space: nowrap !important; font-size: 3em !important; }',
         '#main[data-page-type="regions"] .regionMap { width: 880px !important; }',
         '#main[data-page-type="regions"] .regionRail { width: 880px !important; }',
         '#main[data-page-type="regions"] .railName { white-space: nowrap !important; }',

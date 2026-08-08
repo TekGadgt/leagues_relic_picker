@@ -1839,8 +1839,24 @@ main.exporting {
  * The title's top margin exists to clear the fixed navbar, which isn't in the
  * capture — keeping it just leaves a dead band above the title.
  */
+/*
+ * The title's top margin exists to clear the fixed navbar, which isn't in the
+ * capture — keeping it just leaves a dead band above the title.
+ *
+ * nowrap for the same reason the rail names get it: the export frame is sized to
+ * its content, so the title fits its own box exactly, and snapdom's slightly
+ * wider metrics tip it into a second line that overflows the box and lands on
+ * the rail. One line, and the frame widens to suit.
+ */
 main.exporting[data-page-type="regions"] .title {
   margin-top: 0;
+  white-space: nowrap;
+  /*
+   * Smaller than on screen. The export frame is sized to its content, so at 5em
+   * a normal-length title is wider than the map and drags the whole frame out
+   * with it. At 3em the map sets the width and the title sits inside it.
+   */
+  font-size: 3em;
 }
 
 main.exporting .regionMap {
