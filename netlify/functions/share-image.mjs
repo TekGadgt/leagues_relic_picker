@@ -74,7 +74,15 @@ export async function renderShareImage({ origin, page, selected, bonus, title })
     const navStart = performance.now();
     // networkidle0 waits for the relic images, which is the slow part and the
     // whole reason a naive screenshot comes out half-empty.
-    await tab.goto(target.toString(), { waitUntil: 'networkidle0', timeout: 20000 });
+    //
+    // Generous, because the request that matters here is the cache warm fired by
+    // Copy Image Link, and nobody is waiting on it. Timing out returns a 404 and
+    // caches nothing, leaving the paste broken; finishing slowly warms the cache
+    // and the link works. Warm renders are ~4.5s for relics and ~9s for
+    // blessings, which has twice the images, and a cold start adds to both — so
+    // the ceiling sits well clear of the slow path rather than just above it.
+    // The function itself may run for 60s.
+    await tab.goto(target.toString(), { waitUntil: 'networkidle0', timeout: 45000 });
     mark('navigateMs', navStart);
 
     // The navbar is position:fixed, so it paints over #main's box and lands in
