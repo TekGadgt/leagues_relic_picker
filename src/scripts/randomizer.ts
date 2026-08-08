@@ -19,6 +19,10 @@
 export interface RandomizerContext {
   /** Groups in render order, excluding derived ones. */
   groups: HTMLElement[];
+  /** Region badges, on a region map only. Mandatory ones included. */
+  regions?: HTMLElement[];
+  /** Free-pick slot numbers, on a region map only. */
+  slots?: number[];
 }
 
 export interface RollPlan {
@@ -133,12 +137,49 @@ export const onePerTierStrategy: RandomizerStrategy = {
 };
 
 /**
+ * Three regions from the pool of eight, no repeats.
+ *
+ * Simpler than the tier strategies because there is nothing to respect but the
+ * count: regions have no adjacency rule, so any three of the eight is a legal
+ * build, and every unpicked region is always a candidate.
+ */
+export const regionsStrategy: RandomizerStrategy = {
+  rollAll: (ctx) => {
+    const pool = choosableRegions(ctx);
+    const capacity = ctx.slots?.length ?? 0;
+
+    // Shuffle and take, rather than picking one at a time and rejecting repeats.
+    const shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return { clearFirst: true, picks: shuffled.slice(0, capacity) };
+  },
+
+  rollNext: (ctx) => {
+    const taken = choosableRegions(ctx).filter(isSelected);
+    if (taken.length >= (ctx.slots?.length ?? 0)) return EMPTY_PLAN;
+
+    const choice = pickRandom(choosableRegions(ctx).filter((region) => !isSelected(region)));
+    return choice ? { clearFirst: false, picks: [choice] } : EMPTY_PLAN;
+  },
+};
+
+/** Regions a player can actually spend a pick on. */
+export function choosableRegions(ctx: RandomizerContext): HTMLElement[] {
+  return (ctx.regions ?? []).filter((region) => region.dataset.mandatory !== 'true');
+}
+
+/**
  * Strategies by name. A league opts in through `randomizer` in its content data,
  * so adding the buttons to another league is a one-line change unless it needs a
  * genuinely new mode.
  */
 export const STRATEGIES: Record<string, RandomizerStrategy> = {
   'one-per-tier': onePerTierStrategy,
+  regions: regionsStrategy,
 };
 
 export function getStrategy(name: string | undefined): RandomizerStrategy | null {

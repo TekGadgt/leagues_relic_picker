@@ -1608,8 +1608,14 @@ main.exporting .pact-lg .pactImg {
   fill: #2f5c4a;
 }
 
-/* Picked regions take the league's own colour, so the map themes itself. */
-.regionShape.selected {
+/*
+ * Picked regions take the league's own colour, so the map themes itself.
+ * `.rolling` is the travelling highlight during a randomised roll and looks
+ * identical — it's a separate class only because `.selected` here is the real
+ * selection, which a spin must not touch.
+ */
+.regionShape.selected,
+.regionShape.rolling {
   fill: var(--title-color);
 }
 
@@ -1668,12 +1674,14 @@ main.exporting .pact-lg .pactImg {
  * discs, so drop-shadow traces the silhouette rather than boxing it.
  */
 .region.selected .regionImg,
+.region.rolling .regionImg,
 .region.mandatory .regionImg {
   opacity: 1;
   filter: drop-shadow(0 0 4px #ffcc48) drop-shadow(0 0 10px rgba(255, 204, 72, 0.55));
 }
 
 .region.selected .regionLabel,
+.region.rolling .regionLabel,
 .region.mandatory .regionLabel {
   opacity: 1;
   border-color: rgba(255, 204, 72, 0.55);

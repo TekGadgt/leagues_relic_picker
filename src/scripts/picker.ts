@@ -6,9 +6,10 @@ import {
   applyRegionClick,
   chosenRegionIds,
   reconcileRestoredRegions,
+  remainingPicks,
   type RegionSelectionContext,
 } from './region-selection';
-import { getStrategy, itemsIn, type RollPlan } from './randomizer';
+import { choosableRegions, getStrategy, itemsIn, type RandomizerContext, type RollPlan } from './randomizer';
 import { animateRoll, pause, BONUS_BEAT_MS, ROLLING_BONUS_CLASS, type Reel } from './roll-animation';
 
 interface PickerConfig {
@@ -159,6 +160,19 @@ function tierContext(): TierSelectionContext | null {
   return groups.length
     ? { groups, setSelected: (el, selected) => updateElementOpacity(el, selected) }
     : null;
+}
+
+/**
+ * The travelling highlight for a region reel.
+ *
+ * Deliberately not the `selected` class, which on this page *is* the selection —
+ * see performRegionRoll. Mirrored onto the map shape the same way a real pick is.
+ */
+function setRegionRolling(element: HTMLElement, rolling: boolean): void {
+  element.classList.toggle('rolling', rolling);
+  document
+    .querySelector(`.regionShape[data-region="${CSS.escape(element.id)}"]`)
+    ?.classList.toggle('rolling', rolling);
 }
 
 /**
@@ -540,6 +554,9 @@ function initPicker(): void {
         const item = element as HTMLElement;
         item.classList.remove('selected');
         item.removeAttribute('data-bonus');
+        // A region's slot is part of its selection, so clearing has to drop it
+        // too or the next pick inherits a stale position.
+        item.removeAttribute('data-slot');
         updateElementOpacity(item, false);
       }
     };
@@ -552,9 +569,27 @@ function initPicker(): void {
       refreshRollNextState();
     };
 
+    /**
+     * The context a strategy plans against — regions if this is a map, tiers
+     * otherwise. TierSelectionContext already carries `groups`, so it doubles as
+     * a randomizer context unchanged.
+     */
+    const randomizerContext = (): RandomizerContext | null => {
+      const regions = regionContext();
+      if (regions) return { groups: [], regions: regions.regions, slots: regions.slots };
+      return tierContext();
+    };
+
     // Nothing left to reveal once every tier is filled.
     function refreshRollNextState(): void {
       if (!rollNextBtn) return;
+
+      const regions = regionContext();
+      if (regions) {
+        rollNextBtn.disabled = rolling || remainingPicks(regions) === 0;
+        return;
+      }
+
       const ctx = tierContext();
       rollNextBtn.disabled = rolling || !ctx?.groups.some(
         group => !itemsIn(group).some(item => item.classList.contains('selected')),
@@ -572,6 +607,12 @@ function initPicker(): void {
     const performRoll = async (plan: RollPlan) => {
       if (rolling || plan.picks.length === 0) return;
 
+      const regionCtx = regionContext();
+      if (regionCtx) {
+        await performRegionRoll(plan, regionCtx);
+        return;
+      }
+
       const ctx = tierContext();
       if (!ctx) return;
 
@@ -587,7 +628,7 @@ function initPicker(): void {
         };
         const reelFor = (pick: HTMLElement): Reel | null => {
           const group = ctx.groups.find(candidate => candidate.contains(pick));
-          return group ? { group, landOn: pick } : null;
+          return group ? { items: itemsIn(group), landOn: pick } : null;
         };
 
         const reels = plan.picks.map(reelFor).filter((reel): reel is Reel => reel !== null);
@@ -617,9 +658,56 @@ function initPicker(): void {
       }
     };
 
+    /**
+     * Reveal a region roll.
+     *
+     * Reels run one after another rather than side by side. Every tier has its
+     * own column, so those can spin at once; regions all draw from the same pool,
+     * and parallel reels would fight over the same badges. Sequential also reads
+     * as unlocking in order, which is what the slots mean.
+     *
+     * The travelling highlight uses its own class rather than `selected`. On a
+     * tier page highlighting only changes opacity, but a region's selected state
+     * is the class itself — spinning with it would leave every region the reel
+     * passed over looking picked, and the apply that follows would read the
+     * winner as already selected and switch it back off.
+     */
+    const performRegionRoll = async (plan: RollPlan, ctx: RegionSelectionContext) => {
+      rolling = true;
+      setRollInProgress(true);
+      for (const button of lockable) if (button) button.disabled = true;
+
+      try {
+        if (plan.clearFirst) clearSelection();
+
+        const highlight = {
+          setHighlighted: (element: HTMLElement, on: boolean) => setRegionRolling(element, on),
+        };
+
+        for (const pick of plan.picks) {
+          // Recomputed per reel so it never spins over a region an earlier reel
+          // in this same roll has just taken.
+          const candidates = choosableRegions({ groups: [], regions: ctx.regions })
+            .filter(region => !region.classList.contains('selected'));
+
+          if (candidates.includes(pick)) {
+            await animateRoll([{ items: candidates, landOn: pick }], highlight);
+          }
+          setRegionRolling(pick, false);
+          applyRegionClick(pick, ctx);
+        }
+      } finally {
+        for (const region of ctx.regions) setRegionRolling(region, false);
+        rolling = false;
+        setRollInProgress(false);
+        for (const button of lockable) if (button) button.disabled = false;
+        commit();
+      }
+    };
+
     if (rollNextBtn && strategy.rollNext) {
       rollNextBtn.addEventListener('click', function() {
-        const ctx = tierContext();
+        const ctx = randomizerContext();
         if (ctx) void performRoll(strategy.rollNext!(ctx));
       });
     } else if (rollNextBtn) {
@@ -629,7 +717,7 @@ function initPicker(): void {
 
     if (randomizeBtn) {
       randomizeBtn.addEventListener('click', function() {
-        const ctx = tierContext();
+        const ctx = randomizerContext();
         if (ctx) void performRoll(strategy.rollAll(ctx));
       });
     }
