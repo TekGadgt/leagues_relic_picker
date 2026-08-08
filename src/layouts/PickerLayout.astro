@@ -42,7 +42,7 @@ const onePickPerTier = pageType === 'relics' || pageType === 'blessings';
 >
   <Navbar itemType={pageType} showShowcaseLink={true} />
 
-  <main id="main">
+  <main id="main" data-page-type={pageType}>
     <h1 class="title" contenteditable="true">Change Me</h1>
     <slot />
   </main>

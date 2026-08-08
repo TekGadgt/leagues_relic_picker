@@ -1575,6 +1575,22 @@ main.exporting .pact-lg .pactImg {
  * picker.ts, which is the element selection is actually tracked on.
  */
 /*
+ * Rebalance the space around the title.
+ *
+ * `.title` is an h1, so it carries a default 0.67em margin — 53.6px at this font
+ * size — top and bottom. That left a chasm above the rail while the top margin
+ * was still shorter than the fixed navbar, tucking the title box underneath it.
+ *
+ * Scoped to this page rather than fixed on `.title` itself: the other pickers
+ * have cached share cards pinned for a year, and restyling shared chrome would
+ * strand every one of them showing the old layout.
+ */
+main[data-page-type="regions"] .title {
+  margin-top: 80px;
+  margin-bottom: 10px;
+}
+
+/*
  * Sized so the whole page clears a 1080p screen without scrolling. The reserve
  * covers the navbar, title, rail and button row; the width is derived from
  * what's left rather than the height being capped, because the badges are
